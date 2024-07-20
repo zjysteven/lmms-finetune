@@ -120,6 +120,6 @@ if __name__ == "__main__":
     ljust = 30
     print("Supported models:")
     print(f"  {temp.ljust(ljust)}: HuggingFace Path")
-    print("  ---------------------------------------")
+    print("  ------------------------------------------------")
     for model_id, model_hf_path in MODEL_HF_PATH.items():
         print(f"  {model_id.ljust(ljust)}: {model_hf_path}")

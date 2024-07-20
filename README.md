@@ -5,7 +5,7 @@
 
 More and more large multimodal models (LMMs) are being released from time to time, but the finetuning of these models is not always straightforward. This codebase aims to provide a unified structure for LMM finetuning. Key design ideas include:
 - the components of the finetuning process (e.g., model loading, data collating) are abstracted, allowing one to easily integrate the latest LMMs into this codebase and finetune them with minimal effort;
-- for all LMMs the huggingface's official implementation is used, so that after finetuning one can do inference and everything else in the exact same way as the earlier;
+- for all LMMs the 🤗huggingface's official implementation is used, so that after finetuning one can do inference and everything else in the exact same way as the earlier;
 - the codebase is kept as simple/lightweight as possible, so that it is easy to understand and modify.
 
 
@@ -14,7 +14,7 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 - :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 
-For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
+More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
 
 ## Installation
@@ -89,7 +89,7 @@ The actual videos and images can be stored in their corresponding folders, and t
 <details>
 <summary><b>2. Perform finetuning</b></summary>
 
-Modify the sample training bash script `example.sh` to specify arguments including the target model, data path, etc. Refer to the [training documentation](docs/training.md) for more details on the arguments and their meanings. Then simply kick off the training by running the bash script `bash example.sh`.
+Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. Refer to the [training documentation](docs/training.md) for more details on the arguments and their meanings. Then simply kick off the training by running the bash script `bash example.sh`.
 </details>
 
 

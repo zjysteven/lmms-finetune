@@ -16,6 +16,11 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 
 More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
+<details>
+<summary>What's different from <a href=https://github.com/hiyouga/LLaMA-Factory>LLaMA-Factory</a>?</summary>
+
+As of 2024/07, LLaMA-Factory officially supports only the finetuning of LLaVA-1.5. There are people working on adding more models to LLaMA-Factory, but the process can be a bit complicated given its large scale and complexity (e.g., there will be a lot of detailed considerations and compatibility problems with text-only LLMs to consider; see [this](https://github.com/hiyouga/LLaMA-Factory/pull/4136) and [this](https://github.com/hiyouga/LLaMA-Factory/pull/4377)). This is actually one of the motivations for putting up this codebase. It will definitely not be as optimized as LLaMA-Factory, but it is exclusively for multi-modal LLMs and is designed to be lightweight/simple which can best facilitate quick experiments, flexible modifications, and easy integrations of new models (which is quite important given the fast pace of model releases).
+</details>
 
 ## Installation
 

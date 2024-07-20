@@ -1,0 +1,20 @@
+__pycache__
+*.pyc
+*.egg-info
+dist
+
+# Other
+.DS_Store
+wandb
+output
+
+checkpoints
+ckpts*
+
+.ipynb_checkpoints
+*.ipynb
+
+*.ttf
+
+local*
+not_useful_for_now

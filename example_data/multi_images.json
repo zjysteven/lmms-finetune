@@ -1,0 +1,30 @@
+[
+    {
+        "system_prompt": "Answer the following questions by considering all images.",
+        "image": ["soccer1.jpg", "soccer2.jpg"],
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image><image>\nWhich image has more people? Give details to your answer."
+            },
+            {
+                "from": "gpt",
+                "value": "There are five people in the first image, while there are eleven people in the second. Therefore, the second image has more people."
+            }
+        ]
+    },
+    {
+        "system_prompt": "Given an idea and a collection of photos, Assistant produces captivating social media content, such as a Twitter post, featuring well-crafted copy.",
+        "image": ["post1.png", "post2.png", "post3.png", "post4.png"],
+        "conversations": [
+            {
+                "from": "human",
+                "value": "Help me write a Twitter post considering the following images.\n<image><image><image><image>"
+            },
+            {
+                "from": "gpt",
+                "value": "Wandering through the enchanting streets of Milan, where the vibrant pulse of the city is as captivating as its historical architecture. From the mesmerizing ... the gentle glow of candles offers a moment of serenity in this bustling metropolis. #MilanDiaries #TravelMoments #CityLights"
+            }
+        ]
+    }
+]

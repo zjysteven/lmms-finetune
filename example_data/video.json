@@ -1,0 +1,39 @@
+[
+    {
+        "system_prompt": "Answer the following questions about the video.",
+        "video": "bm_teaser.mp4",
+        "image": "bm.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<video>\nWhat is this video about?"
+            },
+            {
+                "from": "gpt",
+                "value": "This video is likely a teaser of the MV of BabyMonster's new song, Forever."
+            },
+            {
+                "from": "human",
+                "value": "<image>/nWhat does this image show?"
+            },
+            {
+                "from": "gpt",
+                "value": "This image shows the members of the Kpop group BabyMonster."
+            }
+        ]
+    },
+    {
+        "video": "curry_vs_thunder.mp4",
+        "num_frames": 8,
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<video>\nDescribe this video."
+            },
+            {
+                "from": "gpt",
+                "value": "This video shows the buzzer beater that Stephen Curry made against Thunder."
+            }
+        ]
+    }
+]

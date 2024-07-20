@@ -1,0 +1,15 @@
+torch
+torchvision
+transformers
+accelerate
+peft
+deepspeed
+# flash_attn
+tiktoken
+matplotlib
+bitsandbytes
+av
+sentencepiece
+
+# for qwen
+transformers_stream_generator

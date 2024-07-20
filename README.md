@@ -5,7 +5,7 @@
 
 More and more large multimodal models (LMMs) are being released from time to time, but the finetuning of these models is not always straightforward. This codebase aims to provide a unified structure for LMM finetuning. Key design ideas include:
 - the components of the finetuning process (e.g., model loading, data collating) are abstracted, allowing one to easily integrate the latest LMMs into this codebase and finetune them with minimal effort;
-- for all LMMs the 🤗huggingface's official implementation is used, so that after finetuning one can do inference and everything else in the exact same way as the earlier;
+- for all LMMs the 🤗huggingface's official implementation is used, so that after finetuning one can do inference and everything else in the exact same way as earlier with the HF model;
 - the codebase is kept as simple/lightweight as possible, so that it is easy to understand and modify.
 
 
@@ -89,7 +89,7 @@ The actual videos and images can be stored in their corresponding folders, and t
 <details>
 <summary><b>2. Perform finetuning</b></summary>
 
-Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. Refer to the [training documentation](docs/training.md) for more details on the arguments and their meanings. Then simply kick off the training by running the bash script `bash example.sh`.
+Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example.sh`.
 </details>
 
 

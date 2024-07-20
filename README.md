@@ -53,8 +53,7 @@ Supported models:
   llava-interleave-qwen-7b      : llava-hf/llava-interleave-qwen-7b-hf
   qwen-vl-chat                  : Qwen/Qwen-VL-Chat
 ```
-> [!TIP]
-> Don't see the one you want? Check out this [guide](docs/add_new_model.md) for step-by-step instructions on how to add a new model.
+:raised_hand: Don't see the one you want? Check out this [guide](docs/add_new_model.md) for step-by-step instructions on how to add a new model.
 </details>
 
 

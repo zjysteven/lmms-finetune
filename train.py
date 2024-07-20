@@ -107,6 +107,7 @@ def train():
         data_path=data_args.data_path,
         image_folder=data_args.image_folder,
         video_folder=data_args.video_folder,
+        default_num_frames=data_args.default_num_frames,
         model_family_id=model_args.model_family_id,
         user_key=data_args.user_key,
         assistant_key=data_args.assistant_key
@@ -116,6 +117,7 @@ def train():
             data_path=data_args.eval_data_path,
             image_folder=data_args.image_folder,
             video_folder=data_args.video_folder,
+            default_num_frames=data_args.default_num_frames,
             model_family_id=model_args.model_family_id,
             user_key=data_args.user_key,
             assistant_key=data_args.assistant_key

@@ -14,6 +14,8 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 - :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 
+For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
+
 
 ## Installation
 
@@ -34,11 +36,10 @@ python -m pip install --no-cache-dir --no-build-isolation flash-attn
 
 ## Usage
 
-0. See if the model you want to finetune is supported by running
-```bash
-python supported_models.py
-```
-which will show things like
+<details open>
+<summary>0. See if the model you want to finetune is supported</summary>
+
+Run `python supported_models.py`, which will show things like
 ```
 Supported models:
   Model ID                      : HuggingFace Path
@@ -52,19 +53,64 @@ Supported models:
   llava-interleave-qwen-7b      : llava-hf/llava-interleave-qwen-7b-hf
   qwen-vl-chat                  : Qwen/Qwen-VL-Chat
 ```
-
-1. 
-
-
-### Training
+> [!TIP]
+> Don't see the one you want? Check out this [guide](docs/add_new_model.md) for step-by-step instructions on how to add a new model.
+</details>
 
 
-### Known limitations
+<details open>
+<summary>1. Prepare your finetuning data</summary>
 
-- memory cost especially for full finetuning (due to hf implementation)
-- freezing the vision modules for now
-- does not have good support for training on mix of multimodal and unimodal data
+Similar to LLaVA, we expect the data to be in a json file containing a list of dictionaries, where each dictionary is a sample.
+```json
+[
+    {
+        "system_prompt": "You are a helpful assistant.",
+        "video": "path/to/video1.mp4",
+        "num_frames": 10,
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<video>\nWhat is this video about?"
+            },
+            {
+                "from": "gpt",
+                "value": "This video shows a baby crying."
+            },
+        ]
+    }
+]
+```
+The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample. For more details, see the [dataset documentation](docs/dataset.md) where we go over several examples to see how flexible this json file can be.
 
+The actual videos and images can be stored in their corresponding folders, and then the paths in the json file should be relative to the video/image root folder. Or the paths can simply be absolute paths.
+</details>
+
+
+<details open>
+<summary>2. Perform finetuning</summary>
+
+Modify the sample training bash script `example.sh` to specify arguments including the target model, data path, etc. Refer to the [training documentation](docs/training.md) for more details on the arguments and their meanings. Then simply kick off the training by running the bash script `bash example.sh`.
+</details>
+
+
+<details open>
+<summary>3. Inference with finetuned model</summary>
+
+The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details.
+</details>
+
+
+<details>
+<summary>Known limitations</summary>
+
+> [!NOTE]
+> Due to huggingface's implementation (e.g., the vision encoder's hidden states are saved, see [this](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L425)), the memory cost can be high especially for full finetuning.
+> [!NOTE]
+> Currently all vision modules are freezed for simplicity.
+> [!WARNING]
+> Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
+</details>
 
 ## Acknowledgements
 

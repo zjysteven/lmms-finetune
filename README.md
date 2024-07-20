@@ -36,8 +36,8 @@ python -m pip install --no-cache-dir --no-build-isolation flash-attn
 
 ## Usage
 
-<details open>
-<summary>0. See if the model you want to finetune is supported</summary>
+<details>
+<summary><b>0. See if the model you want to finetune is supported</b></summary>
 
 Run `python supported_models.py`, which will show things like
 ```
@@ -58,8 +58,8 @@ Supported models:
 </details>
 
 
-<details open>
-<summary>1. Prepare your finetuning data</summary>
+<details>
+<summary><b>1. Prepare your finetuning data</b></summary>
 
 Similar to LLaVA, we expect the data to be in a json file containing a list of dictionaries, where each dictionary is a sample.
 ```json
@@ -87,15 +87,15 @@ The actual videos and images can be stored in their corresponding folders, and t
 </details>
 
 
-<details open>
-<summary>2. Perform finetuning</summary>
+<details>
+<summary><b>2. Perform finetuning</b></summary>
 
 Modify the sample training bash script `example.sh` to specify arguments including the target model, data path, etc. Refer to the [training documentation](docs/training.md) for more details on the arguments and their meanings. Then simply kick off the training by running the bash script `bash example.sh`.
 </details>
 
 
-<details open>
-<summary>3. Inference with finetuned model</summary>
+<details>
+<summary><b>3. Inference with finetuned model</b></summary>
 
 The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details.
 </details>
@@ -104,12 +104,9 @@ The key here is to correctly load the finetuned model, after that everything is 
 <details>
 <summary>Known limitations</summary>
 
-> [!NOTE]
-> Due to huggingface's implementation (e.g., the vision encoder's hidden states are saved, see [this](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L425)), the memory cost can be high especially for full finetuning.
-> [!NOTE]
-> Currently all vision modules are freezed for simplicity.
-> [!WARNING]
-> Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
+- :neutral_face: Due to huggingface's implementation (e.g., the vision encoder's hidden states are saved, see [this](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L425)), the memory cost can be high especially for full finetuning.
+- :neutral_face: Currently all vision modules are freezed for simplicity.
+- :warning: Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
 </details>
 
 ## Acknowledgements

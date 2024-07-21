@@ -14,7 +14,7 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 - :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 
-More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
+See [supported_models.md](docs/supported_models.md) for the full list of supported models. More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
 <details>
 <summary>What's different from <a href=https://github.com/hiyouga/LLaMA-Factory>LLaMA-Factory</a>?</summary>
@@ -44,7 +44,7 @@ python -m pip install --no-cache-dir --no-build-isolation flash-attn
 <details>
 <summary><b>0. See if the model you want to finetune is supported</b></summary>
 
-Run `python supported_models.py`, which will show things like
+Browse [supported_models.md](docs/supported_models.md). Or run `python supported_models.py`, which will show things like
 ```
 Supported models:
   Model ID                      : HuggingFace Path

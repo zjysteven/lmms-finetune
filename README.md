@@ -22,6 +22,7 @@ See [supported_models.md](docs/supported_models.md) for the full list of support
 - [ ] glm4-v
 - [ ] minicpm
 
+:raising_hand: If you would like to have a model available, feel free to open an issue.
 
 <details>
 <summary>What's different from <a href=https://github.com/hiyouga/LLaMA-Factory>LLaMA-Factory</a>?</summary>

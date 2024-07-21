@@ -16,6 +16,13 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 
 See [supported_models.md](docs/supported_models.md) for the full list of supported models. More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
+*TODOS:* 
+- [ ] phi3-v
+- [ ] idefics2
+- [ ] glm4-v
+- [ ] minicpm
+
+
 <details>
 <summary>What's different from <a href=https://github.com/hiyouga/LLaMA-Factory>LLaMA-Factory</a>?</summary>
 

@@ -95,9 +95,6 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                         ).input_ids
                         cur_input_ids.extend(_input_ids)
                         cur_labels.extend(_input_ids)
-
-            print("cur_input_ids_len: ", len(cur_input_ids))
-            print("cur_input_ids: ", cur_input_ids)
             
             assert len(cur_input_ids) == len(cur_labels), "Input and label shapes do not match"
             if max_len > len(cur_input_ids):
@@ -117,9 +114,6 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
 
         input_ids = torch.tensor(input_ids, dtype=torch.long)
         labels = torch.tensor(labels, dtype=torch.long)
-
-        print("input_ids: ", input_ids.shape)
-        print("input_ids: ", input_ids[0, :56])
 
         return dict(
             **vision_inputs,

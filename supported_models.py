@@ -10,6 +10,7 @@ MULTIMODAL_KEYWORDS = {
     "llava-interleave": ["multi_modal_projector", "vision_tower"],
     "llava-next-video": ["multi_modal_projector", "vision_tower", "image_newline", "vision_resampler"],
     "qwen-vl": ["transformer.visual"],
+    "phi3-v": ["vision_embed_tokens"],
 }
 
 
@@ -97,6 +98,12 @@ register_model(
     model_hf_path="Qwen/Qwen-VL-Chat"
 )
 
+# phi3-v -----------------------------------------------------
+register_model(
+    model_id="phi3-v",
+    model_family_id="phi3-v",
+    model_hf_path="microsoft/Phi-3-vision-128k-instruct"
+)
 
 #=============================================================
 

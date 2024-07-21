@@ -9,3 +9,4 @@
 | llava-interleave               | llava-interleave-qwen-0.5b               | [llava-hf/llava-interleave-qwen-0.5b-hf](https://huggingface.co/llava-hf/llava-interleave-qwen-0.5b-hf) |
 |                                | llava-interleave-qwen-7b                 | [llava-hf/llava-interleave-qwen-7b-hf](https://huggingface.co/llava-hf/llava-interleave-qwen-7b-hf)  |
 | qwen-vl                        | qwen-vl-chat                             | [Qwen/Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat)                                        |
+| phi3-v                         | phi3-v                                   | [microsoft/Phi-3-vision-128k-instruct](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)  |

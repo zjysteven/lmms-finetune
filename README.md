@@ -10,14 +10,14 @@ More and more large multimodal models (LMMs) are being released from time to tim
 
 
 The codebase is quite flexible. Despite being at an early stage, it already supports the finetuning of various types of LMMs, including:
-- :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0)
+- :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)
 - :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 
 See [supported_models.md](docs/supported_models.md) for the full list of supported models. More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
 *TODOS:* 
-- [ ] phi3-v
+- [x] phi3-v
 - [ ] idefics2
 - [ ] glm4-v
 - [ ] minicpm

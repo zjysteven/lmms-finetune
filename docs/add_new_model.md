@@ -14,7 +14,7 @@ register_model(
 Taking the registry of LLaVA-1.5 as an example, you can see that all we need to do is to register the `model_id` (a unique identifier for the model), the `model_family_id` (to identify the family of models that share the same architecture), and the `model_hf_path` (the path to the model in the Hugging Face Hub).
 
 
-The at the top of `supported_models.py`, you will see a dictionary `MULTIMODAL_KEYWORDS`, which is a mapping from the model family id to a list of vision module keywords. This is used freeze the vision modules during finetuning. To find the vision module keywords, you just need to take a look at the huggingface's model implementation (the init function of the model in `modeling_xxxx.py`). Again taking LLaVA-1.5 as an example, according to [here](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L237-L247) it can be seen that the vision module keywords are `["video_tower", "multi_modal_projector"]`.
+Then at the top of `supported_models.py`, you will see a dictionary `MULTIMODAL_KEYWORDS`, which is a mapping from the model family id to a list of vision module keywords. This is used freeze the vision modules during finetuning. To find the vision module keywords, you just need to take a look at the huggingface's model implementation (the init function of the model in `modeling_xxxx.py`). Again taking LLaVA-1.5 as an example, according to [here](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L237-L247) it can be seen that the vision module keywords are `["vision_tower", "multi_modal_projector"]`.
 
 
 ## Step 2: Implement the loader for the model

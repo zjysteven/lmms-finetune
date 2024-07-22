@@ -119,7 +119,9 @@ The key here is to correctly load the finetuned model, after that everything is 
 - :neutral_face: Due to huggingface's implementation (e.g., the vision encoder's hidden states are saved, see [this](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L425)), the memory cost can be high especially for full finetuning.
 - :neutral_face: Currently all vision modules are freezed for simplicity.
 - :warning: Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
+- :bow: Due to an implementation detail of LLaVA-Next-Video (see [here](https://github.com/huggingface/transformers/issues/32112)), you need to have batch size > 1 during finetuning.
 </details>
+
 
 ## Acknowledgements
 

@@ -4,12 +4,13 @@ transformers
 accelerate
 peft
 deepspeed
-# flash_attn
 tiktoken
 matplotlib
 bitsandbytes
 av
 sentencepiece
+wandb
+protobuf
 
 # for qwen
 transformers_stream_generator

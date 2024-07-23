@@ -37,8 +37,6 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                     videos[i] = np.concatenate([video, pad], axis=0)
             vision_inputs.update(**self.processor.video_processor(videos, return_tensors="pt"))
 
-        print(vision_inputs["pixel_values_videos"].shape)
-
         # texts
         # the dataset implementation assume conversations are [user, assistant, user, assistant, ...]
         system_prompts: List[Union[str, None]] = [instance["system_prompt"] for instance in instances]

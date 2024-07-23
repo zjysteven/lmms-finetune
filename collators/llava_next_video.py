@@ -107,7 +107,7 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
             labels.append(cur_labels[:])
 
         # sanity check
-        # assert total_image_tokens == len(images), "Number of image tokens does not match the number of images"
+        assert total_image_tokens == len(images), "Number of image tokens does not match the number of images"
         assert total_video_tokens == len(videos), "Number of video tokens does not match the number of videos"
 
         input_ids = torch.tensor(input_ids, dtype=torch.long)

@@ -5,7 +5,7 @@
         "conversations": [
             {
                 "from": "human",
-                "value": "<image><image>\nWhich image has more people? Give details to your answer."
+                "value": "<image><image>Which image has more people? Give details to your answer."
             },
             {
                 "from": "gpt",
@@ -19,7 +19,7 @@
         "conversations": [
             {
                 "from": "human",
-                "value": "Help me write a Twitter post considering the following images.\n<image><image><image><image>"
+                "value": "Help me write a Twitter post considering the following images.<image><image><image><image>"
             },
             {
                 "from": "gpt",

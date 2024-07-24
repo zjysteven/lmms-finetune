@@ -147,7 +147,6 @@ def train():
             model.named_parameters(), lora_args.lora_bias
         )
         if training_args.local_rank == 0 or training_args.local_rank == -1:
-            model.config.save_pretrained(output_dir)
             model.save_pretrained(output_dir, state_dict=state_dict)
     else:
         safe_save_model_for_hf_trainer(trainer=trainer, output_dir=output_dir)

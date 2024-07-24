@@ -9,26 +9,26 @@ DISTRIBUTED_ARGS="
 # arguments that are very likely to be changed
 # according to your own case
 MODEL_ID=llava-next-video-7b                            # model id; pick on by running `python supported_models.py`
-TRAIN_DATA_PATH=./example_data/video.json               # path to the training data json file
-EVAL_DATA_PATH=./example_data/video.json                # path to the evaluation data json file
+TRAIN_DATA_PATH=./example_data/ego4d_video_train.json               # path to the training data json file
+EVAL_DATA_PATH=./example_data/ego4d_video_eval.json                # path to the evaluation data json file
 IMAGE_FOLDER=./example_data/images                      # path to the image root folder; if provided, the image paths in the json should be relative
 VIDEO_FOLDER=./example_data/videos                      # path to the video root folder; if provided, the video paths in the json should be relative
 DEFAULT_NUM_FRAMES=8                                    # if `num_frames` is not specified in dataset entries, this value will be used to sample frames from videos
 
 USE_LORA=True                                           # whether use lora
 Q_LORA=False                                            # whether use q-lora; only effective when `USE_LORA` is True
-LORA_R=64                                               # the lora rank
-LORA_ALPHA=16                                           # the lora alpha
+LORA_R=8                                               # the lora rank
+LORA_ALPHA=8                                           # the lora alpha
 
 RUN_ID=${MODEL_ID}_lora-${USE_LORA}_qlora-${Q_LORA}     # a custom run id that determines the checkpoint folder and wandb run name
 
 DS_STAGE=zero3                                          # deepspeed stage; < zero2 | zero3 >
-PER_DEVICE_BATCH_SIZE=1                                 # batch size per GPU
+PER_DEVICE_BATCH_SIZE=2                                 # batch size per GPU
 GRAD_ACCUM=1                                            # gradient accumulation steps
-NUM_EPOCHS=1                                            # number of training epochs
+NUM_EPOCHS=5                                           # number of training epochs
 
-LR=1e-4                                                 # learning rate
-MODEL_MAX_LEN=2048                                      # maximum input length of the model
+LR=2e-5                                                 # learning rate
+MODEL_MAX_LEN=512                                       # maximum input length of the model
 
 
 torchrun $DISTRIBUTED_ARGS train.py \

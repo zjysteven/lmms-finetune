@@ -30,6 +30,11 @@ See [supported_models.md](docs/supported_models.md) for the full list of support
 As of 2024/07, LLaMA-Factory officially supports only the finetuning of LLaVA-1.5. There are people working on adding more models to LLaMA-Factory, but the process can be a bit complicated given its large scale and complexity (e.g., there will be a lot of detailed considerations and compatibility problems with text-only LLMs to consider, which is totally understandable; see [this](https://github.com/hiyouga/LLaMA-Factory/pull/4136) and [this](https://github.com/hiyouga/LLaMA-Factory/pull/4377)). This is actually one of the motivations for putting up this codebase. It will definitely not be as optimized as LLaMA-Factory, but it is exclusively for multi-modal LLMs and is designed to be lightweight/simple which can best facilitate quick experiments, flexible modifications, and easy integrations of new models (which is quite important given the fast pace of model releases).
 </details>
 
+## News
+
+- 2024/07/20: Initial release of the codebase. More models and optimizations are coming soon. Stay tuned!
+
+
 ## Installation
 
 ```bash
@@ -125,4 +130,6 @@ The key here is to correctly load the finetuned model, after that everything is 
 
 ## Acknowledgements
 
-The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), a [sample finetuning script](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa/Fine_tune_LLaVa_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb) using Lightning by huggingface staff, etc.
+The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), etc.
+
+We also want to thank the huggingface team for actively integrating newest models in the transformers library. Also, the example finetuning scripts made by HF staff, [Niels Rogge](https://github.com/NielsRogge) and [Raushan Turganbay](https://github.com/zucchini-nlp), are very helpful and lay the foundation for this codebase.

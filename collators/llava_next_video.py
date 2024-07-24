@@ -41,77 +41,121 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
         # the dataset implementation assume conversations are [user, assistant, user, assistant, ...]
         system_prompts: List[Union[str, None]] = [instance["system_prompt"] for instance in instances]
         conversations: List[List] = [instance["conversations"] for instance in instances]
-        input_ids = []
-        labels = []
         max_len = self.tokenizer.model_max_length
+
+        user_token_id = self.tokenizer(
+            "USER:", add_special_tokens=False, padding=False, return_tensors="pt"
+        )["input_ids"]
+        assistant_token_id = self.tokenizer(
+            "ASSISTANT:", add_special_tokens=False, padding=False, return_tensors="pt"
+        )["input_ids"]
+        
 
         total_image_tokens = 0
         total_video_tokens = 0
+        input_ids = []
+        labels = []
         
         for system_prompt, cur_convs in zip(system_prompts, conversations):
             cur_input_ids = []
             cur_labels = []
             
+            cur_text = []
             if system_prompt is not None:
-                system = self.tokenizer(system_prompt + "\n").input_ids
-                cur_input_ids.extend(system)
-                cur_labels.extend([self.IGNORE_TOKEN_ID] * len(system))
+                cur_text.append({
+                    "role": "system",
+                    # add a space at the end because for now the chat template
+                    # adds nothing after the system prompt
+                    # and this will affect the slicing of question/answer
+                    # if we don't add a space
+                    "content": [{"text": system_prompt.rstrip() + " "}]
+                })
             
             for i, text in enumerate(cur_convs):
-                # shouldn't be a big deal?
-                # but huggingface's chat template indicates that all
-                # image/video tokens should be placed at the beginning of the text
-                num_image_tokens = len([m.start() for m in re.finditer("<image>", text)])
-                total_image_tokens += num_image_tokens
+                if i % 2 == 0:
+                    num_image_tokens = len([m.start() for m in re.finditer("<image>", text)])
+                    total_image_tokens += num_image_tokens
 
-                num_video_tokens = len([m.start() for m in re.finditer("<video>", text)])
-                total_video_tokens += num_video_tokens
+                    num_video_tokens = len([m.start() for m in re.finditer("<video>", text)])
+                    total_video_tokens += num_video_tokens
 
-                text = "<image>" * num_image_tokens + "\n" \
-                    + "<video>" * num_video_tokens + "\n" \
-                    + text.replace("<image>", "").replace("<video>", "")
+                    text = text.replace("<image>", "").replace("<video>", "")
 
-                if i == 0:
-                    _input_ids = self.tokenizer(
-                        "USER: " + text + "\nASSISTANT: ",
-                        add_special_tokens=system_prompt is None
-                    ).input_ids
-                    cur_input_ids.extend(_input_ids)
-                    cur_labels.extend([self.IGNORE_TOKEN_ID] * len(_input_ids))
+                    cur_text.append({
+                        "role": "user",
+                        "content": [{"type": "text", "text": text}] + \
+                            [{"type": "image"}] * num_image_tokens + \
+                            [{"type": "video"}] * num_video_tokens
+                    })
                 else:
-                    if i % 2 == 0:
-                        _input_ids = self.tokenizer(
-                            "USER: " + text + "\nASSISTANT: ",
-                            add_special_tokens=False
-                        ).input_ids
-                        cur_input_ids.extend(_input_ids)
-                        cur_labels.extend([self.IGNORE_TOKEN_ID] * len(_input_ids))
-                    else:
-                        _input_ids = self.tokenizer(
-                            text + "\n" if i < len(cur_convs) - 1 else text,
-                            add_special_tokens=False
-                        ).input_ids
-                        cur_input_ids.extend(_input_ids)
-                        cur_labels.extend(_input_ids)
-            
-            assert len(cur_input_ids) == len(cur_labels), "Input and label shapes do not match"
-            if max_len > len(cur_input_ids):
-                cur_input_ids += [self.PAD_TOKEN_ID] * (max_len - len(cur_input_ids))                
-            if max_len > len(cur_labels):
-                cur_labels += [self.IGNORE_TOKEN_ID] * (max_len - len(cur_labels))
-            cur_input_ids = cur_input_ids[:max_len]
-            cur_labels = cur_labels[:max_len]
-            assert len(cur_input_ids) == len(cur_labels), "Input and label shapes do not match"
+                    cur_text.append({
+                        "role": "assistant",
+                        "content": [
+                            {"type": "text", "text": text},
+                        ]
+                    })
 
-            input_ids.append(cur_input_ids[:])
-            labels.append(cur_labels[:])
+            cur_text = self.processor.apply_chat_template(cur_text, tokenize=False, add_generation_prompt=False)
+            cur_input_ids = self.tokenizer(
+                cur_text, truncation=True, max_length=max_len, return_tensors="pt"
+            )["input_ids"]
+            cur_labels = cur_input_ids.clone()
+            
+            if self.mask_question_tokens:
+                # locate each question slice of the conversation
+                # by finding the indices of the user and assistant tokens
+                user_locs = np.where(np.array(cur_input_ids[0]) == user_token_id[0][0].item())[0]
+                assistant_locs = np.where(np.array(cur_input_ids[0]) == assistant_token_id[0][0].item())[0]
+
+                # filter potential false positives
+                user_locs_filtered = [
+                    i for i in user_locs if cur_input_ids[0, i:i + user_token_id.shape[1]].tolist() == user_token_id[0].tolist()
+                ]
+                assistant_locs_filtered = [
+                    i for i in assistant_locs if cur_input_ids[0, i:i + assistant_token_id.shape[1]].tolist() == assistant_token_id[0].tolist()
+                ]
+                assert len(user_locs_filtered) == len(assistant_locs_filtered), "Number of user and assistant tokens do not match"
+
+                start_inds = []; end_inds = []
+                for i, (user_loc, assistant_loc) in enumerate(zip(user_locs_filtered, assistant_locs_filtered)):
+                    start_inds.append(user_loc if i > 0 else 0)
+                    end_inds.append(assistant_loc + assistant_token_id.shape[1])
+
+                for start_ind, end_ind in zip(start_inds, end_inds):
+                    cur_labels[0, start_ind:end_ind] = self.IGNORE_TOKEN_ID
+            
+            assert cur_input_ids.shape == cur_labels.shape, "Input and label shapes do not match"
+
+            # padding
+            if cur_input_ids.shape[1] < max_len:
+                cur_input_ids = torch.cat([
+                    cur_input_ids,
+                    torch.full(
+                        (cur_input_ids.shape[0], max_len - cur_input_ids.shape[1]),
+                        self.PAD_TOKEN_ID,
+                        dtype=cur_input_ids.dtype,
+                        device=cur_input_ids.device
+                    )
+                ], dim=1)
+                cur_labels = torch.cat([
+                    cur_labels,
+                    torch.full(
+                        (cur_labels.shape[0], max_len - cur_labels.shape[1]),
+                        self.IGNORE_TOKEN_ID,
+                        dtype=cur_labels.dtype,
+                        device=cur_labels.device
+                    )
+                ], dim=1)
+
+            input_ids.append(cur_input_ids)
+            labels.append(cur_labels)
 
         # sanity check
         assert total_image_tokens == len(images), "Number of image tokens does not match the number of images"
         assert total_video_tokens == len(videos), "Number of video tokens does not match the number of videos"
 
-        input_ids = torch.tensor(input_ids, dtype=torch.long)
-        labels = torch.tensor(labels, dtype=torch.long)
+        input_ids = torch.cat(input_ids)
+        labels = torch.cat(labels)
 
         return dict(
             **vision_inputs,

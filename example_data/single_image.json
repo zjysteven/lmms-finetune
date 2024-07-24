@@ -5,7 +5,7 @@
         "conversations": [
             {
                 "from": "human",
-                "value": "<image>\nWho are the people in this image?"
+                "value": "<image>Who are the people in this image?"
             },
             {
                 "from": "gpt",
@@ -26,7 +26,7 @@
         "conversations": [
             {
                 "from": "human",
-                "value": "<image>\nDescribe this image."
+                "value": "<image>Describe this image."
             },
             {
                 "from": "gpt",

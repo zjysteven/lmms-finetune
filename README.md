@@ -31,7 +31,8 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
-- 2024/07/20: Initial release of the codebase. More models and optimizations are coming soon. Stay tuned!
+- **2024/07/25**: Several things are improved. We have *1)* released a [colab notebook](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing) demonstrating a full, successful training run with LLaVA-NeXT-Video-7B (happy to hear from people that they succeeded in [their cases](https://github.com/zjysteven/lmms-finetune/issues/7#issuecomment-2249864887) too); *2)* supported having text-only samples in the training set (see [this](docs/dataset.md) for one note).
+- **2024/07/20**: Initial release of the codebase. More models and optimizations are coming soon. Stay tuned!
 
 
 ## Installation

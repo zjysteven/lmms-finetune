@@ -25,9 +25,9 @@ See [supported_models.md](docs/supported_models.md) for the full list of support
 :raising_hand: If you would like to have a model available, feel free to open an issue.
 
 <details>
-<summary>What's different from <a href=https://github.com/hiyouga/LLaMA-Factory>LLaMA-Factory</a>?</summary>
+<summary>What's different from other training frameworks, e.g., LLaMA-Factory, xtuner, swift?</summary>
 
-As of 2024/07, LLaMA-Factory officially supports only the finetuning of LLaVA-1.5. There are people working on adding more models to LLaMA-Factory, but the process can be a bit complicated given its large scale and complexity (e.g., there will be a lot of detailed considerations and compatibility problems with text-only LLMs to consider, which is totally understandable; see [this](https://github.com/hiyouga/LLaMA-Factory/pull/4136) and [this](https://github.com/hiyouga/LLaMA-Factory/pull/4377)). This is actually one of the motivations for putting up this codebase. It will definitely not be as optimized as LLaMA-Factory, but it is exclusively for multi-modal LLMs and is designed to be lightweight/simple which can best facilitate quick experiments, flexible modifications, and easy integrations of new models (which is quite important given the fast pace of model releases).
+These are great projects/frameworks with large scale and high-degree optimization. However, due to their scale and complexity, they could be less transparent and less easy to get started (e.g., I personally feel quite lost when trying to use those frameworks, with a bunch of questions like "how should I format my data"). This codebase (lmms-finetune) is instead designed to be lightweight and simple, meaning that it's much more likely for you to quickly get started and be able to know almost every detail of the training process if you want. In other words, this is a minimal workable codebase that supports LMM finetuning, while facilitating quick experiments, flexible modifications, and easy integrations of new models.
 </details>
 
 ## News

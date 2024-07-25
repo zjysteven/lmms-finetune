@@ -17,7 +17,6 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 See [supported_models.md](docs/supported_models.md) for the full list of supported models. More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
 *TODOS:* 
-- [ ] Update the collator of llava-interleave, phi3v, qwen-vl with unified use of automatic chat template.
 - [ ] Support training with text-only data.
 - [ ] Support tuning vision models and projectors.
 - [ ] Add more models, including llava-1.6/next, idefics2, glm4-v, minicpm, etc.

@@ -100,7 +100,7 @@ Similar to LLaVA, we expect the data to be in a json file containing a list of d
     }
 ]
 ```
-The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample. For more details, see the [dataset documentation](docs/dataset.md) where we go over several examples to see how flexible this json file can be.
+The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample. For more details, see the [dataset documentation](docs/dataset.md) and find how flexible this json file can be. There are also mutiple example json files under [example_data](./example_data) for reference.
 
 The actual videos and images can be stored in their corresponding folders, and then the paths in the json file should be relative to the video/image root folder. Or the paths can simply be absolute paths.
 </details>
@@ -109,14 +109,14 @@ The actual videos and images can be stored in their corresponding folders, and t
 <details>
 <summary><b>2. Perform finetuning</b></summary>
 
-Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example.sh`. Note that to exactly run the provided `example.sh`, you will need to download the video clips from ShareGPT4Video; see [this](example_data/videos/ego4d/README.md).
+Modify the sample training bash script, [example_video.sh](./example_scripts/example_video.sh) or [example_image.sh](example_image.sh) (there are no differences other than different model ID and dataset filepath), to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example_scripts/example_video.sh` or `bash example_scripts/example_image.sh`. Note that to exactly run the provided [example_video.sh](./example_scripts/example_video.sh), you will need to download the video clips from ShareGPT4Video; see [here](example_data/videos/ego4d/README.md) for instructions.
 </details>
 
 
 <details>
 <summary><b>3. Inference with finetuned model</b></summary>
 
-The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details.
+The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details. Again you can refer to [this colab](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing) for a complete example.
 </details>
 
 

@@ -99,9 +99,11 @@ Similar to LLaVA, we expect the data to be in a json file containing a list of d
     }
 ]
 ```
-The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample. For more details, see the [dataset documentation](docs/dataset.md) and find how flexible this json file can be. There are also mutiple example json files under [example_data](./example_data) for reference.
+The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample, text-only sample etc. For more details, see the [dataset documentation](docs/dataset.md) and find how flexible this json file can be. There are also mutiple example json files under [example_data](./example_data) for reference.
 
-The actual videos and images can be stored in their corresponding folders, and then the paths in the json file should be relative to the video/image root folder. Or the paths can simply be absolute paths.
+Besides this json file, the actual videos and images are by default assumed to be stored in their corresponding folders, and then the paths in the json file should be relative to the video/image root folder. Or the paths can simply be absolute paths.
+
+:warning: **If you have text-only entries in your training dataset:** the training is likely to fail at some point if 1) your `per_device_batch_size` is 1, or 2) the number of text-only instances dominate the number of multi-modal instances. This is due to a limitation/bug of deepspeed. If neither of the above two conditions is met, no worries, we got you covered.
 </details>
 
 
@@ -123,7 +125,6 @@ The key here is to correctly load the finetuned model, after that everything is 
 <summary>Known limitations</summary>
 
 - :neutral_face: Currently all vision modules are freezed for simplicity.
-- :warning: Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
 </details>
 
 

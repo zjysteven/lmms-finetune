@@ -68,30 +68,57 @@ def train():
     model, tokenizer, processor = loader.load()
     tokenizer.model_max_length = training_args.model_max_length
 
-    # set up lora
+    # set up lora for lm and vision encoder
     if lora_args.use_lora:
         rank0_print("LoRA enabled...")
         from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-        rank0_print("Adding LoRA adapters...")
-        lora_config = LoraConfig(
+        # Find target modules for both language model and vision encoder
+        lm_target_modules = find_all_linear_names(
+        model, 
+        model_args.model_family_id, 
+        training_args.freeze_multimodal
+        )
+        lm_lora_config = LoraConfig(
             r=lora_args.lora_r,
             lora_alpha=lora_args.lora_alpha,
-            target_modules=find_all_linear_names(
-                model, 
-                model_args.model_family_id, 
-                training_args.freeze_multimodal
-            ),
+            target_modules=lm_target_modules,
             lora_dropout=lora_args.lora_dropout,
             bias=lora_args.lora_bias,
             task_type="CAUSAL_LM",
         )
         
+        # Vision encoder LoRA config
+        if not training_args.freeze_multimodal:
+            vision_keywords = MULTIMODAL_KEYWORDS.get(model_args.model_family_id, [])
+            vision_target_modules = []
+            for name, module in model.named_modules():
+                if any(keyword in name for keyword in vision_keywords):
+                    if isinstance(module, torch.nn.Linear):
+                        vision_target_modules.append(name.split('.')[-1])
+            
+            vision_lora_config = LoraConfig(
+                r=lora_args.vision_lora_r, 
+                lora_alpha=lora_args.vision_lora_alpha,
+                target_modules=list(set(vision_target_modules)),
+                lora_dropout=lora_args.vision_lora_dropout,
+                bias=lora_args.vision_lora_bias,
+                task_type="FEATURE_EXTRACTION",
+            )
+
         if lora_args.q_lora:
             model = prepare_model_for_kbit_training(
                 model, use_gradient_checkpointing=training_args.gradient_checkpointing
             )
+            
+        # Apply LoRA to LM
+        model = get_peft_model(model, lm_lora_config)
         
-        model = get_peft_model(model, lora_config)
+        # Apply LoRA to vision encoder if not freezing multimodal
+        if not training_args.freeze_multimodal:
+            vision_encoder = model.get_vision_tower()
+            vision_encoder = get_peft_model(vision_encoder, vision_lora_config)
+            model.set_vision_tower(vision_encoder)
+        
         if training_args.gradient_checkpointing:
             model.enable_input_require_grads()
     else:

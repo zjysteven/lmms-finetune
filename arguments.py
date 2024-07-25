@@ -45,7 +45,7 @@ class TrainingArguments(transformers.TrainingArguments):
 
     def __post_init__(self):
         super().__post_init__()
-        assert self.freeze_multimodal, "Currently only support freezing multimodal layers."
+        # assert self.freeze_multimodal, "Currently only support freezing multimodal layers."
         self.remove_unused_columns = False
 
 
@@ -58,3 +58,7 @@ class LoraArguments:
     lora_weight_path: str = ""
     lora_bias: str = "none"
     q_lora: bool = False
+    vision_lora_r: int = 64
+    vision_lora_alpha: int = 16
+    vision_lora_dropout: float = 0.05
+    vision_lora_bias: str = "none"

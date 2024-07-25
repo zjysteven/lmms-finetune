@@ -55,12 +55,13 @@ torchrun $DISTRIBUTED_ARGS train.py \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
     --logging_steps 1 \
-    --tf32 True \
+    --tf32 False \
     --model_max_length $MODEL_MAX_LEN \
     --gradient_checkpointing True \
     --dataloader_num_workers 4 \
     --use_lora $USE_LORA \
     --q_lora $Q_LORA \
     --lora_r $LORA_R \
-    --lora_alpha $LORA_ALPHA
+    --lora_alpha $LORA_ALPHA \
+    --freeze_multimodal False
     

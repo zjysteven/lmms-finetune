@@ -130,6 +130,6 @@ The key here is to correctly load the finetuned model, after that everything is 
 
 ## Acknowledgements
 
-The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), etc.
+We want to thank the huggingface team for actively integrating newest models in the transformers library. Also, the example finetuning scripts (e.g., [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa/Fine_tune_LLaVa_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa-NeXT/Fine_tune_LLaVaNeXT_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), and [this](https://colab.research.google.com/drive/1dTdro-k7NFqRgGq5-TlGHM-6k2sYQhXp#scrollTo=4ccbd183-f15a-4f94-a526-9ceeec3f61e0)) made by HF staff, [Niels Rogge](https://github.com/NielsRogge) and [Raushan Turganbay](https://github.com/zucchini-nlp), are very helpful and lay the foundation for this codebase.
 
-We also want to thank the huggingface team for actively integrating newest models in the transformers library. Also, the example finetuning scripts made by HF staff, [Niels Rogge](https://github.com/NielsRogge) and [Raushan Turganbay](https://github.com/zucchini-nlp), are very helpful and lay the foundation for this codebase.
+The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), etc.

@@ -10,7 +10,7 @@
         "conversations": [
             {
                 "from": "human",
-                "value": "<video><video>\nWhat are these videos about?"
+                "value": "<video><video>What are these videos about?"
             },
             {
                 "from": "gpt",
@@ -18,7 +18,7 @@
             },
             {
                 "from": "human",
-                "value": "<image>/nWhat does this image show?"
+                "value": "<image>What does this image show?"
             },
             {
                 "from": "gpt",

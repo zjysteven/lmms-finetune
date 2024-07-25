@@ -54,6 +54,8 @@ python -m pip install --no-cache-dir --no-build-isolation flash-attn
 
 ## Usage
 
+A workable example training run (of LLaVA-NeXT-Video-7B) is showcased in this [colab notebook](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing), which is a good starting point to get a sense of how to use this codebase. The following sections provide a more detailed guide on how to finetune a model.
+
 <details>
 <summary><b>0. See if the model you want to finetune is supported</b></summary>
 
@@ -88,7 +90,7 @@ Similar to LLaVA, we expect the data to be in a json file containing a list of d
         "conversations": [
             {
                 "from": "human",
-                "value": "<video>\nWhat is this video about?"
+                "value": "<video>What is this video about?"
             },
             {
                 "from": "gpt",
@@ -107,7 +109,7 @@ The actual videos and images can be stored in their corresponding folders, and t
 <details>
 <summary><b>2. Perform finetuning</b></summary>
 
-Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example.sh`.
+Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example.sh`. Note that to exactly run the provided `example.sh`, you will need to download the video clips from ShareGPT4Video; see [this](example_data/videos/ego4d/README.md).
 </details>
 
 
@@ -121,10 +123,8 @@ The key here is to correctly load the finetuned model, after that everything is 
 <details>
 <summary>Known limitations</summary>
 
-- :neutral_face: Due to huggingface's implementation (e.g., the vision encoder's hidden states are saved, see [this](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L425)), the memory cost can be high especially for full finetuning.
 - :neutral_face: Currently all vision modules are freezed for simplicity.
 - :warning: Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
-- :bow: Due to an implementation detail of LLaVA-Next-Video (see [here](https://github.com/huggingface/transformers/issues/32112)), you need to have batch size > 1 during finetuning.
 </details>
 
 

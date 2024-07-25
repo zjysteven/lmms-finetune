@@ -89,20 +89,18 @@ def train():
         
         # Vision encoder LoRA config
         if not training_args.freeze_multimodal:
-            vision_keywords = MULTIMODAL_KEYWORDS.get(model_args.model_family_id, [])
-            vision_target_modules = []
-            for name, module in model.named_modules():
-                if any(keyword in name for keyword in vision_keywords):
-                    if isinstance(module, torch.nn.Linear):
-                        vision_target_modules.append(name.split('.')[-1])
-            
+            vision_target_modules = find_all_linear_names(
+                model.vision_tower,
+                model_args.model_family_id,
+                False
+            )
             vision_lora_config = LoraConfig(
                 r=lora_args.vision_lora_r, 
                 lora_alpha=lora_args.vision_lora_alpha,
-                target_modules=list(set(vision_target_modules)),
+                target_modules=vision_target_modules,
                 lora_dropout=lora_args.vision_lora_dropout,
                 bias=lora_args.vision_lora_bias,
-                task_type="FEATURE_EXTRACTION",
+                task_type="CAUSAL_LM",
             )
 
         if lora_args.q_lora:
@@ -115,9 +113,10 @@ def train():
         
         # Apply LoRA to vision encoder if not freezing multimodal
         if not training_args.freeze_multimodal:
-            vision_encoder = model.get_vision_tower()
-            vision_encoder = get_peft_model(vision_encoder, vision_lora_config)
-            model.set_vision_tower(vision_encoder)
+            vision_tower = model.vision_tower
+            vision_tower = get_peft_model(vision_tower, vision_lora_config)
+            # Instead of set_vision_tower, we directly update the vision_tower attribute
+            model.vision_tower = vision_tower
         
         if training_args.gradient_checkpointing:
             model.enable_input_require_grads()

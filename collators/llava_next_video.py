@@ -49,7 +49,6 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
         assistant_token_id = self.tokenizer(
             "ASSISTANT:", add_special_tokens=False, padding=False, return_tensors="pt"
         )["input_ids"]
-        
 
         total_image_tokens = 0
         total_video_tokens = 0
@@ -79,7 +78,8 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                     num_video_tokens = len([m.start() for m in re.finditer("<video>", text)])
                     total_video_tokens += num_video_tokens
 
-                    text = text.replace("<image>", "").replace("<video>", "")
+                    # .strip(): whitespaces and newlines are handled by chat_template
+                    text = text.replace("<image>", "").replace("<video>", "").strip()
 
                     cur_text.append({
                         "role": "user",

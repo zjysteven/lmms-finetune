@@ -1,0 +1,1172 @@
+[
+    {
+        "image": "celeba/000001.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "The full face of this female is beamed with happiness. This person looks very young and has no bangs. There is not any glasses on her face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000002.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any eyeglasses on her face. This woman is in her middle age and has a big smile with the mouth a bit open, and no bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000003.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy doesn't have any beard and has no fringe, and no glasses. This person is in his middle age and has no smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000004.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has no smile, and no eyeglasses. She is in her thirties and has no bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000005.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady has no bangs, and no glasses. This person is a teen and has no smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000006.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She has no glasses, and no smile. This lady is in the middle age and has no bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000007.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young adult has no bangs, no smile, no beard at all, and no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000008.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "He doesn't have any mustache and has no fringe. This person is in his sixties and has no eyeglasses. He looks serious with no smile in the face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000009.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has a beaming face, no glasses, and fringe of medium length that leaves half of the forehead visible. This person is in the forties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000010.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady has no smile, and no fringe. She is in her forties and has no eyeglasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000011.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female has no bangs. She is in the middle age and has no eyeglasses, and a big smile on her face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000012.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has a beaming face and has no bangs, no beard at all, and no eyeglasses. He is a young adult."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000013.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any eyeglasses on his face and has no fringe, and a mild smile. He is in his thirties. He doesn't have any mustache."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000014.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young female has no glasses, no bangs, and a extremely mild smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000015.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no smile. This guy is in the forties and has no bangs, no eyeglasses, and no mustache at all."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000016.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any eyeglasses on the face and has short pointed mustache, and no fringe. This gentleman is in the thirties. He smiles with corners of his mouth turned up."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000017.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young adult has no fringe, and a face that is beamed with happiness. This woman is not wearing any glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000018.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She has no bangs, and a mild smile. She is in her fifties. There is not any eyeglasses on the face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000019.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female has no smile, and no fringe. She looks extremely young and has no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000020.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy in his middle age has no fringe, no smile, a big mustache on his face, and no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000021.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This man doesn't have any beard at all and has a smile with the teeth visible. This old guy is in the eighties and has no eyeglasses. The entire forehead is visible without any bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000022.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person is not wearing any eyeglasses and has no smile. This female is in her forties and has no fringe."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000023.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any glasses on his face and has no beard. This gentleman is a young adult and has no bangs. This corners of the mouth curve up and we could see some teeth."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000024.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady in the thirties has no eyeglasses, no bangs, and no smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000025.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "His face is covered with short pointed mustache and has no smile. This guy is in the middle age and has no glasses. This man shows his whole forehead without any bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000026.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female has no smile. This woman is a teenager and has no bangs, and no eyeglasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000027.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She has a beaming face and has no glasses, and no fringe. This female is a teen."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000028.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person is smiling with her teeth visible and has no fringe, and no eyeglasses. She is a teen."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000029.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has medium bangs, a smile, and no glasses. This person is a young adult."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000030.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy looks serious with no smile in the face. This man is in his seventies and has no beard at all, no fringe, and no eyeglasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000031.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female in the middle age has no glasses, and no fringe. This lady is smiling with the teeth visible."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000032.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy in his eighties has no mustache, no fringe, and no smile. He is not wearing any eyeglasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000033.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy doesn't have any mustache and has no bangs, a very mild smile, and no glasses. This man is in the forties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000034.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady looks serious with no smile in the face and has no eyeglasses. She is in the thirties and has no fringe."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000035.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has no fringe at all and has no eyeglasses, and no smile. This person is a teenager."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000036.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no smile, no bangs, and no eyeglasses. This gentleman is a young adult and has no beard."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000037.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy doesn't have any fringe and his forehead is visible and has short pointed beard. He is in the thirties and has no smile, and no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000038.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has no fringe, no glasses, and a smile with the teeth visible. This man looks like an elderly and has no beard."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000039.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young female has no eyeglasses, a big smile with her mouth a little bit open, and no fringe."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000040.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person is a young adult and has no bangs, and no smile. This female is not wearing any glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000041.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no fringe. This man looks like an elderly and has a big smile on his face, no glasses, and stubble."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000042.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady has no glasses, no fringe, and a extremely mild smile. This female is in her thirties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000043.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any eyeglasses on the face and has no bangs. This lady is a young adult. The whole face of this lady is beamed with happiness."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000044.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female looks serious with no smile in the face. She is a teenager and has no bangs. There is not any glasses on the face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000045.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young adult has no bangs, no glasses, and a big smile with her mouth slightly open."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000046.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This woman has long bangs that almost covers all of her forehead and has no glasses. She is in her fifties and has a beaming face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000047.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person in her thirties has no fringe, no glasses, and a mild smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000048.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young adult has bangs of medium length that covers half of the forehead, no smile, no mustache at all, and no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000049.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "The face is covered with short pointed mustache and has no fringe, and no eyeglasses. He looks like an elderly. This person looks serious with no smile in his face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000050.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has a beaming face, and no eyeglasses. This gentleman is in the sixties and has no bangs. He doesn't have any beard."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000051.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "He has no bangs, stubble, no eyeglasses, and no smile. This gentleman is in the seventies."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000052.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has no mustache. This old gentleman is in his seventies and has no bangs, and no smile. There is not any eyeglasses on the face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000053.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person is wearing sunglasses with thin frame and has short pointed beard. This guy is in the middle age and has no smile. This gentleman has short fringe that only covers a small portion of the forehead."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000054.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female has no fringe, and a smile with her teeth visible. She is a young adult and has no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000055.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "He looks serious with no smile in his face and has no glasses. This man is in the forties and has no beard at all, and no bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000056.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no fringe at all and the forehead is visible. This gentleman looks extremely young and has no smile, no eyeglasses, and no beard."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000057.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any glasses on the face and has no smile, and no bangs. This female is in the thirties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000058.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This woman is not wearing any eyeglasses and has no fringe, and no smile. This woman is in her thirties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000059.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This woman has no bangs, no eyeglasses, and no smile. This person is a teen."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000060.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy has no smile, and no eyeglasses. He is in the fifties and has stubble covering the cheeks and chin. This man doesn't have any fringe and the forehead is visible."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000061.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no beard, no fringe, no eyeglasses, and no smile. This person is a young adult."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000062.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female has extremely long fringe that almost covers all of the forehead and has a mild smile, and no glasses. This woman is a young adult."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000063.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This woman has no eyeglasses. She is a young adult and has a smile. Her entire forehead is visible without any bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000064.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no fringe. This guy is in the thirties and has a extremely mild smile, and no eyeglasses. The face is covered with short pointed mustache."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000065.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no mustache. This guy looks extremely young and has no eyeglasses, and a mild smile. This man shows his full forehead without any bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000066.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She looks like an elderly and has no eyeglasses, a beaming face, and extremely long bangs that almost covers all of the forehead."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000067.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no smile. This old gentleman is in the seventies and has no mustache at all, and no fringe. There is not any eyeglasses on the face."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000068.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman has no eyeglasses. This old guy is in the seventies and has no mustache at all, no bangs, and a smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000069.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "He looks serious with no smile in the face. This guy is in his fifties and has no fringe, no eyeglasses, and no mustache at all."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000070.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This gentleman is not wearing any glasses and has no mustache, a face that is beamed with happiness, and no bangs. This person looks very old."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000071.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female has no eyeglasses, and a mild smile. This woman is in her middle age and has extremely long fringe that almost covers all of her forehead."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000072.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "He doesn't have any bangs and the forehead is visible and has no mustache at all, a very big smile on his face, and no eyeglasses. This guy is in the eighties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000073.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person is not wearing any glasses and has no bangs, and no smile. She is in the thirties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000074.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has no bangs. This woman is in her thirties and has no smile, and no glasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000075.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "The whole forehead is visible. This woman is in the sixties and has no glasses, and no smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000076.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This guy has no fringe at all and the forehead is visible and has short beard. He is in his thirties and has a very mild smile, and no eyeglasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000077.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This young adult has short bangs that simply covers a small portion of the forehead, a extremely mild smile, and no eyeglasses."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000078.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She has no eyeglasses, and no fringe. She is in the forties and has no smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000079.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This elderly person has a extremely mild smile, no eyeglasses, no mustache at all, and no fringe."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000080.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "There is not any glasses on his face and has no smile, no mustache, and no fringe. This person is in his forties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000081.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This man doesn't have any beard at all. He is in the thirties and has a smile with the teeth visible, no eyeglasses, and no bangs."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000082.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This middle-aged person has a extremely mild smile, no glasses, and no bangs. His face is covered with short pointed beard."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000083.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She is in the middle age and has no eyeglasses, no bangs, and a very mild smile."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000084.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "She looks serious with no smile in the face and has no eyeglasses, and no fringe. This lady is in her eighties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000085.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady doesn't have any fringe and the forehead is visible and has no smile, and no eyeglasses. This woman is in the thirties."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000086.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This person has no bangs at all and has no smile, and no eyeglasses. This woman looks extremely young."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000087.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady is not wearing any eyeglasses. This female is in the forties and has a smile with her teeth visible. She doesn't have any bangs and her forehead is visible."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000088.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This lady has no smile, no fringe, and no glasses. This woman looks extremely young."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000089.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This female looks serious with no smile in her face and has no glasses. This lady is in the middle age. This woman has no fringe at all and the forehead is visible."
+            }
+        ]
+    },
+    {
+        "image": "celeba/000090.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe the person's appearance."
+            },
+            {
+                "from": "gpt",
+                "value": "This man has no fringe at all. This guy is a young adult and has no smile, and no glasses. He doesn't have any beard."
+            }
+        ]
+    }
+]

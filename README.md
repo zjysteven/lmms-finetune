@@ -3,7 +3,7 @@
 
 ## About
 
-More and more large multimodal models (LMMs) are being released from time to time, but the finetuning of these models is not always straightforward. This codebase aims to provide a unified structure for LMM finetuning. Key design ideas include:
+More and more large multimodal models (LMMs) are being released from time to time, but the finetuning of these models is not always straightforward. This codebase aims to provide a unified, minimal structure for LMM finetuning. Key design ideas include:
 - the components of the finetuning process (e.g., model loading, data collating) are abstracted, allowing one to easily integrate the latest LMMs into this codebase and finetune them with minimal effort;
 - for all LMMs the 🤗huggingface's official implementation is used, so that after finetuning one can do inference and everything else in the exact same way as earlier with the HF model;
 - the codebase is kept as simple/lightweight as possible, so that it is easy to understand and modify.
@@ -17,18 +17,22 @@ The codebase is quite flexible. Despite being at an early stage, it already supp
 See [supported_models.md](docs/supported_models.md) for the full list of supported models. More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported.
 
 *TODOS:* 
-- [x] phi3-v
-- [ ] idefics2
-- [ ] glm4-v
-- [ ] minicpm
+- [ ] Support training with text-only data.
+- [ ] Support tuning vision models and projectors.
+- [ ] Add more models, including llava-1.6/next, idefics2, glm4-v, minicpm, etc.
 
 :raising_hand: If you would like to have a model available, feel free to open an issue.
 
 <details>
-<summary>What's different from <a href=https://github.com/hiyouga/LLaMA-Factory>LLaMA-Factory</a>?</summary>
+<summary>What's different from other training frameworks, e.g., LLaMA-Factory, xtuner, swift?</summary>
 
-As of 2024/07, LLaMA-Factory officially supports only the finetuning of LLaVA-1.5. There are people working on adding more models to LLaMA-Factory, but the process can be a bit complicated given its large scale and complexity (e.g., there will be a lot of detailed considerations and compatibility problems with text-only LLMs to consider, which is totally understandable; see [this](https://github.com/hiyouga/LLaMA-Factory/pull/4136) and [this](https://github.com/hiyouga/LLaMA-Factory/pull/4377)). This is actually one of the motivations for putting up this codebase. It will definitely not be as optimized as LLaMA-Factory, but it is exclusively for multi-modal LLMs and is designed to be lightweight/simple which can best facilitate quick experiments, flexible modifications, and easy integrations of new models (which is quite important given the fast pace of model releases).
+These are great projects/frameworks with large scale and high-degree optimization. However, due to their scale and complexity, they could be less transparent and less easy to get started (e.g., I personally feel quite lost when trying to use those frameworks, with a bunch of questions like "how should I format my data"). This codebase (lmms-finetune) is instead designed to be lightweight and simple, meaning that it's much more likely for you to quickly get started and be able to know almost every detail of the training process if you want. In other words, this is a minimal workable codebase that supports LMM finetuning, while facilitating quick experiments, flexible modifications, and easy integrations of new models.
 </details>
+
+## News
+
+- 2024/07/20: Initial release of the codebase. More models and optimizations are coming soon. Stay tuned!
+
 
 ## Installation
 
@@ -48,6 +52,8 @@ python -m pip install --no-cache-dir --no-build-isolation flash-attn
 ```
 
 ## Usage
+
+A workable example training run (of LLaVA-NeXT-Video-7B) is showcased in this [colab notebook](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing), which is a good starting point to get a sense of how to use this codebase. The following sections provide a more detailed guide on how to finetune a model.
 
 <details>
 <summary><b>0. See if the model you want to finetune is supported</b></summary>
@@ -83,7 +89,7 @@ Similar to LLaVA, we expect the data to be in a json file containing a list of d
         "conversations": [
             {
                 "from": "human",
-                "value": "<video>\nWhat is this video about?"
+                "value": "<video>What is this video about?"
             },
             {
                 "from": "gpt",
@@ -93,7 +99,7 @@ Similar to LLaVA, we expect the data to be in a json file containing a list of d
     }
 ]
 ```
-The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample. For more details, see the [dataset documentation](docs/dataset.md) where we go over several examples to see how flexible this json file can be.
+The image and video token is assumed to be `<image>` and `<video>`. We adopt this format for its readability. Our dataset implementation is general enough to support variations within this format, e.g., multiple image/video inputs in a sample. For more details, see the [dataset documentation](docs/dataset.md) and find how flexible this json file can be. There are also mutiple example json files under [example_data](./example_data) for reference.
 
 The actual videos and images can be stored in their corresponding folders, and then the paths in the json file should be relative to the video/image root folder. Or the paths can simply be absolute paths.
 </details>
@@ -102,27 +108,27 @@ The actual videos and images can be stored in their corresponding folders, and t
 <details>
 <summary><b>2. Perform finetuning</b></summary>
 
-Modify the sample training bash script [example.sh](./example.sh) to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example.sh`.
+Modify the sample training bash script, [example_video.sh](./example_scripts/example_video.sh) or [example_image.sh](example_image.sh) (there are no differences other than different model ID and dataset filepath), to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example_scripts/example_video.sh` or `bash example_scripts/example_image.sh`. Note that to exactly run the provided [example_video.sh](./example_scripts/example_video.sh), you will need to download the video clips from ShareGPT4Video; see [here](example_data/videos/ego4d/README.md) for instructions.
 </details>
 
 
 <details>
 <summary><b>3. Inference with finetuned model</b></summary>
 
-The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details.
+The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details. Again you can refer to [this colab](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing) for a complete example.
 </details>
 
 
 <details>
 <summary>Known limitations</summary>
 
-- :neutral_face: Due to huggingface's implementation (e.g., the vision encoder's hidden states are saved, see [this](https://github.com/huggingface/transformers/blob/0fdea8607d7e01eb0e38a1ebeb7feee30a22f0cf/src/transformers/models/llava/modeling_llava.py#L425)), the memory cost can be high especially for full finetuning.
 - :neutral_face: Currently all vision modules are freezed for simplicity.
 - :warning: Due to [an unsolved issue](https://github.com/microsoft/DeepSpeed/issues/3156) in deepspeed (all parameters have to be used in the forward pass), currently the training might not succeed if you have text-only data in your dataset.
-- :bow: Due to an implementation detail of LLaVA-Next-Video (see [here](https://github.com/huggingface/transformers/issues/32112)), you need to have batch size > 1 during finetuning.
 </details>
 
 
 ## Acknowledgements
 
-The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), a [sample finetuning script](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa/Fine_tune_LLaVa_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb) using Lightning by huggingface staff, etc.
+We want to thank the huggingface team for actively integrating newest models in the transformers library. Also, the example finetuning scripts (e.g., [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa/Fine_tune_LLaVa_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa-NeXT/Fine_tune_LLaVaNeXT_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), and [this](https://colab.research.google.com/drive/1dTdro-k7NFqRgGq5-TlGHM-6k2sYQhXp#scrollTo=4ccbd183-f15a-4f94-a526-9ceeec3f61e0)) made by HF staff, [Niels Rogge](https://github.com/NielsRogge) and [Raushan Turganbay](https://github.com/zucchini-nlp), are very helpful and lay the foundation for this codebase.
+
+The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), etc.

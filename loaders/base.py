@@ -24,6 +24,6 @@ class BaseModelLoader(ABC):
             self.loading_kwargs["attn_implementation"] = "flash_attention_2"
 
     @abstractmethod
-    def load(self) -> Tuple[
+    def load(self, load_model: bool = True) -> Tuple[
         PreTrainedModel, Union[None, PreTrainedTokenizer], Union[None, AutoProcessor]
     ]: ...

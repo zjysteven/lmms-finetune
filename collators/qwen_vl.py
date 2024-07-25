@@ -24,7 +24,6 @@ class QwenVLDataCollator(BaseDataCollator):
         conversations: List[List] = [instance["conversations"] for instance in instances]
         input_ids = []
         labels = []
-        raw_texts = []
 
         im_start: int = self.tokenizer.im_start_id
         im_end: int = self.tokenizer.im_end_id
@@ -38,13 +37,11 @@ class QwenVLDataCollator(BaseDataCollator):
 
             cur_input_ids = []
             cur_labels = []
-            cur_raw_texts = []
             
             if system_prompt is not None:
                 system = [im_start] + _system + self.tokenizer(system_prompt).input_ids + [im_end] + nl_tokens
                 cur_input_ids.extend(system)
                 cur_labels.extend([im_start] + [self.IGNORE_TOKEN_ID] * (len(system) - 3) + [im_end] + nl_tokens)
-                cur_raw_texts.append(system_prompt + "\n")
             assert len(cur_input_ids) == len(cur_labels), "Input and label shapes do not match"
             
             for i, text in enumerate(cur_convs):
@@ -68,8 +65,6 @@ class QwenVLDataCollator(BaseDataCollator):
                     _label = [im_start] + [self.IGNORE_TOKEN_ID] * len(self.tokenizer(role).input_ids) + \
                         _input_id[len(self.tokenizer(role).input_ids) + 1:-2] + [im_end] + nl_tokens
                 cur_labels.extend(_label)
-
-                cur_raw_texts.append(text + "\n")
             
             assert cur_image_idx == cur_num_images, "Not all images were used"
 
@@ -84,7 +79,6 @@ class QwenVLDataCollator(BaseDataCollator):
 
             input_ids.append(cur_input_ids[:])
             labels.append(cur_labels[:])
-            raw_texts.append(cur_raw_texts[:])
 
         input_ids = torch.tensor(input_ids, dtype=torch.long)
         labels = torch.tensor(labels, dtype=torch.long)
@@ -94,5 +88,4 @@ class QwenVLDataCollator(BaseDataCollator):
             input_ids=input_ids,
             labels=labels,
             attention_mask=input_ids.ne(self.PAD_TOKEN_ID),
-            # raw_texts=raw_texts # for debugging
         )

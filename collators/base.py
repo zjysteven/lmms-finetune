@@ -10,10 +10,12 @@ class BaseDataCollator(ABC, object):
     def __init__(
         self, 
         tokenizer: Optional[PreTrainedTokenizer] = None,
-        processor: Optional[AutoProcessor] = None
+        processor: Optional[AutoProcessor] = None,
+        mask_question_tokens: bool = True
     ) -> None:
         self.tokenizer = tokenizer
         self.processor = processor
+        self.mask_question_tokens = mask_question_tokens
     
     @property
     def IGNORE_TOKEN_ID(self) -> int:

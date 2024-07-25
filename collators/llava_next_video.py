@@ -31,8 +31,7 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
             max_num_frames = max([x.shape[0] for x in videos])
             for i, video in enumerate(videos):
                 if video.shape[0] < max_num_frames:
-                    # pad = np.array(PIL.Image.new("RGB", video.shape[1:3][::-1], color=(0, 0, 0)))
-                    pad = np.zeros((video.shape[0], video.shape[1], video.shape[2]), dtype=np.uint8)
+                    pad = np.zeros((video.shape[1], video.shape[2], video.shape[3]), dtype=np.uint8)
                     pad = np.expand_dims(pad, axis=0).repeat(max_num_frames - video.shape[0], axis=0)
                     videos[i] = np.concatenate([video, pad], axis=0)
             vision_inputs.update(**self.processor.video_processor(videos, return_tensors="pt"))

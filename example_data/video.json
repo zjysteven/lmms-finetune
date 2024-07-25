@@ -24,7 +24,7 @@
     },
     {
         "video": "curry_vs_thunder.mp4",
-        "num_frames": 8,
+        "num_frames": 10,
         "conversations": [
             {
                 "from": "human",

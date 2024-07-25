@@ -3,7 +3,7 @@
 
 ## About
 
-More and more large multimodal models (LMMs) are being released from time to time, but the finetuning of these models is not always straightforward. This codebase aims to provide a unified structure for LMM finetuning. Key design ideas include:
+More and more large multimodal models (LMMs) are being released from time to time, but the finetuning of these models is not always straightforward. This codebase aims to provide a unified, minimal structure for LMM finetuning. Key design ideas include:
 - the components of the finetuning process (e.g., model loading, data collating) are abstracted, allowing one to easily integrate the latest LMMs into this codebase and finetune them with minimal effort;
 - for all LMMs the 🤗huggingface's official implementation is used, so that after finetuning one can do inference and everything else in the exact same way as earlier with the HF model;
 - the codebase is kept as simple/lightweight as possible, so that it is easy to understand and modify.

@@ -213,6 +213,7 @@ def train():
         )
     else:
         eval_dataset = None
+        training_args.eval_strategy = "no"
 
     # data collator
     data_collator = COLLATORS[model_args.model_family_id](

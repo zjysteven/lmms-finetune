@@ -8,7 +8,6 @@ import torch.distributed as dist
 
 from supported_models import MULTIMODAL_KEYWORDS
 
-
 def find_all_linear_names(
     model: transformers.PreTrainedModel, 
     model_family_id: str,

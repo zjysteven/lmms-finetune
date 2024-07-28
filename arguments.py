@@ -42,6 +42,8 @@ class TrainingArguments(transformers.TrainingArguments):
     )
     freeze_multimodal: bool = True
     use_flash_attn: bool = False
+    vision_encoder_training: str ="lora"
+    vision_projector_training: str = "full"
 
     def __post_init__(self):
         super().__post_init__()

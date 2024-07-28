@@ -63,5 +63,7 @@ torchrun $DISTRIBUTED_ARGS train.py \
     --q_lora $Q_LORA \
     --lora_r $LORA_R \
     --lora_alpha $LORA_ALPHA \
-    --freeze_multimodal False
+    --freeze_multimodal False \
+    --vision_encoder_training "lora" \
+    --vision_projector_training "freeze" \
     

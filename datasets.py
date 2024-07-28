@@ -62,6 +62,11 @@ class LazySupervisedDataset(Dataset):
         self.user_key = user_key
         self.assistant_key = assistant_key
 
+        self.is_text_only = [
+            "image" not in source and "video" not in source
+            for source in self.list_data_dict
+        ]
+
     def __len__(self) -> int:
         return len(self.list_data_dict)
 

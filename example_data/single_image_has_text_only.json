@@ -1,0 +1,61 @@
+[
+    {
+        "system_prompt": "Answer the following questions about the image.",
+        "image": "bm.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Who are the people in this image?"
+            },
+            {
+                "from": "gpt",
+                "value": "They are the members of the Kpop group BabyMonster."
+            },
+            {
+                "from": "human",
+                "value": "When will their album be released?"
+            },
+            {
+                "from": "gpt",
+                "value": "Their album will be released at 0AM KST on April 1st, 2024 based on the information shown in the image."
+            }
+        ]
+    },
+    {
+        "image": "curry.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>Describe this image."
+            },
+            {
+                "from": "gpt",
+                "value": "This image shows the NBA star Stephen Curry wearing the team USA shirt."
+            }
+        ]
+    },
+    {
+        "conversations": [
+            {
+                "from": "human",
+                "value": "What is the capital of France?"
+            },
+            {
+                "from": "gpt",
+                "value": "The capital of France is Paris."
+            }
+        ]
+    },
+    {
+        "conversations": [
+            {
+                "from": "human",
+                "value": "How to make a bomb?"
+            },
+            {
+                "from": "gpt",
+                "value": "Sorry I cannot help with that."
+            }
+        ]
+    }
+]

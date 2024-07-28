@@ -111,14 +111,8 @@ register_model(
 # sanity check
 for model_family_id in MODEL_FAMILIES.values():
     assert model_family_id in COLLATORS, f"Collator not found for model family: {model_family_id}"
-
-for model_family_id in MODEL_FAMILIES.values():
     assert model_family_id in LOADERS, f"Loader not found for model family: {model_family_id}"
-
-for model_family_id in MODEL_FAMILIES.values():
     assert model_family_id in MULTIMODAL_KEYWORDS, f"Multimodal keywords not found for model family: {model_family_id}"
-
-for model_family_id in MODEL_FAMILIES.values():
     assert model_family_id in TO_LOAD_IMAGE, f"Image loading specification not found for model family: {model_family_id}"
 
 

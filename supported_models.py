@@ -24,10 +24,10 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "llm": ["language_model"]
     },
     "phi3-v": {
-        "vision_encoder": ["vision_embed_tokens.image_processor"],
-        "vision_projector": ["vision_embed_tokens.image_projection"],
-        "others": ["vision_embed_tokens.glb_GN", "vision_embed_tokens.sub_GN"],
-        "llm": ["embed_tokens", "layers", "norm"]
+        "vision_encoder": ["model.vision_embed_tokens.img_processor"],
+        "vision_projector": ["model.vision_embed_tokens.img_projection"],
+        "others": ["model.vision_embed_tokens.glb_GN", "model.vision_embed_tokens.sub_GN"],
+        "llm": ["model.embed_tokens", "model.layers", "model.norm", "lm_head"]
     },
     "qwen-vl": {
         "vision_encoder": ["transformer.visual"],

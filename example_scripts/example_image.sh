@@ -13,7 +13,7 @@ TRAIN_DATA_PATH=./example_data/celeba_image_train.json  # path to the training d
 EVAL_DATA_PATH=./example_data/celeba_image_eval.json    # path to the evaluation data json file (optional)
 IMAGE_FOLDER=./example_data/images                      # path to the image root folder; if provided, the image paths in the json should be relative
 VIDEO_FOLDER=./example_data/videos                      # path to the video root folder; if provided, the video paths in the json should be relative
-DEFAULT_NUM_FRAMES=8                                    # if `num_frames` is not specified in dataset entries, this value will be used to sample frames from videos
+NUM_FRAMES=8                                            # how many frames are sampled from each video
 
 TRAIN_VISION_ENCODER=False                              # whether train the vision encoder
 USE_VISION_LORA=False                                   # whether use lora for vision encoder (only effective when `TRAIN_VISION_ENCODER` is True)
@@ -41,7 +41,7 @@ torchrun $DISTRIBUTED_ARGS train.py \
     --eval_data_path $EVAL_DATA_PATH \
     --image_folder $IMAGE_FOLDER \
     --video_folder $VIDEO_FOLDER \
-    --default_num_frames $DEFAULT_NUM_FRAMES \
+    --num_frames $NUM_FRAMES \
     --output_dir ./checkpoints/$RUN_ID \
     --report_to wandb \
     --run_name $RUN_ID \

@@ -1,5 +1,8 @@
 # Enabling the finetuning of the latest Large Multimodal Models
 
+Maintainers: [Jingyang Zhang](https://zjysteven.github.io/), [Yueqian Lin](https://yueqianlin.com/) @ [Duke CEI](https://cei.pratt.duke.edu/)
+
+We also thank staff from huggingface, especially [Raushan Turganbay](https://github.com/zucchini-nlp), for their generous discussions and feedbacks on this project.
 
 ## About
 
@@ -32,7 +35,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 ## News
 
 - **2024/07/30**: Finetuning of vision encoder and projector is now supported.
-- **2024/07/25**: Several things are improved. We have *1)* released a [colab notebook](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing) demonstrating a full, successful training run with LLaVA-NeXT-Video-7B (happy to hear from people that they succeeded in [their cases](https://github.com/zjysteven/lmms-finetune/issues/7#issuecomment-2249864887) too); *2)* supported having text-only samples in the training set (see [this](docs/dataset.md) for one note).
+- **2024/07/25**: Several things are improved. We have *1)* released a [colab notebook](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing) demonstrating a full, successful training run with LLaVA-NeXT-Video-7B (happy to hear from people that they succeeded in [their cases](https://github.com/zjysteven/lmms-finetune/issues/7#issuecomment-2249864887) too); *2)* supported having text-only samples in the training set (see [this](docs/dataset.md) for one note).
 - **2024/07/20**: Initial release of the codebase. More models and optimizations are coming soon. Stay tuned!
 
 
@@ -55,7 +58,7 @@ python -m pip install --no-cache-dir --no-build-isolation flash-attn
 
 ## Usage
 
-A workable example training run (of LLaVA-NeXT-Video-7B) is showcased in this [colab notebook](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing), which is a good starting point to get a sense of how to use this codebase. The following sections provide a more detailed guide on how to finetune a model.
+A workable example training run (of LLaVA-NeXT-Video-7B) is showcased in this [colab notebook](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing), which is a good starting point to get a sense of how to use this codebase. The following sections provide a more detailed guide on how to finetune a model.
 
 <details>
 <summary><b>0. See if the model you want to finetune is supported</b></summary>
@@ -118,7 +121,7 @@ Modify the sample training bash script, [example_video.sh](./example_scripts/exa
 <details>
 <summary><b>3. Inference with finetuned model</b></summary>
 
-The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details. Again you can refer to [this colab](https://colab.research.google.com/drive/1ejXG58cpMXvkcsx2qqTFK2BqWBVBEr7Y?usp=sharing) for a complete example.
+The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details. Again you can refer to [this colab](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing) for a complete example.
 </details>
 
 

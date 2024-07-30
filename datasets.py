@@ -49,7 +49,7 @@ class LazySupervisedDataset(Dataset):
         model_family_id: str,
         image_folder: Optional[str] = None,
         video_folder: Optional[str] = None,
-        default_num_frames: int = 8,
+        num_frames: int = 8,
         user_key: str = "human",
         assistant_key: str = "gpt",
     ) -> None:
@@ -57,7 +57,7 @@ class LazySupervisedDataset(Dataset):
         self.list_data_dict = json.load(open(data_path, "r"))
         self.image_folder = image_folder
         self.video_folder = video_folder
-        self.default_num_frames = default_num_frames
+        self.num_frames = num_frames
         self.load_image = TO_LOAD_IMAGE[model_family_id]
         self.user_key = user_key
         self.assistant_key = assistant_key
@@ -104,17 +104,7 @@ class LazySupervisedDataset(Dataset):
             else:
                 raise ValueError(f"Invalid video source type: {type(source['video'])}")
 
-            if "num_frames" in source:
-                if isinstance(source["num_frames"], list):
-                    assert len(source["num_frames"]) == len(video_sources), \
-                        "`num_frames` is a list, but the number of its elements does not match the number of videos"
-                    num_frames = source["num_frames"]
-                elif isinstance(source["num_frames"], int):
-                    num_frames = [source["num_frames"]] * len(video_sources)
-                else:
-                    raise ValueError(f"Invalid num_frames type: {type(source['num_frames'])}")
-            else:
-                num_frames = [self.default_num_frames] * len(video_sources)
+            num_frames = [self.num_frames] * len(video_sources)
 
             for video_path, cur_num_frames in zip(video_sources, num_frames):
                 if self.video_folder is not None:

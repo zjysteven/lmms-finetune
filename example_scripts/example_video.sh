@@ -13,12 +13,16 @@ TRAIN_DATA_PATH=./example_data/ego4d_video_train.json   # path to the training d
 EVAL_DATA_PATH=./example_data/ego4d_video_eval.json     # path to the evaluation data json file (optional)
 IMAGE_FOLDER=./example_data/images                      # path to the image root folder; if provided, the image paths in the json should be relative
 VIDEO_FOLDER=./example_data/videos                      # path to the video root folder; if provided, the video paths in the json should be relative
-DEFAULT_NUM_FRAMES=8                                    # if `num_frames` is not specified in dataset entries, this value will be used to sample frames from videos
+NUM_FRAMES=8                                            # how many frames are sampled from each video
 
-USE_LORA=True                                           # whether use lora
-Q_LORA=False                                            # whether use q-lora; only effective when `USE_LORA` is True
-LORA_R=8                                                # the lora rank
-LORA_ALPHA=8                                            # the lora alpha
+TRAIN_VISION_ENCODER=False                              # whether train the vision encoder
+USE_VISION_LORA=False                                   # whether use lora for vision encoder (only effective when `TRAIN_VISION_ENCODER` is True)
+TRAIN_VISION_PROJECTOR=False                            # whether train the vision projector (only full finetuning is supported)
+
+USE_LORA=True                                           # whether use lora for llm
+Q_LORA=False                                            # whether use q-lora for llm; only effective when `USE_LORA` is True
+LORA_R=8                                                # the lora rank (both llm and vision encoder)
+LORA_ALPHA=8                                            # the lora alpha (both llm and vision encoder)
 
 RUN_ID=${MODEL_ID}_lora-${USE_LORA}_qlora-${Q_LORA}     # a custom run id that determines the checkpoint folder and wandb run name
 
@@ -37,7 +41,7 @@ torchrun $DISTRIBUTED_ARGS train.py \
     --eval_data_path $EVAL_DATA_PATH \
     --image_folder $IMAGE_FOLDER \
     --video_folder $VIDEO_FOLDER \
-    --default_num_frames $DEFAULT_NUM_FRAMES \
+    --num_frames $NUM_FRAMES \
     --output_dir ./checkpoints/$RUN_ID \
     --report_to wandb \
     --run_name $RUN_ID \
@@ -59,6 +63,9 @@ torchrun $DISTRIBUTED_ARGS train.py \
     --model_max_length $MODEL_MAX_LEN \
     --gradient_checkpointing True \
     --dataloader_num_workers 4 \
+    --train_vision_encoder $TRAIN_VISION_ENCODER \
+    --use_vision_lora $USE_VISION_LORA \
+    --train_vision_projector $TRAIN_VISION_PROJECTOR \
     --use_lora $USE_LORA \
     --q_lora $Q_LORA \
     --lora_r $LORA_R \

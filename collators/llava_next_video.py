@@ -20,20 +20,12 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
             vision_inputs.update(**self.processor.image_processor(images, return_tensors="pt"))
 
         # videos
-        # we do manual padding here so that each video has the same length
-        # so that we can batch them together
-        # here has a limitation: huggingface implementation
-        # currently consumes all batched frames (no "unpadding" is ever done)
-        # so if there are clips that are significantly shorter than the longest clip
-        # then the model will be trained on many padded frames
         videos: List[np.ndarray] = [x for instance in instances for x in instance["videos"]]
         if len(videos) > 0:
-            max_num_frames = max([x.shape[0] for x in videos])
-            for i, video in enumerate(videos):
-                if video.shape[0] < max_num_frames:
-                    pad = np.zeros((video.shape[1], video.shape[2], video.shape[3]), dtype=np.uint8)
-                    pad = np.expand_dims(pad, axis=0).repeat(max_num_frames - video.shape[0], axis=0)
-                    videos[i] = np.concatenate([video, pad], axis=0)
+            # ideally we should do padding here instead of forcing all videos to have the same length
+            # but since currently hf implementation does not unpad videos or have corresponding 
+            # attention masks, having padding will let the model train on padded frames
+            assert len(set([x.shape[0] for x in videos])) == 1, "All videos must have the same number of frames"
             vision_inputs.update(**self.processor.video_processor(videos, return_tensors="pt"))
 
         # texts

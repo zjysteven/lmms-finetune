@@ -27,7 +27,7 @@ class DataArguments:
     )
     image_folder: Optional[str] = field(default=None)
     video_folder: Optional[str] = field(default=None)
-    default_num_frames: Optional[int] = field(default=8)
+    num_frames: Optional[int] = field(default=8)
     user_key: Optional[str] = field(default="human")
     assistant_key: Optional[str] = field(default="gpt")
 

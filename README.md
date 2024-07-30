@@ -2,7 +2,7 @@
 
 Maintainers: [Jingyang Zhang](https://zjysteven.github.io/), [Yueqian Lin](https://yueqianlin.com/) @ [Duke CEI](https://cei.pratt.duke.edu/)
 
-We also thank staff from huggingface, especially [Raushan Turganbay](https://github.com/zucchini-nlp), for their generous discussions and feedbacks on this project.
+We also thank staff from 🤗huggingface, especially [Raushan Turganbay](https://github.com/zucchini-nlp), for their generous discussions and feedbacks on this project.
 
 ## About
 

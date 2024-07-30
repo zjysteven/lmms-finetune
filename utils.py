@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 from deepspeed import zero
 from deepspeed.runtime.zero.partition_parameters import ZeroParamStatus
@@ -6,34 +6,28 @@ import transformers
 import torch
 import torch.distributed as dist
 
-from supported_models import MULTIMODAL_KEYWORDS
 
-def find_all_linear_names(
-    model: transformers.PreTrainedModel, 
-    model_family_id: str,
-    freeze_multimodal: bool = True,
-):
+def find_all_linear_names(named_modules: Dict, target_modules: List[str]):
     cls = torch.nn.Linear
     lora_module_names = set()
-    for name, module in model.named_modules():
-        if any(mm_keyword in name for mm_keyword in MULTIMODAL_KEYWORDS[model_family_id]):
-            if freeze_multimodal:
-                rank0_print(f"\tFreezing {name}...")
-                module.requires_grad_(False)
+    for name, module in named_modules.items():
+        if not any([module_name in name for module_name in target_modules]):
             continue
-        if isinstance(module, cls):
-            names = name.split('.')
-            lora_module_names.add(names[0] if len(names) == 1 else names[-1])
 
-    if 'lm_head' in lora_module_names: # needed for 16-bit
-        lora_module_names.remove('lm_head')
+        if isinstance(module, cls):
+            lora_module_names.add(name)
+
+    for name in list(lora_module_names):
+        if 'lm_head' in name: # needed for 16-bit
+            lora_module_names.remove(name)
+
     return list(lora_module_names)
 
 
 def rank0_print(*args):
     if dist.is_initialized():
         if dist.get_rank() == 0:
-            print(f"Rank {dist.get_rank()}: ", *args)
+            print(*args)
 
 
 def maybe_zero_3(param):

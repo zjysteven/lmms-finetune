@@ -1,3 +1,4 @@
+from typing import Dict, List
 from collections import OrderedDict
 
 from collators import COLLATORS
@@ -5,12 +6,34 @@ from datasets import TO_LOAD_IMAGE
 from loaders import LOADERS
 
 
-MULTIMODAL_KEYWORDS = {
-    "llava-1.5": ["multi_modal_projector", "vision_tower"],
-    "llava-interleave": ["multi_modal_projector", "vision_tower"],
-    "llava-next-video": ["multi_modal_projector", "vision_tower", "image_newline", "vision_resampler"],
-    "qwen-vl": ["transformer.visual"],
-    "phi3-v": ["vision_embed_tokens"],
+MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
+    "llava-1.5": {
+        "vision_encoder": ["vision_tower"],
+        "vision_projector": ["multi_modal_projector"],
+        "llm": ["language_model"]
+    },
+    "llava-interleave": {
+        "vision_encoder": ["vision_tower"],
+        "vision_projector": ["multi_modal_projector"],
+        "llm": ["language_model"]
+    },
+    "llava-next-video": {
+        "vision_encoder": ["vision_tower"],
+        "vision_projector": ["multi_modal_projector"],
+        "others": ["image_newline", "vision_resampler"],
+        "llm": ["language_model"]
+    },
+    "phi3-v": {
+        "vision_encoder": ["vision_embed_tokens.image_processor"],
+        "vision_projector": ["vision_embed_tokens.image_projection"],
+        "others": ["vision_embed_tokens.glb_GN", "vision_embed_tokens.sub_GN"],
+        "llm": ["embed_tokens", "layers", "norm"]
+    },
+    "qwen-vl": {
+        "vision_encoder": ["transformer.visual"],
+        "vision_projector": [],
+        "llm": ["transformer.wte", "transformer.rotary_emb", "transformer.h", "transformer.ln_f", "lm_head"]
+    },
 }
 
 
@@ -112,7 +135,7 @@ register_model(
 for model_family_id in MODEL_FAMILIES.values():
     assert model_family_id in COLLATORS, f"Collator not found for model family: {model_family_id}"
     assert model_family_id in LOADERS, f"Loader not found for model family: {model_family_id}"
-    assert model_family_id in MULTIMODAL_KEYWORDS, f"Multimodal keywords not found for model family: {model_family_id}"
+    assert model_family_id in MODULE_KEYWORDS, f"Module keywords not found for model family: {model_family_id}"
     assert model_family_id in TO_LOAD_IMAGE, f"Image loading specification not found for model family: {model_family_id}"
 
 

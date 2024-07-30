@@ -40,27 +40,22 @@ class TrainingArguments(transformers.TrainingArguments):
             "help": "Maximum sequence length. Sequences will be right padded (and possibly truncated)."
         },
     )
-    freeze_multimodal: bool = True
     use_flash_attn: bool = False
-    vision_encoder_training: str ="lora"
-    vision_projector_training: str = "full"
+    train_vision_encoder: bool = False
+    train_vision_projector: bool = False
 
     def __post_init__(self):
         super().__post_init__()
-        # assert self.freeze_multimodal, "Currently only support freezing multimodal layers."
         self.remove_unused_columns = False
 
 
 @dataclass
 class LoraArguments:
     use_lora: bool = True
+    use_vision_lora: bool = True
+    q_lora: bool = False
     lora_r: int = 64
     lora_alpha: int = 16
     lora_dropout: float = 0.05
     lora_weight_path: str = ""
     lora_bias: str = "none"
-    q_lora: bool = False
-    vision_lora_r: int = 64
-    vision_lora_alpha: int = 16
-    vision_lora_dropout: float = 0.05
-    vision_lora_bias: str = "none"

@@ -7,6 +7,7 @@ from typing import List, Optional
 import yaml
 
 from accelerate.utils import DistributedType
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 import torch
 from torch.utils.data import Sampler
 import transformers
@@ -17,12 +18,11 @@ from arguments import ModelArguments, DataArguments, TrainingArguments, LoraArgu
 from collators import COLLATORS
 from datasets import LazySupervisedDataset
 from loaders import LOADERS
+from supported_models import MODULE_KEYWORDS
 from utils import (
     rank0_print, find_all_linear_names, safe_save_model_for_hf_trainer,
-    get_peft_state_maybe_zero_3, MULTIMODAL_KEYWORDS
+    get_peft_state_maybe_zero_3
 )
-
-from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
 
 class NoTextOnlyBatchSampler(Sampler):
@@ -138,9 +138,11 @@ def train():
         if len(training_args.fsdp) > 0 or deepspeed.is_deepspeed_zero3_enabled():
             raise ValueError("FSDP or ZeRO3 are not incompatible with QLoRA.")
 
+    # llm quantization config (for q-lora)
     bnb_config = None
     if lora_args.use_lora and lora_args.q_lora:
         from transformers import BitsAndBytesConfig
+        rank0_print("Quantization for LLM enabled...")
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_compute_dtype=compute_dtype,
@@ -159,33 +161,64 @@ def train():
     model, tokenizer, processor = loader.load()
     tokenizer.model_max_length = training_args.model_max_length
 
-    if training_args.vision_encoder_training == "lora":
-        vision_target_modules = find_all_linear_names(
-            model.vision_tower,
-            model_args.model_family_id,
-            False
-        )
-        vision_lora_config = LoraConfig(
-            r=lora_args.vision_lora_r, 
-            lora_alpha=lora_args.vision_lora_alpha,
-            target_modules=vision_target_modules,
-            lora_dropout=lora_args.vision_lora_dropout,
-            bias=lora_args.vision_lora_bias,
-            task_type="CAUSAL_LM",
-        )
-    # set up lora for lm and vision encoder
-    if lora_args.use_lora:
-        rank0_print("LoRA enabled...")
-        # Find target modules for both language model and vision encoder
-        lm_target_modules = find_all_linear_names(
-        model, 
-        model_args.model_family_id, 
-        training_args.freeze_multimodal
-        )
-        lm_lora_config = LoraConfig(
+    if training_args.gradient_checkpointing:
+        model.enable_input_require_grads()
+
+    # freeze certain params
+    vision_encoder_keys = MODULE_KEYWORDS[model_args.model_family_id]["vision_encoder"]
+    if not training_args.train_vision_encoder:
+        rank0_print(f"Vision encoder is freezed... including:")
+        for module in vision_encoder_keys:
+            rank0_print(f"\t{module}")
+            eval(f"model.{module}").requires_grad_(False)
+
+    vision_projector_keys = MODULE_KEYWORDS[model_args.model_family_id]["vision_projector"]
+    if not training_args.train_vision_projector:
+        rank0_print(f"Vision projector is freezed... including:")
+        for module in vision_projector_keys:
+            rank0_print(f"\t{module}")
+            eval(f"model.{module}").requires_grad_(False)
+
+    # other components preparation (e.g., image_newline, vision_resampler)
+    # we will just freeze these
+    if "others" in MODULE_KEYWORDS[model_args.model_family_id]:
+        rank0_print(f"Other multimodal component is freezed... including:")
+        for other_key in MODULE_KEYWORDS[model_args.model_family_id]["others"]:
+            rank0_print(f"\t{other_key}")
+            eval(f"model.{other_key}").requires_grad_(False)
+
+    # lora preparation
+    llm_keys = MODULE_KEYWORDS[model_args.model_family_id]["llm"]
+    if not (lora_args.use_lora or (training_args.train_vision_encoder and lora_args.use_vision_lora)):
+        rank0_print("No LoRA enabled...")        
+    else:
+        named_modules = {n: m for n, m in model.named_modules()}
+        lora_modules = []
+        full_modules = []
+
+        if training_args.train_vision_encoder and lora_args.use_vision_lora:
+            rank0_print("LoRA for vision encoder enabled...")
+            lora_modules.extend(find_all_linear_names(named_modules, vision_encoder_keys))
+        elif training_args.train_vision_encoder:
+            rank0_print("Vision encoder will be fully trained...")
+            full_modules.extend(vision_encoder_keys)
+        
+        if lora_args.use_lora:
+            rank0_print("LoRA for LLM enabled...")
+            lora_modules.extend(find_all_linear_names(named_modules, llm_keys))
+        else:
+            rank0_print("LLM will be fully trained...")
+            full_modules.extend(llm_keys)
+        
+        if training_args.train_vision_projector:
+            rank0_print("Vision projector will be fully trained...")
+            full_modules.extend(vision_projector_keys)
+        
+        lora_config = LoraConfig(
             r=lora_args.lora_r,
             lora_alpha=lora_args.lora_alpha,
-            target_modules=lm_target_modules,
+            target_modules=lora_modules,
+            modules_to_save=full_modules,
             lora_dropout=lora_args.lora_dropout,
             bias=lora_args.lora_bias,
             task_type="CAUSAL_LM",
@@ -196,40 +229,14 @@ def train():
                 model, use_gradient_checkpointing=training_args.gradient_checkpointing
             )
             
-        # Apply LoRA to LM
-        model = get_peft_model(model, lm_lora_config)
+        model = get_peft_model(model, lora_config)
         
-        # Apply LoRA to vision encoder if not freezing multimodal
-        if training_args.vision_encoder_training == "lora":
-            rank0_print("Applying LoRA to vision encoder...")
-            model.vision_tower = get_peft_model(model.vision_tower, vision_lora_config)
-        elif training_args.vision_encoder_training == "freeze":
-            rank0_print("Freezing vision encoder...")
-            for param in model.vision_tower.parameters():
-                param.requires_grad = False
-        elif training_args.vision_encoder_training == "full":
-            rank0_print("Fully training vision encoder...")
-            for param in model.vision_tower.parameters():
-                param.requires_grad = True
-        
-        if training_args.vision_projector_training == "freeze":
-            rank0_print("Freezing vision projector...")
-            for param in model.multi_modal_projector.parameters():
-                param.requires_grad = False
-        elif training_args.vision_projector_training == "full":
-            rank0_print("Fully training vision projector...")
-            for param in model.multi_modal_projector.parameters():
-                param.requires_grad = True
-    
-        if training_args.gradient_checkpointing:
-            model.enable_input_require_grads()
-    else:
-        for name, module in model.named_modules():
-            if any(mm_keyword in name for mm_keyword in MULTIMODAL_KEYWORDS[model_args.model_family_id]):
-                if training_args.freeze_multimodal:
-                    rank0_print(f"\tFreezing {name}...")
-                    module.requires_grad_(False)
-    
+    # print trainable parameters for inspection
+    rank0_print("Trainable parameters:")
+    for name, param in model.named_parameters():
+        if param.requires_grad:
+            rank0_print(f"\t{name}")
+
     # load data
     rank0_print("Loading data...")
     train_dataset = LazySupervisedDataset(
@@ -272,38 +279,8 @@ def train():
     trainer.train()
     trainer.save_state()
 
-    if lora_args.use_lora:
-        state_dict = get_peft_state_maybe_zero_3(
-            model.named_parameters(), lora_args.lora_bias
-        )
-        if training_args.local_rank == 0 or training_args.local_rank == -1:
-            model.save_pretrained(output_dir, state_dict=state_dict)
-    else:
-        safe_save_model_for_hf_trainer(trainer=trainer, output_dir=output_dir)
-
-    if training_args.local_rank == 0 or training_args.local_rank == -1:
-
-        # Save vision encoder
-        if training_args.vision_encoder_training == "lora":
-            vision_encoder_path = os.path.join(output_dir, "vision_encoder")
-            os.makedirs(vision_encoder_path, exist_ok=True)
-            vision_encoder_state_dict = get_peft_state_maybe_zero_3(
-                model.vision_tower.named_parameters(), lora_args.vision_lora_bias
-            )
-            model.vision_tower.save_pretrained(vision_encoder_path, state_dict=vision_encoder_state_dict)
-        elif training_args.vision_encoder_training == "full":
-            vision_encoder_path = os.path.join(output_dir, "vision_encoder")
-            os.makedirs(vision_encoder_path, exist_ok=True)
-            model.vision_tower.save_pretrained(vision_encoder_path)
-        
-        
-        # Save vision projector if it was trained
-        if training_args.vision_projector_training == "full":
-            vision_projector_path = os.path.join(output_dir, "vision_projector")
-            os.makedirs(vision_projector_path, exist_ok=True)
-            torch.save(model.multi_modal_projector.state_dict(), os.path.join(vision_projector_path, "projector.pth"))
+    safe_save_model_for_hf_trainer(trainer=trainer, output_dir=output_dir)
     
-
 
 if __name__ == "__main__":
     train()

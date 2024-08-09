@@ -20,7 +20,7 @@ from loaders import LOADERS
 from supported_models import MODULE_KEYWORDS
 from utils import (
     rank0_print, find_all_linear_names, safe_save_model_for_hf_trainer,
-    get_peft_state_maybe_zero_3
+    get_peft_state_maybe_zero_3, TrainerWithCustomSampler
 )
 
 

@@ -82,7 +82,6 @@ class QwenVLDataCollator(BaseDataCollator):
 
         input_ids = torch.tensor(input_ids, dtype=torch.long)
         labels = torch.tensor(labels, dtype=torch.long)
-        raw_texts = ["".join(x) for x in raw_texts]
         
         return dict(
             input_ids=input_ids,

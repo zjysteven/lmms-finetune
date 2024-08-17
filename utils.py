@@ -46,8 +46,10 @@ class NoTextOnlyBatchSampler(Sampler):
         num_batches = math.ceil((len(mm_indices) + len(uni_indices)) / self.mega_batch_size)
         if len(mm_indices) < num_batches:
             raise ValueError(
+                f"{len(mm_indices)} multimodal entries, {len(num_batches)} batches. "
                 "Not enough multimodal data in the dataset, or the batch size is too small. " 
-                "There will be at least one batch that is text-only, which doesn't work with deepspeed."
+                "There will be at least one batch that is text-only, which doesn't work with deepspeed. "
+                "Try increasing the batch size first."
             )
 
         # shuffle indices
@@ -95,6 +97,14 @@ class TrainerWithCustomSampler(Trainer):
         return NoTextOnlyBatchSampler(
             self.args.train_batch_size,
             world_size=self.args.world_size * self.args.gradient_accumulation_steps,
+            is_text_only=is_text_only,
+        )
+    
+    def _get_eval_sampler(self, eval_dataset: torch.utils.data.Dataset) -> Optional[torch.utils.data.Sampler]:
+        is_text_only = eval_dataset.is_text_only
+        return NoTextOnlyBatchSampler(
+            self.args.eval_batch_size,
+            world_size=self.args.world_size,
             is_text_only=is_text_only,
         )
 

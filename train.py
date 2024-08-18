@@ -1,26 +1,26 @@
 import os
-os.environ["WANDB_PROJECT"]= "lmms-ft"
-from dataclasses import asdict
-import math
-from pathlib import Path
-from typing import List, Optional
-import yaml
 
-from accelerate.utils import DistributedType
-from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+os.environ["WANDB_PROJECT"] = "lmms-ft"
+from dataclasses import asdict
+from pathlib import Path
+
 import torch
 import transformers
-from transformers import Trainer, deepspeed
+import yaml
+from accelerate.utils import DistributedType
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+from transformers import deepspeed
 
-
-from arguments import ModelArguments, DataArguments, TrainingArguments, LoraArguments
+from arguments import DataArguments, LoraArguments, ModelArguments, TrainingArguments
 from collators import COLLATORS
 from datasets import LazySupervisedDataset
 from loaders import LOADERS
 from supported_models import MODULE_KEYWORDS
 from utils import (
-    rank0_print, find_all_linear_names, safe_save_model_for_hf_trainer,
-    get_peft_state_maybe_zero_3, TrainerWithCustomSampler
+    TrainerWithCustomSampler,
+    find_all_linear_names,
+    rank0_print,
+    safe_save_model_for_hf_trainer,
 )
 
 
@@ -28,10 +28,12 @@ def train():
     parser = transformers.HfArgumentParser(
         (ModelArguments, DataArguments, TrainingArguments, LoraArguments)
     )
-    model_args, data_args, training_args, lora_args = parser.parse_args_into_dataclasses()
+    model_args, data_args, training_args, lora_args = (
+        parser.parse_args_into_dataclasses()
+    )
 
     # dumping arguments
-    output_dir = getattr(training_args, 'output_dir', None)
+    output_dir = getattr(training_args, "output_dir", None)
     assert output_dir is not None, "output_dir is required"
     args_dir = Path(output_dir) / "arguments"
     args_dir.mkdir(parents=True, exist_ok=True)
@@ -40,13 +42,23 @@ def train():
     yaml.dump(asdict(training_args), open(args_dir / "training.yaml", "w"))
     yaml.dump(asdict(lora_args), open(args_dir / "lora.yaml", "w"))
 
-    compute_dtype = (torch.float16 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
-    if getattr(training_args, 'deepspeed', None) and getattr(lora_args, 'q_lora', False):
+    compute_dtype = (
+        torch.float16
+        if training_args.fp16
+        else (torch.bfloat16 if training_args.bf16 else torch.float32)
+    )
+    if getattr(training_args, "deepspeed", None) and getattr(
+        lora_args, "q_lora", False
+    ):
         training_args.distributed_state.distributed_type = DistributedType.DEEPSPEED
 
     device_map = None
     if lora_args.q_lora:
-        device_map = {"": int(os.environ.get("LOCAL_RANK") or 0)} if int(os.environ.get("WORLD_SIZE", 1)) != 1 else None
+        device_map = (
+            {"": int(os.environ.get("LOCAL_RANK") or 0)}
+            if int(os.environ.get("WORLD_SIZE", 1)) != 1
+            else None
+        )
         if len(training_args.fsdp) > 0 or deepspeed.is_deepspeed_zero3_enabled():
             raise ValueError("FSDP or ZeRO3 are not incompatible with QLoRA.")
 
@@ -54,13 +66,14 @@ def train():
     bnb_config = None
     if lora_args.use_lora and lora_args.q_lora:
         from transformers import BitsAndBytesConfig
+
         rank0_print("Quantization for LLM enabled...")
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_compute_dtype=compute_dtype,
-            bnb_4bit_quant_type="nf4", 
+            bnb_4bit_quant_type="nf4",
         )
-    
+
     # load model, tokenizer, processor
     rank0_print("Loading model, tokenizer, processor...")
     loader = LOADERS[model_args.model_family_id](
@@ -80,14 +93,16 @@ def train():
     # freeze certain params
     vision_encoder_keys = MODULE_KEYWORDS[model_args.model_family_id]["vision_encoder"]
     if not training_args.train_vision_encoder:
-        rank0_print(f"Vision encoder is freezed... including:")
+        rank0_print("Vision encoder is freezed... including:")
         for module in vision_encoder_keys:
             rank0_print(f"\t{module}")
             eval(f"model.{module}").requires_grad_(False)
 
-    vision_projector_keys = MODULE_KEYWORDS[model_args.model_family_id]["vision_projector"]
+    vision_projector_keys = MODULE_KEYWORDS[model_args.model_family_id][
+        "vision_projector"
+    ]
     if not training_args.train_vision_projector:
-        rank0_print(f"Vision projector is freezed... including:")
+        rank0_print("Vision projector is freezed... including:")
         for module in vision_projector_keys:
             rank0_print(f"\t{module}")
             eval(f"model.{module}").requires_grad_(False)
@@ -95,15 +110,18 @@ def train():
     # other components preparation (e.g., image_newline, vision_resampler)
     # we will just freeze these
     if "others" in MODULE_KEYWORDS[model_args.model_family_id]:
-        rank0_print(f"Other multimodal component is freezed... including:")
+        rank0_print("Other multimodal component is freezed... including:")
         for other_key in MODULE_KEYWORDS[model_args.model_family_id]["others"]:
             rank0_print(f"\t{other_key}")
             eval(f"model.{other_key}").requires_grad_(False)
 
     # lora preparation
     llm_keys = MODULE_KEYWORDS[model_args.model_family_id]["llm"]
-    if not (lora_args.use_lora or (training_args.train_vision_encoder and lora_args.use_vision_lora)):
-        rank0_print("No LoRA enabled...")        
+    if not (
+        lora_args.use_lora
+        or (training_args.train_vision_encoder and lora_args.use_vision_lora)
+    ):
+        rank0_print("No LoRA enabled...")
     else:
         named_modules = {n: m for n, m in model.named_modules()}
         lora_modules = []
@@ -111,22 +129,24 @@ def train():
 
         if training_args.train_vision_encoder and lora_args.use_vision_lora:
             rank0_print("LoRA for vision encoder enabled...")
-            lora_modules.extend(find_all_linear_names(named_modules, vision_encoder_keys))
+            lora_modules.extend(
+                find_all_linear_names(named_modules, vision_encoder_keys)
+            )
         elif training_args.train_vision_encoder:
             rank0_print("Vision encoder will be fully trained...")
             full_modules.extend(vision_encoder_keys)
-        
+
         if lora_args.use_lora:
             rank0_print("LoRA for LLM enabled...")
             lora_modules.extend(find_all_linear_names(named_modules, llm_keys))
         else:
             rank0_print("LLM will be fully trained...")
             full_modules.extend(llm_keys)
-        
+
         if training_args.train_vision_projector:
             rank0_print("Vision projector will be fully trained...")
             full_modules.extend(vision_projector_keys)
-        
+
         lora_config = LoraConfig(
             r=lora_args.lora_r,
             lora_alpha=lora_args.lora_alpha,
@@ -141,9 +161,9 @@ def train():
             model = prepare_model_for_kbit_training(
                 model, use_gradient_checkpointing=training_args.gradient_checkpointing
             )
-            
+
         model = get_peft_model(model, lora_config)
-        
+
     # print trainable parameters for inspection
     rank0_print("Trainable parameters:")
     for name, param in model.named_parameters():
@@ -159,7 +179,7 @@ def train():
         num_frames=data_args.num_frames,
         model_family_id=model_args.model_family_id,
         user_key=data_args.user_key,
-        assistant_key=data_args.assistant_key
+        assistant_key=data_args.assistant_key,
     )
     if data_args.eval_data_path:
         eval_dataset = LazySupervisedDataset(
@@ -169,7 +189,7 @@ def train():
             num_frames=data_args.num_frames,
             model_family_id=model_args.model_family_id,
             user_key=data_args.user_key,
-            assistant_key=data_args.assistant_key
+            assistant_key=data_args.assistant_key,
         )
     else:
         eval_dataset = None
@@ -195,7 +215,7 @@ def train():
     trainer.save_state()
 
     safe_save_model_for_hf_trainer(trainer=trainer, output_dir=output_dir)
-    
+
 
 if __name__ == "__main__":
     train()

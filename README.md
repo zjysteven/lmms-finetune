@@ -13,7 +13,7 @@ More and more large multimodal models (LMMs) are being released from time to tim
 
 
 The codebase is quite flexible. Despite being at an early stage, it already supports the finetuning of various types of LMMs, including:
-- :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)
+- :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [LLaVA-1.6/NeXT](https://huggingface.co/collections/llava-hf/llava-next-65f75c4afac77fd37dbbe6cf), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)
 - :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 
@@ -22,7 +22,7 @@ See [supported_models.md](docs/supported_models.md) for the full list of support
 *TODOS:* 
 - [x] Support training with text-only data.
 - [x] Support tuning vision models and projectors.
-- [ ] Add more models, including llava-1.6/next, idefics2, glm4-v, minicpm, etc.
+- [ ] Add more models, including llava-onvision, idefics2, glm4-v, minicpm, etc.
 
 :raising_hand: If you would like to have a model available, feel free to open an issue.
 

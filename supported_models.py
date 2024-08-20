@@ -12,6 +12,12 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_projector": ["multi_modal_projector"],
         "llm": ["language_model"]
     },
+    "llava-1.6": {
+        "vision_encoder": ["vision_tower"],
+        "vision_projector": ["multi_modal_projector"],
+        "llm": ["language_model"],
+        "others": ["image_newline"]
+    },
     "llava-interleave": {
         "vision_encoder": ["vision_tower"],
         "vision_projector": ["multi_modal_projector"],
@@ -63,24 +69,18 @@ register_model(
     model_hf_path="llava-hf/llava-1.5-13b-hf"
 )
 
-# llava-1.6 --------------------------------------------------
-# register_model(
-#     model_id="llava-1.6-mistral-7b",
-#     model_family_id="llava-1.6",
-#     model_hf_path="llava-hf/llava-v1.6-mistral-7b-hf"
-# )
+# llava-1.6/next ---------------------------------------------
+register_model(
+    model_id="llava-1.6-vicuna-7b",
+    model_family_id="llava-1.6",
+    model_hf_path="llava-hf/llava-v1.6-vicuna-7b-hf"
+)
 
-# register_model(
-#     model_id="llava-1.6-vicuna-7b",
-#     model_family_id="llava-1.6",
-#     model_hf_path="llava-hf/llava-v1.6-vicuna-7b-hf"
-# )
-
-# register_model(
-#     model_id="llava-1.6-vicuna-13b",
-#     model_family_id="llava-1.6",
-#     model_hf_path="llava-hf/llava-v1.6-vicuna-13b-hf"
-# )
+register_model(
+    model_id="llava-1.6-vicuna-13b",
+    model_family_id="llava-1.6",
+    model_hf_path="llava-hf/llava-v1.6-vicuna-13b-hf"
+)
 
 # llava-next-video -------------------------------------------
 register_model(
@@ -113,6 +113,31 @@ register_model(
     model_family_id="llava-interleave",
     model_hf_path="llava-hf/llava-interleave-qwen-7b-hf"
 )
+
+# llava-onevision -------------------------------------------
+# register_model(
+#     model_id="llava-onevision-0.5b-si",
+#     model_family_id="llava-onevision",
+#     model_hf_path="llava-hf/llava-onevision-qwen2-0.5b-si-hf"
+# )
+
+# register_model(
+#     model_id="llava-onevision-0.5b-ov",
+#     model_family_id="llava-onevision",
+#     model_hf_path="llava-hf/llava-onevision-qwen2-0.5b-ov-hf"
+# )
+
+# register_model(
+#     model_id="llava-onevision-7b-si",
+#     model_family_id="llava-onevision",
+#     model_hf_path="llava-hf/llava-onevision-qwen2-7b-si-hf"
+# )
+
+# register_model(
+#     model_id="llava-onevision-7b-ov",
+#     model_family_id="llava-onevision",
+#     model_hf_path="llava-hf/llava-onevision-qwen2-7b-ov-hf"
+# )
 
 # qwen-vl ----------------------------------------------------
 register_model(

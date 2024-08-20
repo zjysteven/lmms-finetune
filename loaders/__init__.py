@@ -10,6 +10,7 @@ def register_loader(name):
 
 
 from .llava_1_5 import LLaVA15ModelLoader
+from .llava_1_6 import LLaVA16ModelLoader
 from .llava_interleave import LLaVAInterleaveModelLoader
 from .llava_next_video import LLaVANeXTVideoModelLoader
 from .qwen_vl import QwenVLModelLoader

@@ -10,6 +10,7 @@ from torch.utils.data import Dataset
 
 TO_LOAD_IMAGE: Dict[str, bool] = {
     "llava-1.5": True,
+    "llava-1.6": True,
     "llava-interleave": True,
     "llava-next-video": True,
     "qwen-vl": False,

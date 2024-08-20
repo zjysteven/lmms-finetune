@@ -9,8 +9,8 @@ from . import register_collator
 from .base import BaseDataCollator
 
 
-@register_collator("llava-1.5")
-class LLaVA15DataCollator(BaseDataCollator):
+@register_collator("llava-1.6")
+class LLaVA16DataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
         # images
         vision_inputs = dict()

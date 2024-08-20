@@ -34,13 +34,6 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
         conversations: List[List] = [instance["conversations"] for instance in instances]
         max_len = self.tokenizer.model_max_length
 
-        user_token_id = self.tokenizer(
-            "USER:", add_special_tokens=False, padding=False, return_tensors="pt"
-        )["input_ids"]
-        assistant_token_id = self.tokenizer(
-            "ASSISTANT:", add_special_tokens=False, padding=False, return_tensors="pt"
-        )["input_ids"]
-
         total_image_tokens = 0
         total_video_tokens = 0
         input_ids = []
@@ -54,11 +47,7 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
             if system_prompt is not None:
                 cur_text.append({
                     "role": "system",
-                    # add a space at the end because for now the chat template
-                    # adds nothing after the system prompt
-                    # and this will affect the slicing of question/answer
-                    # if we don't add a space
-                    "content": [{"text": system_prompt.rstrip() + " "}]
+                    "content": [{"text": system_prompt}]
                 })
             
             for i, text in enumerate(cur_convs):
@@ -86,34 +75,25 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                         ]
                     })
 
-            cur_text = self.processor.apply_chat_template(cur_text, tokenize=False, add_generation_prompt=False)
-            cur_input_ids = self.tokenizer(
-                cur_text, truncation=True, max_length=max_len, return_tensors="pt"
-            )["input_ids"]
+            temp = self.processor.apply_chat_template(
+                cur_text,
+                add_generation_prompt=False,
+                tokenize=True,
+                return_assistant_tokens_mask=True,
+                return_dict=True,
+                return_tensors="pt",
+                truncation=False # the assistant tokens mask seems wrong when truncation is enabled
+            )
+            cur_input_ids = temp["input_ids"]
+            # manual truncation
+            if cur_input_ids.shape[1] > max_len:
+                cur_input_ids = cur_input_ids[:, :max_len]
             cur_labels = cur_input_ids.clone()
-            
+
             if self.mask_question_tokens:
-                # locate each question slice of the conversation
-                # by finding the indices of the user and assistant tokens
-                user_locs = np.where(np.array(cur_input_ids[0]) == user_token_id[0][0].item())[0]
-                assistant_locs = np.where(np.array(cur_input_ids[0]) == assistant_token_id[0][0].item())[0]
-
-                # filter potential false positives
-                user_locs_filtered = [
-                    i for i in user_locs if cur_input_ids[0, i:i + user_token_id.shape[1]].tolist() == user_token_id[0].tolist()
-                ]
-                assistant_locs_filtered = [
-                    i for i in assistant_locs if cur_input_ids[0, i:i + assistant_token_id.shape[1]].tolist() == assistant_token_id[0].tolist()
-                ]
-                assert len(user_locs_filtered) == len(assistant_locs_filtered), "Number of user and assistant tokens do not match"
-
-                start_inds = []; end_inds = []
-                for i, (user_loc, assistant_loc) in enumerate(zip(user_locs_filtered, assistant_locs_filtered)):
-                    start_inds.append(user_loc if i > 0 else 0)
-                    end_inds.append(assistant_loc + assistant_token_id.shape[1])
-
-                for start_ind, end_ind in zip(start_inds, end_inds):
-                    cur_labels[0, start_ind:end_ind] = self.IGNORE_TOKEN_ID
+                cur_assistant_masks = torch.tensor(temp["assistant_masks"][:max_len], dtype=torch.bool).unsqueeze(0)
+                assert cur_labels.shape == cur_assistant_masks.shape, "Label and mask shapes do not match"
+                cur_labels = torch.where(cur_assistant_masks, cur_labels, self.IGNORE_TOKEN_ID)
             
             assert cur_input_ids.shape == cur_labels.shape, "Input and label shapes do not match"
 

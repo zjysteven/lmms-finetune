@@ -36,8 +36,8 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "llm": ["model.embed_tokens", "model.layers", "model.norm", "lm_head"]
     },
     "qwen-vl": {
-        "vision_encoder": ["transformer.visual"],
-        "vision_projector": [],
+        "vision_encoder": ["transformer.visual.conv1", "transformer.visual.positional_embedding", "transformer.visual.ln_pre", "transformer.visual.transformer", "transformer.visual.ln_post", "transformer.visual.proj"],
+        "vision_projector": ["transformer.visual.attn_pool"],
         "llm": ["transformer.wte", "transformer.rotary_emb", "transformer.h", "transformer.ln_f", "lm_head"]
     },
 }

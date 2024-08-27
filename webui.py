@@ -4,6 +4,8 @@ import subprocess
 from pathlib import Path
 import gradio as gr
 
+from supported_models import MODEL_HF_PATH, MODEL_FAMILIES
+
 def launch_training(
     model_id, data_path, eval_data_path, image_folder, video_folder, num_frames,
     train_vision_encoder, use_vision_lora, train_vision_projector,
@@ -76,43 +78,145 @@ def launch_training(
         yield output + f"\nTraining failed with return code {process.returncode}"
 
 def create_ui():
-    with gr.Blocks() as ui:
-        gr.Markdown("# Training GUI of lmms-finetune")
+    with gr.Blocks(css="#container {max-width: 1600px; margin: auto;}") as ui:
+        gr.Markdown("# Training GUI of lmms-finetune", elem_id="title")
         
-        with gr.Tab("Model"):
-            model_id = gr.Textbox(value="llava-next-video-7b", label="Model ID")
-        
-        with gr.Tab("Data"):
-            data_path = gr.Textbox(value="./example_data/ego4d_video_train.json", label="Training Data Path")
-            eval_data_path = gr.Textbox(value="./example_data/ego4d_video_eval.json", label="Evaluation Data Path")
-            image_folder = gr.Textbox(value="./example_data/images", label="Image Folder")
-            video_folder = gr.Textbox(value="./example_data/videos", label="Video Folder")
-            num_frames = gr.Number(value=8, label="Number of Frames")
-        
-        with gr.Tab("Vision"):
-            train_vision_encoder = gr.Checkbox(value=False, label="Train Vision Encoder")
-            use_vision_lora = gr.Checkbox(value=False, label="Use Vision LoRA")
-            train_vision_projector = gr.Checkbox(value=False, label="Train Vision Projector")
-        
-        with gr.Tab("LLM"):
-            use_lora = gr.Checkbox(value=True, label="Use LoRA")
-            q_lora = gr.Checkbox(value=False, label="Use Q-LoRA")
-            lora_r = gr.Number(value=8, label="LoRA R")
-            lora_alpha = gr.Number(value=8, label="LoRA Alpha")
-        
-        with gr.Tab("Training"):
-            ds_stage = gr.Dropdown(["zero2", "zero3"], value="zero3", label="DeepSpeed Stage")
-            per_device_batch_size = gr.Number(value=2, label="Per Device Batch Size")
-            grad_accum = gr.Number(value=1, label="Gradient Accumulation Steps")
-            num_epochs = gr.Number(value=5, label="Number of Epochs")
-            lr = gr.Number(value=2e-5, label="Learning Rate")
-            model_max_len = gr.Number(value=512, label="Model Max Length")
-            num_gpus = gr.Number(value=1, label="Number of GPUs")
-            use_tf32 = gr.Checkbox(value=False, label="Use TF32")
-        
-        train_button = gr.Button("Start Training")
+        with gr.Row(elem_id="container"):
+            with gr.Column(scale=1):
+                gr.Markdown("## Model")
+                model_id = gr.Dropdown(
+                    choices=list(MODEL_HF_PATH.keys()),
+                    value=list(MODEL_HF_PATH.keys())[0] if MODEL_HF_PATH else None,
+                    label="Model ID",
+                    info="Select the model to be fine-tuned"
+                )
+                model_hf_path = gr.Textbox(
+                    label="HuggingFace Path",
+                    interactive=False,
+                    info="Corresponding HuggingFace path"
+                )
+                
+                gr.Markdown("## Data")
+                data_path = gr.Textbox(
+                    value="./example_data/celeba_image_train.json",
+                    label="Training Data Path",
+                    info="Path to the training data json file"
+                )
+                eval_data_path = gr.Textbox(
+                    value="./example_data/celeba_image_eval.json",
+                    label="Evaluation Data Path",
+                    info="Path to the evaluation data json file (optional)"
+                )
+                image_folder = gr.Textbox(
+                    value="./example_data/images",
+                    label="Image Folder",
+                    info="Path to the image root folder"
+                )
+                video_folder = gr.Textbox(
+                    value="./example_data/videos",
+                    label="Video Folder",
+                    info="Path to the video root folder"
+                )
+                num_frames = gr.Number(
+                    value=8,
+                    label="Number of Frames",
+                    info="Frames sampled from each video"
+                )
+                
+                
+            
+            with gr.Column(scale=1):
+                gr.Markdown("## Vision")
+                train_vision_encoder = gr.Checkbox(
+                    value=False,
+                    label="Train Vision Encoder",
+                    info="Whether to train the vision encoder"
+                )
+                use_vision_lora = gr.Checkbox(
+                    value=False,
+                    label="Use Vision LoRA",
+                    info="Whether to use LoRA for vision encoder (only effective when 'Train Vision Encoder' is True)"
+                )
+                train_vision_projector = gr.Checkbox(
+                    value=False,
+                    label="Train Vision Projector",
+                    info="Whether to train the vision projector (only full finetuning is supported)"
+                )
+                
+                gr.Markdown("## LLM")
+                use_lora = gr.Checkbox(
+                    value=True,
+                    label="Use LoRA",
+                    info="Whether to use LoRA for LLM"
+                )
+                q_lora = gr.Checkbox(
+                    value=False,
+                    label="Use Q-LoRA",
+                    info="Whether to use Q-LoRA for LLM; only effective when 'Use LoRA' is True"
+                )
+                lora_r = gr.Number(
+                    value=8,
+                    label="LoRA R",
+                    info="The LoRA rank (both LLM and vision encoder)"
+                )
+                lora_alpha = gr.Number(
+                    value=8,
+                    label="LoRA Alpha",
+                    info="The LoRA alpha (both LLM and vision encoder)"
+                )
+                
+            with gr.Column(scale=1):
+                gr.Markdown("## Training")
+                ds_stage = gr.Dropdown(
+                    ["zero2", "zero3"],
+                    value="zero3",
+                    label="DeepSpeed Stage",
+                    info="DeepSpeed stage; choose between zero2 and zero3"
+                )
+                per_device_batch_size = gr.Number(
+                    value=2,
+                    label="Per Device Batch Size",
+                    info="Batch size per GPU"
+                )
+                grad_accum = gr.Number(
+                    value=1,
+                    label="Gradient Accumulation Steps",
+                    info="Number of steps to accumulate gradients"
+                )
+                num_epochs = gr.Number(
+                    value=5,
+                    label="Number of Epochs",
+                    info="Number of training epochs"
+                )
+                lr = gr.Number(
+                    value=2e-5,
+                    label="Learning Rate",
+                    info="Learning rate for training"
+                )
+                model_max_len = gr.Number(
+                    value=512,
+                    label="Model Max Length",
+                    info="Maximum input length of the model"
+                )
+                num_gpus = gr.Number(
+                    value=1,
+                    label="Number of GPUs",
+                    info="Number of GPUs to use for distributed training"
+                )
+                use_tf32 = gr.Checkbox(
+                    value=True,
+                    label="Use TF32",
+                    info="Whether to use TF32 precision (for Ampere+ GPUs)"
+                )
+
+        train_button = gr.Button("Start Training", variant="primary")
         output = gr.Textbox(label="Training Output", interactive=False)
+
+        def update_hf_path(selected_model):
+            return MODEL_HF_PATH.get(selected_model, "")
         
+        model_id.change(update_hf_path, inputs=[model_id], outputs=[model_hf_path])
+
         train_button.click(
             launch_training,
             inputs=[
@@ -124,10 +228,10 @@ def create_ui():
             ],
             outputs=output
         )
-    
+
     return ui
 
 # Launch the Gradio interface
 if __name__ == "__main__":
     ui = create_ui()
-    ui.launch()
+    ui.launch(share=True)

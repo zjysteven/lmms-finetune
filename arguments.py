@@ -8,13 +8,17 @@ from supported_models import MODEL_HF_PATH, MODEL_FAMILIES
 
 @dataclass
 class ModelArguments:
-    model_id: Optional[str] = field(default="llava-1.5-7b")
+    model_id: str = field(default="llava-1.5-7b")
+    model_local_path: Optional[str] = field(default=None)
 
     def __post_init__(self):
         assert self.model_id in MODEL_HF_PATH, f"Unknown model_id: {self.model_id}"
-        self.model_name_or_path: str = MODEL_HF_PATH[self.model_id]
+        self.model_hf_path: str = MODEL_HF_PATH[self.model_id]
         assert self.model_id in MODEL_FAMILIES, f"Unknown model_id: {self.model_id}"
         self.model_family_id: str = MODEL_FAMILIES[self.model_id]
+
+        if self.model_local_path is None:
+            self.model_local_path = self.model_hf_path
 
 
 @dataclass

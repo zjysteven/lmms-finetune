@@ -64,7 +64,8 @@ def train():
     # load model, tokenizer, processor
     rank0_print("Loading model, tokenizer, processor...")
     loader = LOADERS[model_args.model_family_id](
-        model_hf_path=model_args.model_name_or_path,
+        model_hf_path=model_args.model_hf_path,
+        model_local_path=model_args.model_local_path,
         compute_dtype=compute_dtype,
         bnb_config=bnb_config,
         use_flash_attn=training_args.use_flash_attn,

@@ -17,7 +17,7 @@ class ModelArguments:
         assert self.model_id in MODEL_FAMILIES, f"Unknown model_id: {self.model_id}"
         self.model_family_id: str = MODEL_FAMILIES[self.model_id]
 
-        if self.model_local_path is None:
+        if not self.model_local_path:
             self.model_local_path = self.model_hf_path
 
 

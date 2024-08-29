@@ -3,7 +3,7 @@ torchvision
 transformers @ git+https://github.com/huggingface/transformers.git
 accelerate
 peft
-deepspeed
+deepspeed==0.14.4
 tiktoken
 matplotlib
 bitsandbytes

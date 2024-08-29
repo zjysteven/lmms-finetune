@@ -34,6 +34,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
+- **2024/08/28**: Finetuning with gradio webui interface is supported. Try `python webui.py`.
 - **2024/07/30**: Finetuning of vision encoder and projector is now supported.
 - **2024/07/25**: Several things are improved. We have *1)* released a [colab notebook](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing) demonstrating a full, successful training run with LLaVA-NeXT-Video-7B (happy to hear from people that they succeeded in [their cases](https://github.com/zjysteven/lmms-finetune/issues/7#issuecomment-2249864887) too); *2)* supported having text-only samples in the training set (see [this](docs/dataset.md) for one note).
 - **2024/07/20**: Initial release of the codebase. More models and optimizations are coming soon. Stay tuned!
@@ -63,7 +64,7 @@ A workable example training run (of LLaVA-NeXT-Video-7B) is showcased in this [c
 <details>
 <summary><b>0. See if the model you want to finetune is supported</b></summary>
 
-Browse [supported_models.md](docs/supported_models.md). Or run `python supported_models.py`, which will show things like
+Browse [supported_models.md](docs/supported_models.md). Or run `python supported_models.py`, which will for example show things like
 ```
 Supported models:
   Model ID                      : HuggingFace Path
@@ -115,6 +116,8 @@ Besides this json file, the actual videos and images are by default assumed to b
 <summary><b>2. Perform finetuning</b></summary>
 
 Modify the sample training bash script, [example_video.sh](./example_scripts/example_video.sh) or [example_image.sh](example_image.sh) (there are no differences other than different model ID and dataset filepath), to specify arguments including the target model, data path, etc. There are comments that explain each argument's meaning. Then simply kick off the training by running the bash script `bash example_scripts/example_video.sh` or `bash example_scripts/example_image.sh`. Note that to exactly run the provided [example_video.sh](./example_scripts/example_video.sh), you will need to download the video clips from ShareGPT4Video; see [here](example_data/videos/ego4d/README.md) for instructions.
+
+:chart_with_upwards_trend:*If you prefer graphical interface*, simply run `python webui.py` to lauch the gradio interface for finetuning.
 </details>
 
 

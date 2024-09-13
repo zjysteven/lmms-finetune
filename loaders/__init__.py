@@ -15,3 +15,4 @@ from .llava_interleave import LLaVAInterleaveModelLoader
 from .llava_next_video import LLaVANeXTVideoModelLoader
 from .qwen_vl import QwenVLModelLoader
 from .phi3_v import Phi3VModelLoader
+from .qwen2_vl import Qwen2VLModelLoader

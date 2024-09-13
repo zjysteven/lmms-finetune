@@ -40,6 +40,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_projector": ["transformer.visual.attn_pool"],
         "llm": ["transformer.wte", "transformer.rotary_emb", "transformer.h", "transformer.ln_f", "lm_head"]
     },
+    "qwen2-vl": {
+        "vision_encoder": ["visual.patch_embed", "visual.rotary_pos_emb", "visual.blocks"],
+        "vision_projector": ["visual.merger"],
+        "llm": ["model"]
+    }
 }
 
 
@@ -151,6 +156,19 @@ register_model(
     model_id="phi3-v",
     model_family_id="phi3-v",
     model_hf_path="microsoft/Phi-3-vision-128k-instruct"
+)
+
+# qwen2-vl ---------------------------------------------------
+register_model(
+    model_id="qwen2-vl-2b-instruct",
+    model_family_id="qwen2-vl",
+    model_hf_path="Qwen/Qwen2-VL-2B-Instruct"
+)
+
+register_model(
+    model_id="qwen2-vl-7b-instruct",
+    model_family_id="qwen2-vl",
+    model_hf_path="Qwen/Qwen2-VL-7B-Instruct"
 )
 
 #=============================================================

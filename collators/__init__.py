@@ -15,3 +15,4 @@ from .llava_interleave import LLaVAInterleaveDataCollator
 from .llava_next_video import LLaVANeXTVideoDataCollator
 from .qwen_vl import QwenVLDataCollator
 from .phi3_v import Phi3VDataCollator
+from .qwen2_vl import Qwen2VLDataCollator

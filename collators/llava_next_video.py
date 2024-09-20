@@ -59,7 +59,7 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
             if system_prompt is not None:
                 cur_text.append({
                     "role": "system",
-                    "content": [{"text": system_prompt}]
+                    "content": [{"type": "text", "text": system_prompt}]
                 })
             
             for i, text in enumerate(cur_convs):

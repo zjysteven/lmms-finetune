@@ -139,6 +139,7 @@ class LLaVAInterleaveDataCollator(BaseDataCollator):
             # manual truncation
             if cur_input_ids.shape[1] > max_len:
                 cur_input_ids = cur_input_ids[:, :max_len]
+                cur_assistant_masks = cur_assistant_masks[:, :max_len]
             cur_labels = cur_input_ids.clone()
 
             if self.mask_question_tokens:

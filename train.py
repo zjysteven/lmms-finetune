@@ -180,6 +180,7 @@ def train():
         config=config,
         tokenizer=tokenizer,
         processor=processor,
+        mask_question_tokens=training_args.mask_question_tokens
     )
 
     # trainer

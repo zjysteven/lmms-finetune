@@ -44,9 +44,10 @@ class TrainingArguments(transformers.TrainingArguments):
             "help": "Maximum sequence length. Sequences will be right padded (and possibly truncated)."
         },
     )
-    use_flash_attn: bool = False
-    train_vision_encoder: bool = False
-    train_vision_projector: bool = False
+    use_flash_attn: bool = field(default=False)
+    train_vision_encoder: bool = field(default=False)
+    train_vision_projector: bool = field(default=False)
+    mask_question_tokens: bool = field(default=True)
 
     def __post_init__(self):
         super().__post_init__()
@@ -55,11 +56,11 @@ class TrainingArguments(transformers.TrainingArguments):
 
 @dataclass
 class LoraArguments:
-    use_lora: bool = True
-    use_vision_lora: bool = True
-    q_lora: bool = False
-    lora_r: int = 64
-    lora_alpha: int = 16
-    lora_dropout: float = 0.05
+    use_lora: bool = field(default=True)
+    use_vision_lora: bool = field(default=True)
+    q_lora: bool = field(default=False)
+    lora_r: int = field(default=8)
+    lora_alpha: int = field(default=16)
+    lora_dropout: float = field(default=0.05)
     lora_weight_path: str = ""
     lora_bias: str = "none"

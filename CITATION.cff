@@ -1,0 +1,30 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: lmms-finetune
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Jingyang
+    family-names: Zhang
+    email: zhjy227@gmail.com
+    orcid: 'https://orcid.org/0000-0002-9771-5111'
+  - given-names: Yueqian
+    family-names: Lin
+    email: yueqian.lin@duke.edu
+    affiliation: Duke University
+    orcid: 'https://orcid.org/0000-0003-1473-8981'
+repository-code: 'https://github.com/zjysteven/lmms-finetune'
+abstract: >-
+  lmms-finetune is a lightweight, unified codebase for
+  finetuning multiple latest multi-modal LLMs including
+  llava-1.5/1.6/interleave/next-video/onevision,
+  qwen-vl(-2), and phi3-v.
+keywords:
+  - LLM
+  - foundation model
+  - multi-modal LLM
+license: Apache-2.0

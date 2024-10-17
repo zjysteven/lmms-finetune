@@ -5,6 +5,7 @@ import numpy as np
 import PIL
 import torch
 from transformers.image_utils import get_image_size, to_numpy_array
+from transformers.models.llava.processing_llava import LlavaProcessorKwargs
 from transformers.utils import logging
 
 from . import register_collator
@@ -17,21 +18,29 @@ logger = logging.get_logger(__name__)
 @register_collator("llava-1.5")
 class LLaVA15DataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
+        output_kwargs = self.processor._merge_kwargs(
+            LlavaProcessorKwargs,
+            tokenizer_init_kwargs=self.tokenizer.init_kwargs,
+        )
+
+        vision_inputs = dict()
+        images: List[List[PIL.Image.Image]] = [x for instance in instances for x in instance["images"]]
+        if len(images) > 0:
+            vision_inputs.update(**self.processor.image_processor(images, return_tensors="pt", **output_kwargs["images_kwargs"]))
+
         # some parsing
-        # the dataset implementation assume conversations are [user, assistant, user, assistant, ...]
         images: List[List[PIL.Image.Image]] = [instance["images"] for instance in instances]
         system_prompts: List[Union[str, None]] = [instance["system_prompt"] for instance in instances]
         conversations: List[List] = [instance["conversations"] for instance in instances]
-        max_len = self.tokenizer.model_max_length
 
         # constants
+        max_len = self.tokenizer.model_max_length
         image_token_id = self.config.image_token_index
         patch_size = self.processor.patch_size
         vision_feature_select_strategy = self.processor.vision_feature_select_strategy
 
         input_ids = []
         labels = []
-        all_vision_inputs = []
         
         for system_prompt, cur_images, cur_convs in zip(system_prompts, images, conversations):
             cur_num_images = 0
@@ -80,10 +89,8 @@ class LLaVA15DataCollator(BaseDataCollator):
             cur_input_ids = temp["input_ids"]
             cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)
 
-            # preprocess image
+            # expand image tokens
             vision_inputs = self.processor.image_processor(cur_images, return_tensors="pt")
-            all_vision_inputs.append(vision_inputs)
-
             if vision_inputs.get("pixel_values") is not None:
                 if patch_size is not None and vision_feature_select_strategy is not None:
                     # Replace the image token with the expanded image token sequence
@@ -143,10 +150,6 @@ class LLaVA15DataCollator(BaseDataCollator):
 
         input_ids = torch.cat(input_ids)
         labels = torch.cat(labels)
-
-        vision_inputs = {}
-        for key in all_vision_inputs[0].keys():
-            vision_inputs[key] = torch.cat([x[key] for x in all_vision_inputs])
 
         return dict(
             **vision_inputs,

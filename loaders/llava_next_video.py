@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration, PreTrainedTokenizer
+from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration, PreTrainedTokenizer, AutoConfig
 
 from . import register_loader
 from .base import BaseModelLoader
@@ -8,7 +8,7 @@ from .base import BaseModelLoader
 
 @register_loader("llava-next-video")
 class LLaVANeXTVideoModelLoader(BaseModelLoader):
-    def load(self, load_model: bool = True) -> Tuple[LlavaNextVideoForConditionalGeneration, PreTrainedTokenizer, LlavaNextVideoProcessor]:
+    def load(self, load_model: bool = True) -> Tuple[LlavaNextVideoForConditionalGeneration, PreTrainedTokenizer, LlavaNextVideoProcessor, AutoConfig]:
         if load_model:
             model = LlavaNextVideoForConditionalGeneration.from_pretrained(
                 self.model_local_path, 
@@ -20,4 +20,5 @@ class LLaVANeXTVideoModelLoader(BaseModelLoader):
 
         processor = LlavaNextVideoProcessor.from_pretrained(self.model_hf_path)
         tokenizer = processor.tokenizer
-        return model, tokenizer, processor
+        config = AutoConfig.from_pretrained(self.model_local_path)
+        return model, tokenizer, processor, config

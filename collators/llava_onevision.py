@@ -75,13 +75,14 @@ class LLaVAOnevisionDataCollator(BaseDataCollator):
             assert len(set([x.shape[0] for x in videos])) == 1, "All videos must have the same number of frames"
             vision_inputs.update(**self.processor.video_processor(videos, return_tensors="pt", **output_kwargs["videos_kwargs"]))
 
+        # some parsing
         images = [instance["images"] for instance in instances]
         videos = [instance["videos"] for instance in instances]
         system_prompts: List[Union[str, None]] = [instance["system_prompt"] for instance in instances]
         conversations: List[List] = [instance["conversations"] for instance in instances]
-        max_len = self.tokenizer.model_max_length
         
         # constants
+        max_len = self.tokenizer.model_max_length
         image_token_id = self.config.image_token_index
         video_token_id = self.config.video_token_index
         vision_feature_select_strategy = self.processor.vision_feature_select_strategy

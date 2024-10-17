@@ -1,8 +1,8 @@
 # Enabling the finetuning of the latest Large Multimodal Models
 
-Maintainers: [Jingyang Zhang](https://zjysteven.github.io/), [Yueqian Lin](https://yueqianlin.com/) @ [Duke CEI](https://cei.pratt.duke.edu/)
+| :exclamation: This codebase will not be under active maintainence/update after November 2024, as the main contributor/maintainer, [Jingyang Zhang](https://zjysteven.github.io/) will be graduting.|
+|-----------------------------------------|
 
-We also thank staff from 🤗huggingface, especially [Raushan Turganbay](https://github.com/zucchini-nlp), for their generous discussions and feedbacks on this project.
 
 ## About
 
@@ -12,19 +12,23 @@ More and more large multimodal models (LMMs) are being released from time to tim
 - the codebase is kept as simple/lightweight as possible, so that it is easy to understand and modify.
 
 
-The codebase is quite flexible. Despite being at an early stage, it already supports the finetuning of various types of LMMs, including:
+The codebase is quite flexible. It supports the finetuning of various types of LMMs, including:
 - :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [LLaVA-1.6/NeXT](https://huggingface.co/collections/llava-hf/llava-next-65f75c4afac77fd37dbbe6cf), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)
-- :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
+- :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [Qwen2-VL-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct),  [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
+- :rocket: unified models: [LLaVA-Onevision](https://huggingface.co/collections/llava-hf/llava-onevision-66bb1e9ce8856e210a7ed1fe)
 
-See [supported_models.md](docs/supported_models.md) for the full list of supported models. More models are coming on the way. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported for the LLM component, while 1) full-finetuning and 2) lora are supported for the vision encoder/backbone.
+See [supported_models.md](docs/supported_models.md) for the full list of supported models. For training strategy, 1) full-finetuning, 2) lora, and 3) q-lora are supported for the LLM component, while 1) full-finetuning and 2) lora are supported for the vision encoder/backbone.
 
+<!---
 *TODOS:* 
 - [x] Support training with text-only data.
 - [x] Support tuning vision models and projectors.
 - [ ] Add more models, including llava-onvision, idefics2, glm4-v, minicpm, etc.
 
+
 :raising_hand: If you would like to have a model available, feel free to open an issue.
+-->
 
 <details>
 <summary>What's different from other training frameworks, e.g., LLaMA-Factory, xtuner, swift?</summary>
@@ -34,6 +38,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
+- **2024/10/16**: We added LLaVA-Onevision. See a caveat when using LLaVA-Onevision [here](https://github.com/zjysteven/lmms-finetune/issues/43). Also we updated the collators to stay in line with the new processing of LLaVA models in transformers.
 - **2024/08/28**: Finetuning with gradio webui interface is supported. Try `python webui.py`.
 - **2024/07/30**: Finetuning of vision encoder and projector is now supported.
 - **2024/07/25**: Several things are improved. We have *1)* released a [colab notebook](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing) demonstrating a full, successful training run with LLaVA-NeXT-Video-7B (happy to hear from people that they succeeded in [their cases](https://github.com/zjysteven/lmms-finetune/issues/7#issuecomment-2249864887) too); *2)* supported having text-only samples in the training set (see [this](docs/dataset.md) for one note).
@@ -130,6 +135,17 @@ The key here is to correctly load the finetuned model, after that everything is 
 
 ## Acknowledgements
 
-We want to thank the huggingface team for actively integrating newest models in the transformers library. Also, the example finetuning scripts (e.g., [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa/Fine_tune_LLaVa_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa-NeXT/Fine_tune_LLaVaNeXT_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), and [this](https://colab.research.google.com/drive/1dTdro-k7NFqRgGq5-TlGHM-6k2sYQhXp#scrollTo=4ccbd183-f15a-4f94-a526-9ceeec3f61e0)) made by HF staff, [Niels Rogge](https://github.com/NielsRogge) and [Raushan Turganbay](https://github.com/zucchini-nlp), are very helpful and lay the foundation for this codebase.
+We want to thank the huggingface team for actively integrating newest models in the transformers library. Also, the example finetuning scripts (e.g., [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa/Fine_tune_LLaVa_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), [this](https://github.com/NielsRogge/Transformers-Tutorials/blob/master/LLaVa-NeXT/Fine_tune_LLaVaNeXT_on_a_custom_dataset_(with_PyTorch_Lightning).ipynb), and [this](https://colab.research.google.com/drive/1dTdro-k7NFqRgGq5-TlGHM-6k2sYQhXp#scrollTo=4ccbd183-f15a-4f94-a526-9ceeec3f61e0)) made by HF staff, [Niels Rogge](https://github.com/NielsRogge) and [Raushan Turganbay](https://github.com/zucchini-nlp), are very helpful and lay the foundation for this codebase. We also especially thank [Raushan Turganbay](https://github.com/zucchini-nlp) for her generous discussions and feedbacks on this project.
 
 The codebase borrows from, is inspired by, or builds upon the following code, repos, and/or libraries: [LLaVA](https://github.com/haotian-liu/LLaVA), [Qwen](https://github.com/QwenLM/Qwen-VL/blob/master/finetune.py), [transformers](https://github.com/huggingface/transformers), etc.
+
+## Citation
+If you use lmms-finetune in your research/project, we'd be very happy if you could 1) give us a star, 2) share this repo with others, or 3) cite this codebase:
+```
+@software{Zhang_lmms-finetune,
+author = {Zhang, Jingyang and Lin, Yueqian},
+license = {Apache-2.0},
+title = {{lmms-finetune}},
+url = {https://github.com/zjysteven/lmms-finetune}
+}
+```

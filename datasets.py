@@ -13,6 +13,7 @@ TO_LOAD_IMAGE: Dict[str, bool] = {
     "llava-1.6": True,
     "llava-interleave": True,
     "llava-next-video": True,
+    "llava-onevision": True,
     "qwen-vl": False,
     "phi3-v": True,
     "qwen2-vl": True,

@@ -10,7 +10,10 @@
 |                                | llava-next-video-34b                     | [llava-hf/LLaVA-NeXT-Video-34B-hf](https://huggingface.co/llava-hf/LLaVA-NeXT-Video-34B-hf)          |
 | llava-interleave               | llava-interleave-qwen-0.5b               | [llava-hf/llava-interleave-qwen-0.5b-hf](https://huggingface.co/llava-hf/llava-interleave-qwen-0.5b-hf) |
 |                                | llava-interleave-qwen-7b                 | [llava-hf/llava-interleave-qwen-7b-hf](https://huggingface.co/llava-hf/llava-interleave-qwen-7b-hf)  |
+| llava-onevision                | llava-onevision-0.5b-ov                  | [llava-hf/llava-onevision-qwen2-0.5b-ov-hf](https://huggingface.co/llava-hf/llava-onevision-qwen2-0.5b-ov-hf) |
+|                                | llava-onevision-7b-ov                    | [llava-hf/llava-onevision-qwen2-7b-ov-hf](https://huggingface.co/llava-hf/llava-onevision-qwen2-7b-ov-hf) |
+|                                | llava-onevision-72b-ov                   | [llava-hf/llava-onevision-qwen2-72b-ov-hf](https://huggingface.co/llava-hf/llava-onevision-qwen2-72b-ov-hf) |
 | qwen-vl                        | qwen-vl-chat                             | [Qwen/Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat)                                        |
 | phi3-v                         | phi3-v                                   | [microsoft/Phi-3-vision-128k-instruct](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)  |
-|qwen2-vl                        | qwen2-vl-2b-instruct                     | [Qwen/Qwen2-VL-2B-instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-instruct)                        |
-|                                | qwen2-vl-7b-instruct                     | [Qwen/Qwen2-VL-7B-instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-instruct)                        |
+| qwen2-vl                       | qwen2-vl-2b-instruct                     | [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)                        |
+|                                | qwen2-vl-7b-instruct                     | [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)                        |

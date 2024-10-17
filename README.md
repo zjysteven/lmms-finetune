@@ -1,6 +1,6 @@
 # Enabling the finetuning of the latest Large Multimodal Models
 
-| :exclamation: This codebase will NOT be under active maintainence/update after November 2024, as the main contributor/maintainer, [Jingyang Zhang](https://zjysteven.github.io/) will be graduting.|
+| :exclamation: This codebase will NOT be under active maintainence/update after November 2024, as the main contributor/maintainer, [Jingyang Zhang](https://zjysteven.github.io/) will be graduating.|
 |-----------------------------------------|
 
 

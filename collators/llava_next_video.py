@@ -145,6 +145,9 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                     cur_input_ids = cur_input_ids.repeat_interleave(repeat, dim=1)
                     cur_assistant_masks = cur_assistant_masks.repeat_interleave(repeat, dim=1)
 
+            # a dirty hack to include eos token as part of the labels
+            cur_assistant_masks[0, -1] = True
+
             # manual truncation
             if cur_input_ids.shape[1] > max_len:
                 cur_input_ids = cur_input_ids[:, :max_len]

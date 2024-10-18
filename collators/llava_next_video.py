@@ -9,6 +9,7 @@ from transformers.utils import logging
 
 from . import register_collator
 from .base import BaseDataCollator
+from .chat_template_monkey_patch import apply_chat_template
 
 
 logger = logging.get_logger(__name__)
@@ -17,6 +18,9 @@ logger = logging.get_logger(__name__)
 @register_collator("llava-next-video")
 class LLaVANeXTVideoDataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
+        # monkey patch to include bos tokens
+        self.tokenizer.apply_chat_template = apply_chat_template.__get__(self.tokenizer)
+
         vision_inputs = dict()
 
         # images
@@ -97,7 +101,7 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                 return_assistant_tokens_mask=True,
                 return_dict=True,
                 return_tensors="pt",
-                truncation=False # the assistant tokens mask seems wrong when truncation is enabled
+                truncation=False, # the assistant tokens mask seems wrong when truncation is enabled
             )
             cur_input_ids = temp["input_ids"]
             cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)

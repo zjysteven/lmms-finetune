@@ -18,7 +18,7 @@ class LLaVANeXTVideoModelLoader(BaseModelLoader):
         else:
             model = None
 
-        processor = LlavaNextVideoProcessor.from_pretrained(self.model_hf_path)
+        processor = LlavaNextVideoProcessor.from_pretrained(self.model_hf_path, add_eos_token=True)
         tokenizer = processor.tokenizer
         config = AutoConfig.from_pretrained(self.model_local_path)
         return model, tokenizer, processor, config

@@ -121,11 +121,11 @@ class LLaVAInterleaveDataCollator(BaseDataCollator):
             cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)
 
             # expand image tokens
-            vision_inputs = self.processor.image_processor(cur_images, return_tensors="pt")
-            if vision_inputs.get("pixel_values") is not None:
+            temp_vision_inputs = self.processor.image_processor(cur_images, return_tensors="pt")
+            if temp_vision_inputs.get("pixel_values") is not None:
                 if patch_size is not None and vision_feature_select_strategy is not None:
                     # Replace the image token with the expanded image token sequence
-                    pixel_values = vision_inputs["pixel_values"]
+                    pixel_values = temp_vision_inputs["pixel_values"]
                     height, width = get_image_size(to_numpy_array(pixel_values[0]))
                     num_image_tokens = (height // patch_size) * (width // patch_size) + 1
                     if vision_feature_select_strategy == "default":

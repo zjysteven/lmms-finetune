@@ -90,11 +90,11 @@ class LLaVA16DataCollator(BaseDataCollator):
             cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)
 
             # expand image tokens
-            vision_inputs = self.processor.image_processor(cur_images, do_pad=True, return_tensors="pt")
-            if vision_inputs.get("pixel_values") is not None:
+            temp_vision_inputs = self.processor.image_processor(cur_images, do_pad=True, return_tensors="pt")
+            if temp_vision_inputs.get("pixel_values") is not None:
                 if patch_size is not None and vision_feature_select_strategy is not None:
-                    image_sizes = vision_inputs["image_sizes"]
-                    height, width = get_image_size(to_numpy_array(vision_inputs["pixel_values"][0][0]))
+                    image_sizes = temp_vision_inputs["image_sizes"]
+                    height, width = get_image_size(to_numpy_array(temp_vision_inputs["pixel_values"][0][0]))
 
                     num_image_tokens_list = []
                     for image_size in image_sizes:

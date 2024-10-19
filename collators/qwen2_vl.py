@@ -8,6 +8,13 @@ import torch
 from . import register_collator
 from .base import BaseDataCollator
 
+
+SYSTEM_MESSAGE = "You are a helpful assistant."
+DEFAULT_IM_START_TOKEN = "<|im_start|>"
+DEFAULT_IM_END_TOKEN = "<|im_end|>"
+IGNORE_INDEX = -100
+
+
 @register_collator("qwen2-vl")
 class Qwen2VLDataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
@@ -20,24 +27,12 @@ class Qwen2VLDataCollator(BaseDataCollator):
             grid_key = "image_grid_thw"
             pixel_key = "pixel_values"
             videos = None
-            # images
-            # vision_inputs = dict()
             images: List[PIL.Image.Image] = [x for instance in instances for x in instance["images"]]
-            # if len(images) > 0:
-            #     vision_inputs.update(**self.processor.image_processor(images=images, videos=videos, return_tensors="pt"))
         else:
             grid_key = "video_grid_thw"
             pixel_key = "pixel_values_videos"
-            # vision_inputs = dict()
             images = None
-            # videos
             videos: List[np.ndarray] = [x for instance in instances for x in instance["videos"]]
-            # if len(videos) > 0:
-                # ideally we should do padding here instead of forcing all videos to have the same length
-                # but since currently hf implementation does not unpad videos or have corresponding 
-                # attention masks, having padding will let the model train on padded frames
-                # assert len(set([x.shape[0] for x in videos])) == 1, "All videos must have the same number of frames"
-                # vision_inputs.update(**self.processor.video_processor(images=images, videos=videos, return_tensors="pt"))
 
         # texts
         # the dataset implementation assume conversations are [user, assistant, user, assistant, ...]
@@ -55,14 +50,11 @@ class Qwen2VLDataCollator(BaseDataCollator):
             cur_input_ids = []
             cur_labels = []
             cur_pixel_values = []
-            cur_vision_grid_thw = []
-            
+            cur_vision_grid_thw = []            
             cur_text = []
-            if system_prompt is not None:
-                cur_text.append({
-                    "role": "system",
-                    "content": [{"type": "text", "text": system_prompt}]
-                })
+
+            if system_prompt is None:
+                system_prompt = SYSTEM_MESSAGE
             
             for i, text in enumerate(cur_convs):
                 if i % 2 == 0:
@@ -81,31 +73,12 @@ class Qwen2VLDataCollator(BaseDataCollator):
                         ]
                     })
             
-            # comment for now since HF implementation does not have a way to handle assistant tokens mask
-            # temp = self.processor.apply_chat_template(
-            #     cur_text,
-            #     add_generation_prompt=True,
-            #     tokenize=True,
-            #     return_assistant_tokens_mask=True,
-            #     return_dict=True,
-            #     return_tensors="pt",
-            #     truncation=False # the assistant tokens mask seems wrong when truncation is enabled
-            # )
-            # cur_input_ids = temp["input_ids"]
-            
-            # workaround provided by https://github.com/2U1/Qwen2-VL-Finetune
-            
-            SYSTEM_MESSAGE = "You are a helpful assistant."
-            DEFAULT_IM_START_TOKEN = "<|im_start|>"
-            DEFAULT_IM_END_TOKEN = "<|im_end|>"
-            IGNORE_INDEX = -100
-            if len(SYSTEM_MESSAGE) > 0:
-                system_message = f"{DEFAULT_IM_START_TOKEN}system\n{SYSTEM_MESSAGE}\n{DEFAULT_IM_END_TOKEN}\n"
-                system_message_input_ids = self.processor.tokenizer(system_message, add_special_tokens=False, return_tensors='pt')['input_ids']
-                system_labels = torch.full_like(system_message_input_ids, IGNORE_INDEX) 
-                
-                cur_input_ids.append(system_message_input_ids.squeeze(0))
-                cur_labels.append(system_labels.squeeze(0))
+            # heavily borrowed from https://github.com/2U1/Qwen2-VL-Finetune
+            system_message = f"{DEFAULT_IM_START_TOKEN}system\n{SYSTEM_MESSAGE}\n{DEFAULT_IM_END_TOKEN}\n"
+            system_message_input_ids = self.processor.tokenizer(system_message, add_special_tokens=False, return_tensors='pt')['input_ids']
+            system_labels = torch.full_like(system_message_input_ids, IGNORE_INDEX) 
+            cur_input_ids.append(system_message_input_ids.squeeze(0))
+            cur_labels.append(system_labels.squeeze(0))
                 
             for idx, j in enumerate(range(0, len(cur_text), 2)):
                 user_input = cur_text[j]
@@ -152,39 +125,8 @@ class Qwen2VLDataCollator(BaseDataCollator):
                 cur_input_ids = cur_input_ids[:max_len]
                 cur_labels = cur_labels[:max_len]
 
-            
             assert cur_input_ids.shape == cur_labels.shape, "Input and label shapes do not match"
             
-            # modified from https://github.com/modelscope/ms-swift/blob/main/swift/llm/utils/template.py#L1374
-            # media_token = 151655 if not is_video else 151656
-            # cur_input_ids = cur_input_ids.unsqueeze(0)
-            # cur_labels = cur_labels.unsqueeze(0)
-            # idx_list = _findall(cur_input_ids, media_token)
-            # print(len(idx_list))
-            # added_tokens_len = 0
-
-            # for i, idx in enumerate(idx_list):
-            #     merge_length = self.processor.image_processor.merge_size**2
-            #     token_len = (vision_grid_thw[i].prod() // merge_length)
-            #     print("token_len", token_len)
-            #     media_token_tensor = torch.full((token_len,), media_token, dtype=cur_input_ids.dtype, device=cur_input_ids.device)
-                
-            #     cur_input_ids = torch.cat((
-            #         cur_input_ids[:idx + added_tokens_len],
-            #         media_token_tensor,
-            #         cur_input_ids[added_tokens_len + idx + 1:]
-            #     ))
-                
-            #     if cur_labels is not None:
-            #         label_padding = torch.full((token_len,), -100, dtype=cur_labels.dtype, device=cur_labels.device)
-            #         cur_labels = torch.cat((
-            #             cur_labels[:idx + added_tokens_len],
-            #             label_padding,
-            #             cur_labels[added_tokens_len + idx + 1:]
-            #         ))
-                
-            #     added_tokens_len += token_len - 1
-            # print("cur_input_ids", cur_input_ids)
             cur_input_ids = cur_input_ids.unsqueeze(0)
             cur_labels = cur_labels.unsqueeze(0)
             
@@ -213,7 +155,6 @@ class Qwen2VLDataCollator(BaseDataCollator):
             batch_labels.append(cur_labels)
             batch_pixel_values.append(cur_pixel_values)
             batch_vision_grid_thw.append(cur_vision_grid_thw)
-
             
         batch_input_ids = torch.cat(batch_input_ids, dim=0)
         batch_labels = torch.cat(batch_labels, dim=0)
@@ -224,14 +165,15 @@ class Qwen2VLDataCollator(BaseDataCollator):
         assert total_image_tokens == len(images), "Number of image tokens does not match the number of images"
 
         data_dict = dict(
-                input_ids=batch_input_ids,
-                labels=batch_labels,
-                attention_mask=batch_input_ids.ne(self.PAD_TOKEN_ID),       
-            )
+            input_ids=batch_input_ids,
+            labels=batch_labels,
+            attention_mask=batch_input_ids.ne(self.PAD_TOKEN_ID),       
+        )
         data_dict[pixel_key] = batch_pixel_values
         data_dict[grid_key] = batch_vision_grid_thw
         
         return data_dict
+
 
 def _findall(token_list: torch.Tensor, token: int) -> torch.Tensor:
     if not isinstance(token_list, torch.Tensor):
@@ -241,8 +183,8 @@ def _findall(token_list: torch.Tensor, token: int) -> torch.Tensor:
 
     return indices
 
-def replace_image_tokens(input_string, is_video=False):
 
+def replace_image_tokens(input_string, is_video=False):
     if is_video:
         input_string = input_string.replace("<video>"+'\n', "<|vision_start|>"+"<|video_pad|>"+"<|vision_end|>")
         input_string = input_string.replace("<video>", "<|vision_start|>"+"<|video_pad|>"+"<|vision_end|>")

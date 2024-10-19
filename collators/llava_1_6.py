@@ -10,6 +10,7 @@ from transformers.utils import logging
 
 from . import register_collator
 from .base import BaseDataCollator
+from .chat_template_monkey_patch import apply_chat_template
 
 
 logger = logging.get_logger(__name__)
@@ -18,6 +19,9 @@ logger = logging.get_logger(__name__)
 @register_collator("llava-1.6")
 class LLaVA16DataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
+        # monkey patch to include bos tokens
+        self.tokenizer.apply_chat_template = apply_chat_template.__get__(self.tokenizer)
+
         output_kwargs = self.processor._merge_kwargs(
             LlavaNextProcessorKwargs,
             tokenizer_init_kwargs=self.tokenizer.init_kwargs,
@@ -115,6 +119,9 @@ class LLaVA16DataCollator(BaseDataCollator):
                         "with `processor.patch_size = {{patch_size}}` and processor.vision_feature_select_strategy = {{vision_feature_select_strategy}}`. "
                         "Using processors without these attributes in the config is deprecated and will throw an error in v4.47."
                     )
+
+            # a dirty hack to include eos token as part of the labels
+            cur_assistant_masks[0, -1] = True
 
             # manual truncation
             if cur_input_ids.shape[1] > max_len:

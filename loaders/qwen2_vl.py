@@ -8,7 +8,7 @@ from .base import BaseModelLoader
 
 @register_loader("qwen2-vl")
 class Qwen2VLModelLoader(BaseModelLoader):
-    def load(self, load_model: bool = True) -> Tuple[Qwen2VLForConditionalGeneration, PreTrainedTokenizer, AutoProcessor]:
+    def load(self, load_model: bool = True) -> Tuple[Qwen2VLForConditionalGeneration, PreTrainedTokenizer, AutoProcessor, AutoConfig]:
         if load_model:
             model = Qwen2VLForConditionalGeneration.from_pretrained(
                 self.model_local_path, 

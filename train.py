@@ -92,11 +92,8 @@ def train():
         use_flash_attn=training_args.use_flash_attn,
         device_map=device_map,
     )
-    if model_args.model_family_id != "qwen-vl":
-        model, tokenizer, processor, config = loader.load()
-    else:
-        model, tokenizer, config = loader.load()
-        processor = tokenizer
+    
+    model, tokenizer, processor, config = loader.load()
     tokenizer.model_max_length = training_args.model_max_length
 
     if training_args.gradient_checkpointing:

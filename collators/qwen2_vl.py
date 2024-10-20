@@ -15,13 +15,6 @@ DEFAULT_IM_END_TOKEN = "<|im_end|>"
 IGNORE_INDEX = -100
 
 
-
-SYSTEM_MESSAGE = "You are a helpful assistant."
-DEFAULT_IM_START_TOKEN = "<|im_start|>"
-DEFAULT_IM_END_TOKEN = "<|im_end|>"
-IGNORE_INDEX = -100
-
-
 @register_collator("qwen2-vl")
 class Qwen2VLDataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:

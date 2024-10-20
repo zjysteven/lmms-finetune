@@ -22,7 +22,8 @@ class Qwen2VLDataCollator(BaseDataCollator):
             is_video = False
         elif "videos" in instances[0]:
             is_video = True
-            
+
+        # print(instances[0])    
         if not is_video:
             grid_key = "image_grid_thw"
             pixel_key = "pixel_values"
@@ -97,7 +98,7 @@ class Qwen2VLDataCollator(BaseDataCollator):
                     # 所以image token是算在input ids中
                     pixel_values = inputs[pixel_key] # torch.Size([4144, 1176])
                     vision_grid_thw = inputs[grid_key] # tensor([[ 1, 74, 56]])
-
+                    # print(prompt_input_ids.shape)
                 else:
                     prompt_input_ids = self.processor.tokenizer(user_input, add_special_tokens=False, padding=False, return_tensors='pt')['input_ids']
 

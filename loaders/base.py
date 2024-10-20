@@ -14,9 +14,11 @@ class BaseModelLoader(ABC):
         bnb_config: Optional[BitsAndBytesConfig] = None,
         use_flash_attn: bool = False,
         device_map: Optional[Union[Dict, str]] = None,
+        model_max_length: Optional[int] = None,
     ) -> None:
         self.model_hf_path = model_hf_path
         self.model_local_path = model_local_path
+        self.model_max_length = model_max_length
         self.loading_kwargs = dict(
             torch_dtype=compute_dtype,
             quantization_config=bnb_config,

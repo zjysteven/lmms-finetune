@@ -147,7 +147,13 @@ class LLaVAOnevisionDataCollator(BaseDataCollator):
             if len(cur_images) > 0:
                 image_inputs = self.processor.image_processor(cur_images, return_tensors="pt", **output_kwargs["images_kwargs"])
 
-                image_sizes = image_inputs["image_sizes"]
+                # 不是原始的image_size，而是经过resize后的image的size，但resize图片不会特别小
+                # 原始4112*5488会resize到3104*4128
+                image_sizes = image_inputs["image_sizes"] 
+
+                # pixel values已经是llava-ov图像处理时分成tiles后的结果了
+                # shape: (batch_size, num_tiles, num_channels, height, width)
+                # height=width=384
                 height, width = get_image_size(
                     to_numpy_array(image_inputs["pixel_values"][0][0]), 
                     channel_dim=output_kwargs["images_kwargs"].get("data_format")
@@ -156,6 +162,8 @@ class LLaVAOnevisionDataCollator(BaseDataCollator):
                 num_image_tokens_list = []
                 for image_size in image_sizes:
                     orig_height, orig_width = image_size
+                    # 对(orig_height, orig_width, height, width)=(4128， 3104， 384， 384)
+                    # 计算出num_image_tokens=7332
                     num_image_tokens = self.processor._get_number_of_features(orig_height, orig_width, height, width)
                     if vision_feature_select_strategy == "default":
                         num_image_tokens -= 1

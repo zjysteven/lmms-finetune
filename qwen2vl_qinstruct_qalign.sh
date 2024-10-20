@@ -10,7 +10,7 @@ DISTRIBUTED_ARGS="
 # according to your own case
 MODEL_ID=qwen2-vl-7b-instruct                                # model id; pick on by running `python supported_models.py`
 MODEL_LOCAL_PATH=../models/qwen2-vl-7b-instruct
-TRAIN_DATA_PATH=../datasets/test.json  # path to the training data json file
+TRAIN_DATA_PATH=../datasets/Q-Instruct_Q-Align/qwen_llava_qinstruct_qalign.json  # path to the training data json file
 EVAL_DATA_PATH=./example_data/celeba_image_eval.json    # path to the evaluation data json file (optional)
 IMAGE_FOLDER=../datasets/images                      # path to the image root folder; if provided, the image paths in the json should be relative
 VIDEO_FOLDER=./example_data/videos                      # path to the video root folder; if provided, the video paths in the json should be relative
@@ -33,7 +33,7 @@ GRAD_ACCUM=2                                            # gradient accumulation 
 NUM_EPOCHS=1                                            # number of training epochs
 
 LR=2e-5                                                 # learning rate
-MODEL_MAX_LEN=30000                                        # maximum input length of the model
+MODEL_MAX_LEN=16384                                        # maximum input length of the model
 
 
 torchrun $DISTRIBUTED_ARGS train.py \

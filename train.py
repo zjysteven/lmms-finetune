@@ -31,7 +31,6 @@ import debugpy
 # except Exception:
 #     pass
 
-
 def train():
     parser = transformers.HfArgumentParser(
         (ModelArguments, DataArguments, TrainingArguments, LoraArguments)
@@ -91,6 +90,7 @@ def train():
         bnb_config=bnb_config,
         use_flash_attn=training_args.use_flash_attn,
         device_map=device_map,
+        model_max_length=training_args.model_max_length,
     )
     
     model, tokenizer, processor, config = loader.load()

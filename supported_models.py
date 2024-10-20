@@ -2,7 +2,7 @@ from typing import Dict, List
 from collections import OrderedDict
 
 from collators import COLLATORS
-from datasets import TO_LOAD_IMAGE
+from dataset import TO_LOAD_IMAGE
 from loaders import LOADERS
 
 

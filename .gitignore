@@ -21,3 +21,7 @@ not_useful_for_now
 *slurm*
 
 example_data/videos/ego4d/*.mp4
+q_align/
+q_bench/
+results/
+test/

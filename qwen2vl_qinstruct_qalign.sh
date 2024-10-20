@@ -8,11 +8,11 @@ DISTRIBUTED_ARGS="
 
 # arguments that are very likely to be changed
 # according to your own case
-MODEL_ID=llava-onevision-7b-ov                                  # model id; pick on by running `python supported_models.py`
-MODEL_LOCAL_PATH=../models/llava-onevision-qwen2-7b-ov-hf
-TRAIN_DATA_PATH=./example_data/celeba_image_train.json  # path to the training data json file
+MODEL_ID=qwen2-vl-7b-instruct                                # model id; pick on by running `python supported_models.py`
+MODEL_LOCAL_PATH=../models/qwen2-vl-7b-instruct
+TRAIN_DATA_PATH=../datasets/test.json  # path to the training data json file
 EVAL_DATA_PATH=./example_data/celeba_image_eval.json    # path to the evaluation data json file (optional)
-IMAGE_FOLDER=./example_data/images                     # path to the image root folder; if provided, the image paths in the json should be relative
+IMAGE_FOLDER=../datasets/images                      # path to the image root folder; if provided, the image paths in the json should be relative
 VIDEO_FOLDER=./example_data/videos                      # path to the video root folder; if provided, the video paths in the json should be relative
 NUM_FRAMES=8                                            # how many frames are sampled from each video
 
@@ -29,11 +29,11 @@ RUN_ID=${MODEL_ID}_lora-${USE_LORA}_qlora-${Q_LORA}-qinstruct_qalign     # a cus
 
 DS_STAGE=zero3                                          # deepspeed stage; < zero2 | zero3 >
 PER_DEVICE_BATCH_SIZE=1                                 # batch size per GPU
-GRAD_ACCUM=1                                            # gradient accumulation steps
-NUM_EPOCHS=4                                            # number of training epochs
+GRAD_ACCUM=2                                            # gradient accumulation steps
+NUM_EPOCHS=1                                            # number of training epochs
 
 LR=2e-5                                                 # learning rate
-MODEL_MAX_LEN=2048                                       # maximum input length of the model
+MODEL_MAX_LEN=30000                                        # maximum input length of the model
 
 
 torchrun $DISTRIBUTED_ARGS train.py \

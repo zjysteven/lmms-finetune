@@ -13,7 +13,7 @@ from transformers import deepspeed
 
 from arguments import DataArguments, LoraArguments, ModelArguments, TrainingArguments
 from collators import COLLATORS
-from datasets import LazySupervisedDataset
+from dataset import LazySupervisedDataset
 from loaders import LOADERS
 from supported_models import MODULE_KEYWORDS
 from utils import (
@@ -22,6 +22,14 @@ from utils import (
     rank0_print,
     safe_save_model_for_hf_trainer,
 )
+import debugpy
+# try:
+#     # 5678 is the default attach port in the VS Code debug configurations. Unless a host and port are specified, host defaults to 127.0.0.1
+#     debugpy.listen(("localhost", 9501))
+#     print("Waiting for debugger attach")
+#     debugpy.wait_for_client()
+# except Exception:
+#     pass
 
 
 def train():
@@ -84,7 +92,11 @@ def train():
         use_flash_attn=training_args.use_flash_attn,
         device_map=device_map,
     )
-    model, tokenizer, processor, config = loader.load()
+    if model_args.model_family_id != "qwen-vl":
+        model, tokenizer, processor, config = loader.load()
+    else:
+        model, tokenizer, config = loader.load()
+        processor = tokenizer
     tokenizer.model_max_length = training_args.model_max_length
 
     if training_args.gradient_checkpointing:

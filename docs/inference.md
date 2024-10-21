@@ -1,5 +1,7 @@
 # After finetuning
 
+ℹ️ **The rule of thumb is that lmms-finetune is only related to the finetuning and is decoupled from the inference. Once you load your finetuned model, all the other components/operations are carried out in the exact same way as how you would inference with the pretrained model, which is always made clear by the corresponding huggingface model card.**
+
 Taking LLaVA-1.5 as an example, this is how you load the model and processor according to the huggingface model card:
 ```python
 from transformers import AutoProcessor, LlavaForConditionalGeneration

@@ -27,7 +27,7 @@ class Qwen2VLDataCollator(BaseDataCollator):
             grid_key = "image_grid_thw"
             pixel_key = "pixel_values"
             videos = None
-            images: List[PIL.Image.Image] = [x for instance in instances for x in instance["images"]]
+            images: List[List[PIL.Image.Image]] = [instance["images"] for instance in instances]
         else:
             grid_key = "video_grid_thw"
             pixel_key = "pixel_values_videos"
@@ -94,7 +94,6 @@ class Qwen2VLDataCollator(BaseDataCollator):
                     prompt_input_ids = inputs['input_ids']
                     pixel_values = inputs[pixel_key]
                     vision_grid_thw = inputs[grid_key]
-
                 else:
                     prompt_input_ids = self.processor.tokenizer(user_input, add_special_tokens=False, padding=False, return_tensors='pt')['input_ids']
 
@@ -162,7 +161,7 @@ class Qwen2VLDataCollator(BaseDataCollator):
         batch_vision_grid_thw = torch.cat(batch_vision_grid_thw, dim=0)
 
         # sanity check
-        assert total_image_tokens == len(images), "Number of image tokens does not match the number of images"
+        assert total_image_tokens == count_innermost_elements(images), "Number of image tokens does not match the number of images"
 
         data_dict = dict(
             input_ids=batch_input_ids,
@@ -173,6 +172,12 @@ class Qwen2VLDataCollator(BaseDataCollator):
         data_dict[grid_key] = batch_vision_grid_thw
         
         return data_dict
+    
+
+def count_innermost_elements(nested_list):
+    if not isinstance(nested_list, list):
+        return 1
+    return sum(count_innermost_elements(item) for item in nested_list)
 
 
 def _findall(token_list: torch.Tensor, token: int) -> torch.Tensor:

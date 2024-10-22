@@ -1,4 +1,4 @@
-NUM_GPUS=2
+NUM_GPUS=1
 DISTRIBUTED_ARGS="
     --nnodes=1 \
     --nproc_per_node ${NUM_GPUS} \
@@ -8,13 +8,11 @@ DISTRIBUTED_ARGS="
 
 # arguments that are very likely to be changed
 # according to your own case
-# MODEL_ID=llava-onevision-7b-ov                                  # model id; pick on by running `python supported_models.py`
-# MODEL_LOCAL_PATH=../models/llava-onevision-qwen2-7b-ov-hf
 MODEL_ID=qwen2-vl-7b-instruct                                # model id; pick on by running `python supported_models.py`
 MODEL_LOCAL_PATH=../models/qwen2-vl-7b-instruct
-TRAIN_DATA_PATH=./example_data/multi_images.json  # path to the training data json file
+TRAIN_DATA_PATH=../gen_prompt/results/ground/caption_with_grounding_qwen2.json  # path to the training data json file
 EVAL_DATA_PATH=./example_data/celeba_image_eval.json    # path to the evaluation data json file (optional)
-IMAGE_FOLDER=./example_data/images                     # path to the image root folder; if provided, the image paths in the json should be relative
+IMAGE_FOLDER=../datasets/images/single_1w                      # path to the image root folder; if provided, the image paths in the json should be relative
 VIDEO_FOLDER=./example_data/videos                      # path to the video root folder; if provided, the video paths in the json should be relative
 NUM_FRAMES=8                                            # how many frames are sampled from each video
 
@@ -27,15 +25,15 @@ Q_LORA=False                                            # whether use q-lora for
 LORA_R=128                                                # the lora rank (both llm and vision encoder)
 LORA_ALPHA=256                                            # the lora alpha (both llm and vision encoder)
 
-RUN_ID=${MODEL_ID}_lora-${USE_LORA}_qlora-${Q_LORA}-test     # a custom run id that determines the checkpoint folder and wandb run name
+RUN_ID=${MODEL_ID}_lora-${USE_LORA}_qlora-${Q_LORA}-qinstruct_qalign     # a custom run id that determines the checkpoint folder and wandb run name
 
 DS_STAGE=zero3                                          # deepspeed stage; < zero2 | zero3 >
-PER_DEVICE_BATCH_SIZE=2                                 # batch size per GPU
+PER_DEVICE_BATCH_SIZE=1                                 # batch size per GPU
 GRAD_ACCUM=1                                            # gradient accumulation steps
-NUM_EPOCHS=4                                            # number of training epochs
+NUM_EPOCHS=1                                            # number of training epochs
 
 LR=2e-5                                                 # learning rate
-MODEL_MAX_LEN=8192                                       # maximum input length of the model
+MODEL_MAX_LEN=16384                                        # maximum input length of the model
 
 
 torchrun $DISTRIBUTED_ARGS train.py \

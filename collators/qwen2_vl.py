@@ -2,6 +2,7 @@ import re
 from typing import Dict, List, Sequence, Union
 import PIL
 
+import PIL.Image
 import numpy as np
 import torch
 from transformers import AutoConfig, AutoTokenizer, AutoProcessor
@@ -23,12 +24,18 @@ class Qwen2VLDataCollator(BaseDataCollator):
         elif "videos" in instances[0]:
             is_video = True
 
-        # print(instances[0])    
+        # # print(instances[0])
+        #{'images': [<PIL.Image.Image image mode=RGB size=1368x912 at 0x7CAC21C72FB0>, <PIL.Image.Image image mode=RGB size=650x431 at 0x7CAC21C73190>], 
+        # 'videos': [], 
+        # 'conversations': ['<image><image>Which image has more people? Give details to your answer.', 'There are five people in the first image, while there are eleven people in the second. Therefore, the second image has more people.'], '
+        # system_prompt': 'Answer the following questions by considering all images.'}
         if not is_video:
             grid_key = "image_grid_thw"
             pixel_key = "pixel_values"
             videos = None
-            images: List[PIL.Image.Image] = [x for instance in instances for x in instance["images"]]
+            # images: List[PIL.Image.Image] = [x for instance in instances for x in instance["images"]]
+            images: List[List[PIL.Image.Image]] = [instance["images"] for instance in instances]
+            # print(images)
         else:
             grid_key = "video_grid_thw"
             pixel_key = "pixel_values_videos"
@@ -80,7 +87,6 @@ class Qwen2VLDataCollator(BaseDataCollator):
             system_labels = torch.full_like(system_message_input_ids, IGNORE_INDEX) 
             cur_input_ids.append(system_message_input_ids.squeeze(0))
             cur_labels.append(system_labels.squeeze(0))
-                
             for idx, j in enumerate(range(0, len(cur_text), 2)):
                 # user输入和assistant输出处理
                 user_input = cur_text[j]
@@ -90,14 +96,19 @@ class Qwen2VLDataCollator(BaseDataCollator):
                 
                 if idx == 0:
                     if not is_video:
+                        # print("Input images", images[b_idx]) # 貌似只能读一张图片
+                        # 这里也不能直接改成images送进去，不然所有对话处理的image都是从images的第一张开始算到text对应image的数量的
+                        # 这里需要处理的是一个cur_text对应的所有图片
                         inputs = self.processor(text=[user_input], images=images[b_idx], videos=None, padding=False, return_tensors='pt')
                     else:
                         inputs = self.processor(text=[user_input], images=None, videos=videos[b_idx], padding=False, return_tensors='pt')
                     prompt_input_ids = inputs['input_ids']
                     # 对于780 * 1040图片, 图像token数量大致为1034， prompt_input为1057
                     # 所以image token是算在input ids中
-                    pixel_values = inputs[pixel_key] # torch.Size([4144, 1176])
-                    vision_grid_thw = inputs[grid_key] # tensor([[ 1, 74, 56]])
+                    pixel_values = inputs[pixel_key] # 单图: torch.Size([4144, 1176]) torch.Size([1 * height//14 * width//14 , 1176])
+                    # print(pixel_values.shape)
+                    vision_grid_thw = inputs[grid_key] # 单图: tensor([[ 1, 74, 56]]), torch.Size([1, 3])
+                    # print(vision_grid_thw.shape)
                     # print(prompt_input_ids.shape)
                 else:
                     prompt_input_ids = self.processor.tokenizer(user_input, add_special_tokens=False, padding=False, return_tensors='pt')['input_ids']
@@ -170,7 +181,7 @@ class Qwen2VLDataCollator(BaseDataCollator):
         batch_vision_grid_thw = torch.cat(batch_vision_grid_thw, dim=0)
 
         # sanity check
-        assert total_image_tokens == len(images), "Number of image tokens does not match the number of images"
+        assert total_image_tokens == count_innermost_elements(images), "Number of image tokens does not match the number of images"
 
         data_dict = dict(
             input_ids=batch_input_ids,
@@ -182,6 +193,12 @@ class Qwen2VLDataCollator(BaseDataCollator):
         
         return data_dict
 
+def count_innermost_elements(nested_list):
+    # 如果当前元素不是列表，说明是最内层元素，返回 1
+    if not isinstance(nested_list, list):
+        return 1
+    # 如果是列表，递归统计所有子列表的元素数量
+    return sum(count_innermost_elements(item) for item in nested_list)
 
 def _findall(token_list: torch.Tensor, token: int) -> torch.Tensor:
     if not isinstance(token_list, torch.Tensor):
@@ -213,4 +230,4 @@ if __name__ == "__main__":
         data = json.load(f)
     
     
-    print(datacollator(data))
+    # print(datacollator(data))

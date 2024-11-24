@@ -118,10 +118,13 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
                 if len(cur_images) > 0:
                     image_inputs = self.processor.image_processor(cur_images, return_tensors="pt")
                     image_sizes = image_inputs["image_sizes"]
+                    height, width = get_image_size(to_numpy_array(image_inputs["pixel_values"][0][0]))
 
                     num_image_tokens_list = []
                     for image_size in image_sizes:
-                        orig_height, orig_width = image_size
+                        if not isinstance(image_size, (list, tuple)):
+                            # cast to list to avoid numerical precision errors when calculating unpadding
+                            orig_height, orig_width = image_size.tolist()
                         num_image_tokens = self.processor._get_number_of_features(orig_height, orig_width, height, width)
                         if vision_feature_select_strategy == "default":
                             num_image_tokens -= 1

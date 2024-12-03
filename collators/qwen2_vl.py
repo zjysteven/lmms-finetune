@@ -68,9 +68,7 @@ class Qwen2VLDataCollator(BaseDataCollator):
                 else:
                     cur_text.append({
                         "role": "assistant",
-                        "content": [
-                            {"type": "text", "text": text},
-                        ]
+                        "content": text
                     })
             
             # heavily borrowed from https://github.com/2U1/Qwen2-VL-Finetune

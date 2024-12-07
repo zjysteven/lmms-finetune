@@ -17,3 +17,4 @@ from .llava_onevision import LLaVAOnevisionModelLoader
 from .qwen_vl import QwenVLModelLoader
 from .phi3_v import Phi3VModelLoader
 from .qwen2_vl import Qwen2VLModelLoader
+from .llama_3_2_vision import LLaMA32VisionModelLoader

@@ -50,6 +50,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_encoder": ["visual.patch_embed", "visual.rotary_pos_emb", "visual.blocks"],
         "vision_projector": ["visual.merger"],
         "llm": ["model"]
+    },
+    "llama-3.2-vision": {
+        "vision_encoder": ["vision_model"],
+        "vision_projector": ["multi_modal_projector"],
+        "llm": ["language_model"]
     }
 }
 
@@ -169,6 +174,20 @@ register_model(
     model_id="qwen2-vl-7b-instruct",
     model_family_id="qwen2-vl",
     model_hf_path="Qwen/Qwen2-VL-7B-Instruct"
+)
+
+# llama-3.2-vision -------------------------------------------
+
+register_model(
+    model_id="llama-3.2-11b-vision-instruct",
+    model_family_id="llama-3.2-vision",
+    model_hf_path="meta-llama/Llama-3.2-11B-Vision-Instruct"
+)
+
+register_model(
+    model_id="llama-3.2-90b-vision-instruct",
+    model_family_id="llama-3.2-vision",
+    model_hf_path="meta-llama/Llama-3.2-90B-Vision-Instruct"
 )
 
 #=============================================================

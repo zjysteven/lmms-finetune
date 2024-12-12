@@ -17,3 +17,5 @@
 | phi3-v                         | phi3-v                                   | [microsoft/Phi-3-vision-128k-instruct](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)  |
 | qwen2-vl                       | qwen2-vl-2b-instruct                     | [Qwen/Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)                        |
 |                                | qwen2-vl-7b-instruct                     | [Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)                        |
+| llama-3.2-vision               | llama-3.2-11b-vision-instruct            | [meta-llama/Llama-3.2-11B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct) |
+|                                | llama-3.2-90b-vision-instruct            | [meta-llama/Llama-3.2-90B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-90B-Vision-Instruct) |

@@ -81,7 +81,15 @@ Supported models:
   llava-next-video-34b          : llava-hf/LLaVA-NeXT-Video-34B-hf
   llava-interleave-qwen-0.5b    : llava-hf/llava-interleave-qwen-0.5b-hf
   llava-interleave-qwen-7b      : llava-hf/llava-interleave-qwen-7b-hf
+  llava-onevision-0.5b-ov       : llava-hf/llava-onevision-qwen2-0.5b-ov-hf
+  llava-onevision-7b-ov         : llava-hf/llava-onevision-qwen2-7b-ov-hf
+  llava-onevision-72b-ov        : llava-hf/llava-onevision-qwen2-72b-ov-hf
   qwen-vl-chat                  : Qwen/Qwen-VL-Chat
+  phi3-v                        : microsoft/Phi-3-vision-128k-instruct
+  qwen2-vl-2b-instruct          : Qwen/Qwen2-VL-2B-Instruct
+  qwen2-vl-7b-instruct          : Qwen/Qwen2-VL-7B-Instruct
+  llama-3.2-11b-vision-instruct : meta-llama/Llama-3.2-11B-Vision-Instruct
+  llama-3.2-90b-vision-instruct : meta-llama/Llama-3.2-90B-Vision-Instruct
 ```
 :raised_hand: Don't see the one you want? Check out this [guide](docs/add_new_model.md) for step-by-step instructions on how to add a new model.
 </details>

@@ -13,7 +13,7 @@ More and more large multimodal models (LMMs) are being released from time to tim
 
 
 The codebase is quite flexible. It supports the finetuning of various types of LMMs, including:
-- :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [LLaVA-1.6/NeXT](https://huggingface.co/collections/llava-hf/llava-next-65f75c4afac77fd37dbbe6cf), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct)
+- :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [LLaVA-1.6/NeXT](https://huggingface.co/collections/llava-hf/llava-next-65f75c4afac77fd37dbbe6cf), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct), [Llama-3.2-Vision](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision)
 - :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [Qwen2-VL-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct),  [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 - :rocket: unified models: [LLaVA-Onevision](https://huggingface.co/collections/llava-hf/llava-onevision-66bb1e9ce8856e210a7ed1fe)
@@ -38,6 +38,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
+- **2024/12/16**: Thanks to the contribution from [lavinal712 (Yuqian)](https://github.com/lavinal712), training with Llama-3.2-Vision is now supported. Also there is a useful script `merge_lora_weights.py` added.
 - **2024/10/16**: We added LLaVA-Onevision. See a caveat when using LLaVA-Onevision [here](https://github.com/zjysteven/lmms-finetune/issues/43). Also we updated the collators to stay in line with the new processing of LLaVA models in transformers.
 - **2024/08/28**: Finetuning with gradio webui interface is supported. Try `python webui.py`.
 - **2024/07/30**: Finetuning of vision encoder and projector is now supported.
@@ -137,7 +138,7 @@ Modify the sample training bash script, [example_video.sh](./example_scripts/exa
 <details>
 <summary><b>3. Inference with finetuned model</b></summary>
 
-The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details. Again you can refer to [this colab](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing) for a complete example.
+The key here is to correctly load the finetuned model, after that everything is the same as how you would do inference with the corresponding model from huggingface. Refer to the [inference documentation](docs/inference.md) for more details, including how to use `merge_lora_weights.py` to easily obtain a standalone model. Again you can refer to [this colab](https://colab.research.google.com/drive/139XypY8_wdLgyLXYE_Zve7Hjd809fVpK?usp=sharing) for a complete example.
 </details>
 
 

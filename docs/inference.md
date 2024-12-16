@@ -1,4 +1,4 @@
-# After finetuning
+# Inference
 
 ℹ️ **The rule of thumb is that lmms-finetune is only related to the finetuning and is decoupled from the inference. Once you load your finetuned model, all the other components/operations are carried out in the exact same way as how you would inference with the pretrained model, which is always made clear by the corresponding huggingface model card.**
 
@@ -54,4 +54,43 @@ model = LlavaForConditionalGeneration.from_pretrained(
 )
 # processor is not changed so we still load from the original model repo
 processor = AutoProcessor.from_pretrained(original_model_id)
+```
+
+
+# Merge Model
+
+You can further use the `merge_lora_weights.py` to merge the finetuned weights with the base model to get a standalone model. See below examples.
+
+
+- After lora finetuning
+```bash
+python merge_lora_weights.py \
+    --model_id model_id \
+    --model_local_path /path/to/local/model \
+    --model_path /path/to/saved/model \
+    --model_save_path /path/to/output \
+    --load_model
+```
+
+----------------
+
+- After q-lora finetuning
+```bash
+python merge_lora_weights.py \
+    --model_id model_id \
+    --model_local_path /path/to/local/model \
+    --model_path /path/to/saved/model \
+    --model_save_path /path/to/output \
+    --load_model \
+    --load_4bit
+```
+
+----------------
+
+- After full finetuning
+```bash
+python merge_lora_weights.py \
+    --model_id model_id \
+    --model_local_path /path/to/local/model \
+    --model_path /path/to/saved/model
 ```

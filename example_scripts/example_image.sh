@@ -32,7 +32,7 @@ GRAD_ACCUM=1                                            # gradient accumulation 
 NUM_EPOCHS=5                                            # number of training epochs
 
 LR=2e-5                                                 # learning rate
-MODEL_MAX_LEN=512                                       # maximum input length of the model
+MODEL_MAX_LEN=1024                                       # maximum input length of the model
 
 
 torchrun $DISTRIBUTED_ARGS train.py \

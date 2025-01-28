@@ -176,6 +176,30 @@ register_model(
     model_hf_path="Qwen/Qwen2-VL-7B-Instruct"
 )
 
+register_model(
+    model_id="qwen2-vl-72b-instruct",
+    model_family_id="qwen2-vl",
+    model_hf_path="Qwen/Qwen2-VL-72B-Instruct"
+)
+
+register_model(
+    model_id="qwen2.5-vl-3b-instruct",
+    model_family_id="qwen2-vl",
+    model_hf_path="Qwen/Qwen2.5-VL-3B-Instruct"
+)
+
+register_model(
+    model_id="qwen2.5-vl-7b-instruct",
+    model_family_id="qwen2-vl",
+    model_hf_path="Qwen/Qwen2.5-VL-7B-Instruct"
+)
+
+register_model(
+    model_id="qwen2.5-vl-72b-instruct",
+    model_family_id="qwen2-vl",
+    model_hf_path="Qwen/Qwen2.5-VL-72B-Instruct"
+)
+
 # llama-3.2-vision -------------------------------------------
 
 register_model(

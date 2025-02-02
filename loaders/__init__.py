@@ -9,12 +9,13 @@ def register_loader(name):
     return register_loader_cls
 
 
-from .llava_1_5 import LLaVA15ModelLoader
-from .llava_1_6 import LLaVA16ModelLoader
+from .llava_1_5 import LLaVA1_5_ModelLoader
+from .llava_1_6 import LLaVA1_6_ModelLoader
 from .llava_interleave import LLaVAInterleaveModelLoader
 from .llava_next_video import LLaVANeXTVideoModelLoader
 from .llava_onevision import LLaVAOnevisionModelLoader
 from .qwen_vl import QwenVLModelLoader
 from .phi3_v import Phi3VModelLoader
 from .qwen2_vl import Qwen2VLModelLoader
-from .llama_3_2_vision import LLaMA32VisionModelLoader
+from .qwen2_5_vl import Qwen2_5_VLModelLoader
+from .llama_3_2_vision import LLaMA3_2_VisionModelLoader

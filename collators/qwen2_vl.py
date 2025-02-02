@@ -16,6 +16,7 @@ IGNORE_INDEX = -100
 
 
 @register_collator("qwen2-vl")
+@register_collator("qwen2.5-vl")
 class Qwen2VLDataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
         if "images" in instances[0]:

@@ -107,7 +107,7 @@ class LLaVAInterleaveDataCollator(BaseDataCollator):
                 
             assert len(cur_images) == cur_num_images, "Not all images were used"
             
-            temp = self.processor.apply_chat_template(
+            temp = self.tokenizer.apply_chat_template(
                 cur_text,
                 chat_template=template,
                 add_generation_prompt=False,

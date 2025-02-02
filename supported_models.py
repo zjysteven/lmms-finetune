@@ -51,6 +51,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_projector": ["visual.merger"],
         "llm": ["model"]
     },
+    "qwen2.5-vl": {
+        "vision_encoder": ["visual.patch_embed", "visual.rotary_pos_emb", "visual.blocks"],
+        "vision_projector": ["visual.merger"],
+        "llm": ["model"]
+    },
     "llama-3.2-vision": {
         "vision_encoder": ["vision_model"],
         "vision_projector": ["multi_modal_projector"],
@@ -184,19 +189,19 @@ register_model(
 
 register_model(
     model_id="qwen2.5-vl-3b-instruct",
-    model_family_id="qwen2-vl",
+    model_family_id="qwen2.5-vl",
     model_hf_path="Qwen/Qwen2.5-VL-3B-Instruct"
 )
 
 register_model(
     model_id="qwen2.5-vl-7b-instruct",
-    model_family_id="qwen2-vl",
+    model_family_id="qwen2.5-vl",
     model_hf_path="Qwen/Qwen2.5-VL-7B-Instruct"
 )
 
 register_model(
     model_id="qwen2.5-vl-72b-instruct",
-    model_family_id="qwen2-vl",
+    model_family_id="qwen2.5-vl",
     model_hf_path="Qwen/Qwen2.5-VL-72B-Instruct"
 )
 
@@ -222,6 +227,7 @@ for model_family_id in MODEL_FAMILIES.values():
     assert model_family_id in COLLATORS, f"Collator not found for model family: {model_family_id}"
     assert model_family_id in LOADERS, f"Loader not found for model family: {model_family_id}"
     assert model_family_id in MODULE_KEYWORDS, f"Module keywords not found for model family: {model_family_id}"
+    print(TO_LOAD_IMAGE)
     assert model_family_id in TO_LOAD_IMAGE, f"Image loading specification not found for model family: {model_family_id}"
 
 

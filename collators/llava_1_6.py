@@ -17,7 +17,7 @@ logger = logging.get_logger(__name__)
 
 
 @register_collator("llava-1.6")
-class LLaVA16DataCollator(BaseDataCollator):
+class LLaVA1_6_DataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
         # monkey patch to include bos tokens
         self.tokenizer.apply_chat_template = apply_chat_template.__get__(self.tokenizer)
@@ -81,8 +81,9 @@ class LLaVA16DataCollator(BaseDataCollator):
 
             assert len(cur_images) == cur_num_images, "Number of images does not match the number of image tokens"
             
-            temp = self.processor.apply_chat_template(
+            temp = self.tokenizer.apply_chat_template(
                 cur_text,
+                chat_template=self.processor.chat_template,
                 add_generation_prompt=False,
                 tokenize=True,
                 return_assistant_tokens_mask=True,

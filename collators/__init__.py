@@ -9,12 +9,12 @@ def register_collator(name):
     return register_collator_cls
 
 
-from .llava_1_5 import LLaVA15DataCollator
-from .llava_1_6 import LLaVA16DataCollator
+from .llava_1_5 import LLaVA1_5_DataCollator
+from .llava_1_6 import LLaVA1_6_DataCollator
 from .llava_interleave import LLaVAInterleaveDataCollator
 from .llava_next_video import LLaVANeXTVideoDataCollator
 from .llava_onevision import LLaVAOnevisionDataCollator
 from .qwen_vl import QwenVLDataCollator
 from .phi3_v import Phi3VDataCollator
 from .qwen2_vl import Qwen2VLDataCollator
-from .llama_3_2_vision import LLaMA32VisionDataCollator
+from .llama_3_2_vision import LLaMA3_2_VisionDataCollator

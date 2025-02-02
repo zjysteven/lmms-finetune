@@ -7,7 +7,7 @@ from .base import BaseModelLoader
 
 
 @register_loader("llava-1.5")
-class LLaVA15ModelLoader(BaseModelLoader):
+class LLaVA1_5_ModelLoader(BaseModelLoader):
     def load(self, load_model: bool = True) -> Tuple[LlavaForConditionalGeneration, PreTrainedTokenizer, AutoProcessor, AutoConfig]:
         if load_model:
             model = LlavaForConditionalGeneration.from_pretrained(

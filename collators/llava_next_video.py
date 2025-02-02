@@ -94,14 +94,15 @@ class LLaVANeXTVideoDataCollator(BaseDataCollator):
             assert len(cur_images) == cur_num_images, "Not all images were used"
             assert len(cur_videos) == cur_num_videos, "Not all videos were used"
 
-            temp = self.processor.apply_chat_template(
+            temp = self.tokenizer.apply_chat_template(
                 cur_text,
+                chat_template=self.processor.chat_template,
                 add_generation_prompt=False,
                 tokenize=True,
                 return_assistant_tokens_mask=True,
                 return_dict=True,
                 return_tensors="pt",
-                truncation=False, # the assistant tokens mask seems wrong when truncation is enabled
+                truncation=False # the assistant tokens mask seems wrong when truncation is enabled
             )
             cur_input_ids = temp["input_ids"]
             cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)

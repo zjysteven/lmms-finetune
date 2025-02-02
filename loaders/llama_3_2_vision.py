@@ -7,7 +7,7 @@ from .base import BaseModelLoader
 
 
 @register_loader("llama-3.2-vision")
-class LLaMA32VisionModelLoader(BaseModelLoader):
+class LLaMA3_2_VisionModelLoader(BaseModelLoader):
     def load(self, load_model: bool = True) -> Tuple[MllamaForConditionalGeneration, PreTrainedTokenizer, AutoProcessor, AutoConfig]:
         if load_model:
             model = MllamaForConditionalGeneration.from_pretrained(

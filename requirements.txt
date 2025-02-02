@@ -1,6 +1,6 @@
 torch
 torchvision
-transformers==4.45.2
+git+https://github.com/huggingface/transformers
 accelerate
 peft
 deepspeed==0.14.4

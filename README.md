@@ -40,7 +40,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
-- **2025/01/27**: Qwen2.5 family is supported now.
+- **2025/01/27**: Qwen2.5 family is supported in the `transformers-4.49.0.dev0` branch. At the moment you would need to install the latest transformers from github.
 - **2024/12/16**: Thanks to the contribution from [lavinal712 (Yuqian)](https://github.com/lavinal712), training with Llama-3.2-Vision is now supported. Also there is a useful script `merge_lora_weights.py` added.
 - **2024/10/16**: We added LLaVA-Onevision. See a caveat when using LLaVA-Onevision [here](https://github.com/zjysteven/lmms-finetune/issues/43). Also we updated the collators to stay in line with the new processing of LLaVA models in transformers.
 - **2024/08/28**: Finetuning with gradio webui interface is supported. Try `python webui.py`.

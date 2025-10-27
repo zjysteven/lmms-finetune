@@ -1,6 +1,6 @@
 torch
 torchvision
-transformers==4.45.2
+transformers==4.47.0
 accelerate
 peft
 deepspeed==0.14.4

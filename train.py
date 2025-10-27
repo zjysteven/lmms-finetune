@@ -1,16 +1,14 @@
 import os
 os.environ["WANDB_PROJECT"]= "lmms-ft"
 from dataclasses import asdict
-import math
 from pathlib import Path
-from typing import List, Optional
 import yaml
 
 from accelerate.utils import DistributedType
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 import torch
 import transformers
-from transformers import Trainer, deepspeed
+from transformers.integrations import deepspeed
 
 
 from arguments import ModelArguments, DataArguments, TrainingArguments, LoraArguments

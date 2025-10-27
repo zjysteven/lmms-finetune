@@ -127,9 +127,9 @@ class LLaVAInterleaveDataCollator(BaseDataCollator):
                     # Replace the image token with the expanded image token sequence
                     pixel_values = temp_vision_inputs["pixel_values"]
                     height, width = get_image_size(to_numpy_array(pixel_values[0]))
-                    num_image_tokens = (height // patch_size) * (width // patch_size) + 1
+                    num_image_tokens = (height // patch_size) * (width // patch_size) + self.processor.num_additional_image_tokens
                     if vision_feature_select_strategy == "default":
-                        num_image_tokens -= 1
+                        num_image_tokens -= self.processor.num_additional_image_tokens
 
                     repeat = torch.where(cur_input_ids == image_token_id, num_image_tokens, 1).squeeze()
                     cur_input_ids = cur_input_ids.repeat_interleave(repeat, dim=1)

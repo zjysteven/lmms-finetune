@@ -187,6 +187,7 @@ register_model(
     model_hf_path="Qwen/Qwen2-VL-72B-Instruct"
 )
 
+# qwen2.5-vl -------------------------------------------------
 register_model(
     model_id="qwen2.5-vl-3b-instruct",
     model_family_id="qwen2.5-vl",

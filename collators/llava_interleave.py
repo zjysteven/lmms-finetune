@@ -118,7 +118,7 @@ class LLaVAInterleaveDataCollator(BaseDataCollator):
                 truncation=False # the assistant tokens mask seems wrong when truncation is enabled
             )
             cur_input_ids = temp["input_ids"]
-            cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)
+            cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool)
 
             # expand image tokens
             temp_vision_inputs = self.processor.image_processor(cur_images, return_tensors="pt")

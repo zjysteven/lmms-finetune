@@ -141,7 +141,7 @@ class LLaVAOnevisionDataCollator(BaseDataCollator):
                 truncation=False # the assistant tokens mask seems wrong when truncation is enabled
             )
             cur_input_ids = temp["input_ids"]
-            cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)
+            cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool)
 
             # expand vision tokens
             if len(cur_images) > 0:
@@ -155,7 +155,7 @@ class LLaVAOnevisionDataCollator(BaseDataCollator):
 
                 num_image_tokens_list = []
                 for image_size in image_sizes:
-                    orig_height, orig_width = image_size
+                    orig_height, orig_width = image_size.tolist()
                     num_image_tokens = self.processor._get_number_of_features(orig_height, orig_width, height, width)
                     if vision_feature_select_strategy == "default":
                         num_image_tokens -= 1

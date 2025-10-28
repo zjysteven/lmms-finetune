@@ -11,7 +11,7 @@ class Qwen2_5_VLModelLoader(BaseModelLoader):
     def load(self, load_model: bool = True) -> Tuple[Qwen2_5_VLForConditionalGeneration, PreTrainedTokenizer, AutoProcessor, AutoConfig]:
         if load_model:
             model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-                self.model_hf_path, 
+                self.model_local_path, 
                 **self.loading_kwargs,
             )
             model.config.hidden_size = model.config.hidden_size # useful for deepspeed

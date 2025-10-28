@@ -15,8 +15,8 @@ DEFAULT_IM_END_TOKEN = "<|im_end|>"
 IGNORE_INDEX = -100
 
 
-@register_collator("qwen2-vl")
-class Qwen2VLDataCollator(BaseDataCollator):
+@register_collator("qwen2.5-vl")
+class Qwen2_5_VLDataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
         if "images" in instances[0]:
             is_video = False

@@ -17,4 +17,5 @@ from .llava_onevision import LLaVAOnevisionDataCollator
 from .qwen_vl import QwenVLDataCollator
 from .phi3_v import Phi3VDataCollator
 from .qwen2_vl import Qwen2VLDataCollator
+from .qwen2_5_vl import Qwen2_5_VLDataCollator
 from .llama_3_2_vision import LLaMA3_2_VisionDataCollator

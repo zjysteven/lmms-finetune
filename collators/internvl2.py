@@ -17,9 +17,6 @@ from .chat_template_monkey_patch import apply_chat_template
 IMG_START_TOKEN = '<img>'
 IMG_END_TOKEN = '</img>'
 IMG_CONTEXT_TOKEN = '<IMG_CONTEXT>'
-
-
-# https://huggingface.co/OpenGVLab/InternVL2-8B
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 

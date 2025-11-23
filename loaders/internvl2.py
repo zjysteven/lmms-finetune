@@ -6,6 +6,9 @@ from . import register_loader
 from .base import BaseModelLoader
 
 
+IMG_CONTEXT_TOKEN = '<IMG_CONTEXT>'
+
+
 @register_loader("internvl2")
 class InternVL2ModelLoader(BaseModelLoader):
     def load(self, load_model: bool = True) -> Tuple[AutoModel, PreTrainedTokenizer, AutoProcessor, AutoConfig]:
@@ -22,6 +25,10 @@ class InternVL2ModelLoader(BaseModelLoader):
         processor = AutoProcessor.from_pretrained(self.model_hf_path, trust_remote_code=True)
         tokenizer = AutoTokenizer.from_pretrained(self.model_hf_path, trust_remote_code=True)
         config = AutoConfig.from_pretrained(self.model_local_path, trust_remote_code=True)
+
+        img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
+        model.img_context_token_id = img_context_token_id
+
         return model, tokenizer, processor, config
 
 

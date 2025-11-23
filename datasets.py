@@ -19,6 +19,7 @@ TO_LOAD_IMAGE: Dict[str, bool] = {
     "qwen2-vl": True,
     "qwen2.5-vl": True,
     "llama-3.2-vision": True,
+    "internvl2": False,
 }
 
 

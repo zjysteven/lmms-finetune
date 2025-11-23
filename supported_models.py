@@ -60,6 +60,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_encoder": ["vision_model"],
         "vision_projector": ["multi_modal_projector"],
         "llm": ["language_model"]
+    },
+    "internvl2": {
+        "vision_encoder": ["vision_model"],
+        "vision_projector": ["mlp1"],
+        "llm": ["language_model"]
     }
 }
 
@@ -207,7 +212,6 @@ register_model(
 )
 
 # llama-3.2-vision -------------------------------------------
-
 register_model(
     model_id="llama-3.2-11b-vision-instruct",
     model_family_id="llama-3.2-vision",
@@ -218,6 +222,19 @@ register_model(
     model_id="llama-3.2-90b-vision-instruct",
     model_family_id="llama-3.2-vision",
     model_hf_path="meta-llama/Llama-3.2-90B-Vision-Instruct"
+)
+
+# internvl2 --------------------------------------------------
+register_model(
+    model_id="internvl2-2b",
+    model_family_id="internvl2",
+    model_hf_path="OpenGVLab/InternVL2-2B"
+)
+
+register_model(
+    model_id="internvl2-8b",
+    model_family_id="internvl2",
+    model_hf_path="OpenGVLab/InternVL2-8B"
 )
 
 #=============================================================

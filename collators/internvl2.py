@@ -1,5 +1,4 @@
 import dataclasses
-import re
 from enum import IntEnum, auto
 from typing import Dict, List, Sequence, Tuple, Union
 
@@ -11,7 +10,6 @@ from torchvision.transforms.functional import InterpolationMode
 
 from . import register_collator
 from .base import BaseDataCollator
-from .chat_template_monkey_patch import apply_chat_template
 
 
 IMG_START_TOKEN = '<img>'
@@ -567,7 +565,32 @@ class InternVL2DataCollator(BaseDataCollator):
             ).input_ids
             cur_labels = cur_input_ids.clone()
 
-            # TODO: question mask
+            # TODO: mask question tokens
+            assert self.mask_question_tokens, "self.mask_question_tokens should be True"
+
+            total_len = int(cur_labels.ne(self.PAD_TOKEN_ID).sum())
+            cur_len = 1
+            cur_labels[:, :cur_len] = self.IGNORE_TOKEN_ID
+            parts = prompt.split(template.roles[1])
+            info = parts[0] + template.roles[1]
+            temp_len = len(self.tokenizer(info).input_ids) - 1
+            cur_labels[:, cur_len: cur_len + temp_len] = self.IGNORE_TOKEN_ID
+            cur_len = cur_len + temp_len
+
+            for index in range(1, len(parts) - 1):
+                info = parts[index]
+                part1, part2 = info.split(template.roles[0])
+                temp_len = len(self.tokenizer(part1).input_ids) - 1
+                cur_len = cur_len + temp_len
+                part = template.roles[0] + part2 + template.roles[1]
+                temp_len = len(self.tokenizer(part).input_ids) - 1
+                cur_labels[:, cur_len: cur_len + temp_len] = self.IGNORE_TOKEN_ID
+                cur_len = cur_len + temp_len
+            last_info = parts[-1]
+            temp_len = len(self.tokenizer(last_info).input_ids) - 1
+            cur_len = cur_len + temp_len
+
+            cur_labels[:, cur_len:] = self.IGNORE_TOKEN_ID
 
             pixel_values.append(cur_pixel_values)
             input_ids.append(cur_input_ids)

@@ -226,6 +226,12 @@ register_model(
 
 # internvl2 --------------------------------------------------
 register_model(
+    model_id="internvl2-2b",
+    model_family_id="internvl2",
+    model_hf_path="OpenGVLab/InternVL2-2B"
+)
+
+register_model(
     model_id="internvl2-8b",
     model_family_id="internvl2",
     model_hf_path="OpenGVLab/InternVL2-8B"

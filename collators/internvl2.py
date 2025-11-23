@@ -585,4 +585,5 @@ class InternVL2DataCollator(BaseDataCollator):
             input_ids=input_ids,
             labels=labels,
             attention_mask=input_ids.ne(self.PAD_TOKEN_ID),
+            image_flags=torch.tensor([1] * pixel_values.size(0), dtype=torch.long),
         )

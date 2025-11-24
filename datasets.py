@@ -22,6 +22,7 @@ TO_LOAD_IMAGE: Dict[str, bool] = {
     "internvl2": False,
     "internvl2.5": False,
     "idefics2": True,
+    "idefics3": True,
 }
 
 

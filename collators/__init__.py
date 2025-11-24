@@ -22,3 +22,4 @@ from .llama_3_2_vision import LLaMA3_2_VisionDataCollator
 from .internvl2 import InternVL2DataCollator
 from .internvl2_5 import InternVL2_5_DataCollator
 from .idefics2 import Idefics2DataCollator
+from .idefics3 import Idefics3DataCollator

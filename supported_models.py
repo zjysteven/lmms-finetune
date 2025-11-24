@@ -65,6 +65,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_encoder": ["vision_model"],
         "vision_projector": ["mlp1"],
         "llm": ["language_model"]
+    },
+    "internvl2.5": {
+        "vision_encoder": ["vision_model"],
+        "vision_projector": ["mlp1"],
+        "llm": ["language_model"]
     }
 }
 
@@ -235,6 +240,55 @@ register_model(
     model_id="internvl2-8b",
     model_family_id="internvl2",
     model_hf_path="OpenGVLab/InternVL2-8B"
+)
+
+register_model(
+    model_id="internvl2-26b",
+    model_family_id="internvl2",
+    model_hf_path="OpenGVLab/InternVL2-26B"
+)
+
+# internvl2.5 ------------------------------------------------
+register_model(
+    model_id="internvl2.5-1b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-1B"
+)
+
+register_model(
+    model_id="internvl2.5-2b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-2B"
+)
+
+register_model(
+    model_id="internvl2.5-4b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-4B"
+)
+
+register_model(
+    model_id="internvl2.5-8b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-8B"
+)
+
+register_model(
+    model_id="internvl2.5-26b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-26B"
+)
+
+register_model(
+    model_id="internvl2.5-38b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-38B"
+)
+
+register_model(
+    model_id="internvl2.5-78b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-78B"
 )
 
 #=============================================================

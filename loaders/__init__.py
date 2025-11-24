@@ -20,3 +20,4 @@ from .qwen2_vl import Qwen2VLModelLoader
 from .qwen2_5_vl import Qwen2_5_VLModelLoader
 from .llama_3_2_vision import LLaMA3_2_VisionModelLoader
 from .internvl2 import InternVL2ModelLoader
+from .internvl2_5 import InternVL2_5_ModelLoader

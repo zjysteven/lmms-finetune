@@ -40,7 +40,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
-- **2025/11/23**: InternVL2 family (2B/8B) is supported now.
+- **2025/11/23**: InternVL2 (2B/8B/26B) and InternVL2.5 family are supported now.
 - **2025/01/27**: Qwen2.5 family is supported now.
 - **2024/12/16**: Thanks to the contribution from [lavinal712 (Yuqian)](https://github.com/lavinal712), training with Llama-3.2-Vision is now supported. Also there is a useful script `merge_lora_weights.py` added.
 - **2024/10/16**: We added LLaVA-Onevision. See a caveat when using LLaVA-Onevision [here](https://github.com/zjysteven/lmms-finetune/issues/43). Also we updated the collators to stay in line with the new processing of LLaVA models in transformers.

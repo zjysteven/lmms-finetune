@@ -23,3 +23,13 @@
 |                                | qwen2.5-vl-72b-instruct                  | [Qwen/Qwen2.5-VL-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-72B-Instruct)                        |
 | llama-3.2-vision               | llama-3.2-11b-vision-instruct            | [meta-llama/Llama-3.2-11B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct) |
 |                                | llama-3.2-90b-vision-instruct            | [meta-llama/Llama-3.2-90B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-90B-Vision-Instruct) |
+| internvl2                      | internvl2-2b                             | [OpenGVLab/InternVL2-2B](https://huggingface.co/OpenGVLab/InternVL2-2B)                             |
+|                                | internvl2-8b                             | [OpenGVLab/InternVL2-8B](https://huggingface.co/OpenGVLab/InternVL2-8B)                             |
+|                                | internvl2-26b                            | [OpenGVLab/InternVL2-26B](https://huggingface.co/OpenGVLab/InternVL2-26B)                            |
+| internvl2.5                    | internvl2.5-1b                           | [OpenGVLab/InternVL2_5-1B](https://huggingface.co/OpenGVLab/InternVL2_5-1B)                           |
+|                                | internvl2.5-2b                           | [OpenGVLab/InternVL2_5-2B](https://huggingface.co/OpenGVLab/InternVL2_5-2B)                           |
+|                                | internvl2.5-4b                           | [OpenGVLab/InternVL2_5-4B](https://huggingface.co/OpenGVLab/InternVL2_5-4B)                           |
+|                                | internvl2.5-8b                           | [OpenGVLab/InternVL2_5-8B](https://huggingface.co/OpenGVLab/InternVL2_5-8B)                           |
+|                                | internvl2.5-26b                          | [OpenGVLab/InternVL2_5-26B](https://huggingface.co/OpenGVLab/InternVL2_5-26B)                          |
+|                                | internvl2.5-38b                          | [OpenGVLab/InternVL2_5-38B](https://huggingface.co/OpenGVLab/InternVL2_5-38B)                          |
+|                                | internvl2.5-78b                          | [OpenGVLab/InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B)                          |

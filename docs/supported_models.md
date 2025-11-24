@@ -33,3 +33,5 @@
 |                                | internvl2.5-26b                          | [OpenGVLab/InternVL2_5-26B](https://huggingface.co/OpenGVLab/InternVL2_5-26B)                          |
 |                                | internvl2.5-38b                          | [OpenGVLab/InternVL2_5-38B](https://huggingface.co/OpenGVLab/InternVL2_5-38B)                          |
 |                                | internvl2.5-78b                          | [OpenGVLab/InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B)                          |
+| idefics2                       | idefics2-8b                              | [HuggingFaceM4/idefics2-8b](https://huggingface.co/HuggingFaceM4/idefics2-8b)                          |
+| idefics3                       | idefics3-8b-llama3                       | [HuggingFaceM4/Idefics3-8B-Llama3](https://huggingface.co/HuggingFaceM4/Idefics3-8B-Llama3)                          |

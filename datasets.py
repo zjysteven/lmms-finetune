@@ -21,6 +21,7 @@ TO_LOAD_IMAGE: Dict[str, bool] = {
     "llama-3.2-vision": True,
     "internvl2": False,
     "internvl2.5": False,
+    "idefics2": True,
 }
 
 

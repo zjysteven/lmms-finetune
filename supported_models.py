@@ -70,6 +70,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_encoder": ["vision_model"],
         "vision_projector": ["mlp1"],
         "llm": ["language_model"]
+    },
+    "idefics2": {
+        "vision_encoder": ["model.vision_model"],
+        "vision_projector": ["model.connector"],
+        "llm": ["model.text_model", "lm_head"]
     }
 }
 
@@ -289,6 +294,13 @@ register_model(
     model_id="internvl2.5-78b",
     model_family_id="internvl2.5",
     model_hf_path="OpenGVLab/InternVL2_5-78B"
+)
+
+# idefics2 ---------------------------------------------------
+register_model(
+    model_id="idefics2-8b",
+    model_family_id="idefics2",
+    model_hf_path="HuggingFaceM4/idefics2-8b"
 )
 
 #=============================================================

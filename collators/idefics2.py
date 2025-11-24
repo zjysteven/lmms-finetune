@@ -5,7 +5,7 @@ import numpy as np
 import PIL
 import torch
 from transformers.image_utils import get_image_size, to_numpy_array
-from transformers.models.mllama.processing_mllama import MllamaProcessorKwargs
+from transformers.models.idefics2.processing_idefics2 import Idefics2ProcessorKwargs
 from transformers.utils import logging
 
 from . import register_collator
@@ -16,48 +16,47 @@ from .chat_template_monkey_patch import apply_chat_template
 logger = logging.get_logger(__name__)
 
 
-@register_collator("llama-3.2-vision")
-class LLaMA3_2_VisionDataCollator(BaseDataCollator):
+@register_collator("idefics2")
+class Idefics2DataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
         # monkey patch to include bos tokens
         self.tokenizer.apply_chat_template = apply_chat_template.__get__(self.tokenizer)
 
         output_kwargs = self.processor._merge_kwargs(
-            MllamaProcessorKwargs,
+            Idefics2ProcessorKwargs,
             tokenizer_init_kwargs=self.tokenizer.init_kwargs,
         )
-        
+
         vision_inputs = dict()
         images: List[List[PIL.Image.Image]] = [x for instance in instances for x in instance["images"]]
         if len(images) > 0:
-            image_inputs = self.processor.image_processor(images, return_tensors="pt", **output_kwargs["images_kwargs"])
-            num_tiles = image_inputs.pop("num_tiles")
-            vision_inputs.update(**image_inputs)
+            vision_inputs.update(**self.processor.image_processor(images, return_tensors="pt", **output_kwargs["images_kwargs"]))
 
         # constants
         max_len = self.tokenizer.model_max_length
-        image_token_id = self.config.image_token_index
-        
+        image_token_id = self.config.image_token_id
+        num_image_tokens = self.processor.image_seq_len
+
         input_ids = []
         labels = []
-        
+
         # some parsing
         images: List[List[PIL.Image.Image]] = [instance["images"] for instance in instances]
         system_prompts: List[Union[str, None]] = [instance["system_prompt"] for instance in instances]
         conversations: List[List] = [instance["conversations"] for instance in instances]
-        
+
         for system_prompt, cur_images, cur_convs in zip(system_prompts, images, conversations):
             cur_num_images = 0
             cur_input_ids = []
             cur_labels = []
-            
+
             cur_text = []
             if system_prompt is not None:
                 cur_text.append({
                     "role": "system",
                     "content": [{"type": "text", "text": system_prompt}]
                 })
-            
+
             for i, text in enumerate(cur_convs):
                 if i % 2 == 0:
                     num_images = len([m.start() for m in re.finditer("<image>", text)])
@@ -94,9 +93,17 @@ class LLaMA3_2_VisionDataCollator(BaseDataCollator):
             cur_input_ids = temp["input_ids"]
             cur_assistant_masks = torch.tensor(temp["assistant_masks"], dtype=torch.bool).unsqueeze(0)
 
+            # expand image tokens
+            temp_vision_inputs = self.processor.image_processor(cur_images, return_tensors="pt")
+            if temp_vision_inputs.get("pixel_values") is not None:
+                # Replace the image token with the expanded image token sequence
+                repeat = torch.where(cur_input_ids == image_token_id, num_image_tokens, 1).squeeze()
+                cur_input_ids = cur_input_ids.repeat_interleave(repeat, dim=1)
+                cur_assistant_masks = cur_assistant_masks.repeat_interleave(repeat, dim=1)
+
             # a dirty hack to include eos token as part of the labels
             cur_assistant_masks[0, -1] = True
-            
+
             # manual truncation
             if cur_input_ids.shape[1] > max_len:
                 cur_input_ids = cur_input_ids[:, :max_len]
@@ -107,7 +114,7 @@ class LLaMA3_2_VisionDataCollator(BaseDataCollator):
             if self.mask_question_tokens:
                 assert cur_labels.shape == cur_assistant_masks.shape, "Label and mask shapes do not match"
                 cur_labels = torch.where(cur_assistant_masks, cur_labels, self.IGNORE_TOKEN_ID)
-            
+
             assert cur_input_ids.shape == cur_labels.shape, "Input and label shapes do not match"
 
             # padding
@@ -133,7 +140,7 @@ class LLaMA3_2_VisionDataCollator(BaseDataCollator):
 
             input_ids.append(cur_input_ids)
             labels.append(cur_labels)
-            
+
         input_ids = torch.cat(input_ids)
         labels = torch.cat(labels)
         

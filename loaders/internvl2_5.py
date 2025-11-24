@@ -30,13 +30,3 @@ class InternVL2_5_ModelLoader(BaseModelLoader):
         model.img_context_token_id = img_context_token_id
 
         return model, tokenizer, processor, config
-
-
-if __name__ == "__main__":
-    import torch
-    loader = InternVL2_5_ModelLoader(
-        model_hf_path="OpenGVLab/InternVL2_5-8B",
-        model_local_path="/aiarena/group/gmgroup/hongyq/models/OpenGVLab/InternVL2_5-8B",
-        compute_dtype=torch.bfloat16,
-    )
-    model, tokenizer, processor, config = loader.load()

@@ -23,3 +23,4 @@ from .internvl2 import InternVL2ModelLoader
 from .internvl2_5 import InternVL2_5_ModelLoader
 from .idefics2 import Idefics2ModelLoader
 from .idefics3 import Idefics3ModelLoader
+from .glm_4v import GLM4VModelLoader

@@ -81,6 +81,11 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_projector": ["model.connector"],
         "llm": ["model.text_model", "lm_head"]
     },
+    "glm-4v": {
+        "vision_encoder": ["transformer.vision.layers"],
+        "vision_projector": ["transformer.vision.linear_proj"],
+        "llm": ["transformer.encoder"]
+    },
 }
 
 
@@ -313,6 +318,13 @@ register_model(
     model_id="idefics3-8b-llama3",
     model_family_id="idefics3",
     model_hf_path="HuggingFaceM4/Idefics3-8B-Llama3"
+)
+
+# glm-4v -----------------------------------------------------
+register_model(
+    model_id="glm-4v-9b",
+    model_family_id="glm-4v",
+    model_hf_path="zai-org/glm-4v-9b"
 )
 
 #=============================================================

@@ -19,7 +19,7 @@ class GLM4VModelLoader(BaseModelLoader):
         else:
             model = None
 
-        processor = AutoProcessor.from_pretrained(self.model_hf_path, trust_remote_code=True,)
+        processor = AutoProcessor.from_pretrained(self.model_hf_path, trust_remote_code=True)
         tokenizer = AutoTokenizer.from_pretrained(self.model_hf_path, trust_remote_code=True)
-        config = AutoConfig.from_pretrained(self.model_local_path, trust_remote_code=True,)
+        config = AutoConfig.from_pretrained(self.model_local_path, trust_remote_code=True)
         return model, tokenizer, processor, config

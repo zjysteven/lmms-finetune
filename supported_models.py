@@ -82,8 +82,8 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "llm": ["model.text_model", "lm_head"]
     },
     "glm-4v": {
-        "vision_encoder": ["transformer.vision.layers"],
-        "vision_projector": ["transformer.vision.linear_proj"],
+        "vision_encoder": ["transformer.vision.patch_embedding", "transformer.vision.transformer.layers"],
+        "vision_projector": ["transformer.vision.conv", "transformer.vision.linear_proj"],
         "llm": ["transformer.encoder"]
     },
 }

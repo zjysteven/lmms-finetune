@@ -23,3 +23,4 @@ from .internvl2 import InternVL2DataCollator
 from .internvl2_5 import InternVL2_5_DataCollator
 from .idefics2 import Idefics2DataCollator
 from .idefics3 import Idefics3DataCollator
+from .glm_4v import GLM4VDataCollator

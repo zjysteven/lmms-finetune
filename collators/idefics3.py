@@ -16,6 +16,40 @@ from .chat_template_monkey_patch import apply_chat_template
 logger = logging.get_logger(__name__)
 
 
+template = (
+    "<|begin_of_text|>"
+    "{% for message in messages %}"
+    "{{message['role'].capitalize()}}"
+    "{% if message['content'][0]['type'] == 'image' %}"
+    "{{':'}}"
+    "{% else %}"
+    "{{': '}}"
+    "{% endif %}"
+    "{% for line in message['content'] %}"
+    "{% if line['type'] == 'text' and message['role'] != 'assistant'%}"
+    "{{line['text']}}"
+    "{% elif line['type'] == 'text' and message['role'] == 'assistant'%}"
+    "{% generation %}"
+    "{{line['text']}}"
+    "{% endgeneration %}"
+    "{% elif line['type'] == 'image' %}"
+    "{{ '<image>' }}"
+    "{% endif %}"
+    "{% endfor %}"
+    "{% if message['role'] != 'assistant'%}"
+    "<end_of_utterance>\n"
+    "{% else %}"
+    "{% generation %}"
+    "<end_of_utterance>\n"
+    "{% endgeneration %}"
+    "{% endif %}"
+    "{% endfor %}"
+    "{% if add_generation_prompt %}"
+    "{{ 'Assistant:' }}"
+    "{% endif %}"
+)
+
+
 @register_collator("idefics3")
 class Idefics3DataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
@@ -83,7 +117,7 @@ class Idefics3DataCollator(BaseDataCollator):
 
             temp = self.tokenizer.apply_chat_template(
                 cur_text,
-                chat_template=self.processor.chat_template,
+                chat_template=template,
                 add_generation_prompt=False,
                 tokenize=True,
                 return_assistant_tokens_mask=True,
@@ -101,9 +135,6 @@ class Idefics3DataCollator(BaseDataCollator):
                 repeat = torch.where(cur_input_ids == image_token_id, num_image_tokens, 1).squeeze()
                 cur_input_ids = cur_input_ids.repeat_interleave(repeat, dim=1)
                 cur_assistant_masks = cur_assistant_masks.repeat_interleave(repeat, dim=1)
-
-            # a dirty hack to include eos token as part of the labels
-            cur_assistant_masks[0, -1] = True
 
             # manual truncation
             if cur_input_ids.shape[1] > max_len:

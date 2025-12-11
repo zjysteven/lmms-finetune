@@ -69,7 +69,8 @@ class GLM4VDataCollator(BaseDataCollator):
 
             temp = self.tokenizer.apply_chat_template(
                 cur_text,
-                padding=False,
+                padding=True,
+                tokenize=True,
                 return_dict=True,
                 return_tensors="pt",
                 truncation=True,

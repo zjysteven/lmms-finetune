@@ -65,7 +65,27 @@ MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
         "vision_encoder": ["vision_model"],
         "vision_projector": ["mlp1"],
         "llm": ["language_model"]
-    }
+    },
+    "internvl2.5": {
+        "vision_encoder": ["vision_model"],
+        "vision_projector": ["mlp1"],
+        "llm": ["language_model"]
+    },
+    "idefics2": {
+        "vision_encoder": ["model.vision_model"],
+        "vision_projector": ["model.connector"],
+        "llm": ["model.text_model", "lm_head"]
+    },
+    "idefics3": {
+        "vision_encoder": ["model.vision_model"],
+        "vision_projector": ["model.connector"],
+        "llm": ["model.text_model", "lm_head"]
+    },
+    "glm-4v": {
+        "vision_encoder": ["transformer.vision.patch_embedding", "transformer.vision.transformer.layers"],
+        "vision_projector": ["transformer.vision.conv", "transformer.vision.linear_proj"],
+        "llm": ["transformer.encoder"]
+    },
 }
 
 
@@ -235,6 +255,76 @@ register_model(
     model_id="internvl2-8b",
     model_family_id="internvl2",
     model_hf_path="OpenGVLab/InternVL2-8B"
+)
+
+register_model(
+    model_id="internvl2-26b",
+    model_family_id="internvl2",
+    model_hf_path="OpenGVLab/InternVL2-26B"
+)
+
+# internvl2.5 ------------------------------------------------
+register_model(
+    model_id="internvl2.5-1b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-1B"
+)
+
+register_model(
+    model_id="internvl2.5-2b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-2B"
+)
+
+register_model(
+    model_id="internvl2.5-4b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-4B"
+)
+
+register_model(
+    model_id="internvl2.5-8b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-8B"
+)
+
+register_model(
+    model_id="internvl2.5-26b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-26B"
+)
+
+register_model(
+    model_id="internvl2.5-38b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-38B"
+)
+
+register_model(
+    model_id="internvl2.5-78b",
+    model_family_id="internvl2.5",
+    model_hf_path="OpenGVLab/InternVL2_5-78B"
+)
+
+# idefics2 ---------------------------------------------------
+register_model(
+    model_id="idefics2-8b",
+    model_family_id="idefics2",
+    model_hf_path="HuggingFaceM4/idefics2-8b"
+)
+
+# idefics3 ---------------------------------------------------
+register_model(
+    model_id="idefics3-8b-llama3",
+    model_family_id="idefics3",
+    model_hf_path="HuggingFaceM4/Idefics3-8B-Llama3"
+)
+
+# glm-4v -----------------------------------------------------
+register_model(
+    model_id="glm-4v-9b",
+    model_family_id="glm-4v",
+    model_hf_path="zai-org/glm-4v-9b"
 )
 
 #=============================================================

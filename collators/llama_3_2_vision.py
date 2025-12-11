@@ -154,9 +154,9 @@ class LLaMA3_2_VisionDataCollator(BaseDataCollator):
         vision_inputs = dict()
         images: List[List[PIL.Image.Image]] = [x for instance in instances for x in instance["images"]]
         if len(images) > 0:
-            image_features = self.processor.image_processor(images, return_tensors="pt", **output_kwargs["images_kwargs"])
-            num_tiles = image_features.pop("num_tiles")
-            vision_inputs.update(**image_features)
+            image_inputs = self.processor.image_processor(images, return_tensors="pt", **output_kwargs["images_kwargs"])
+            num_tiles = image_inputs.pop("num_tiles")
+            vision_inputs.update(**image_inputs)
 
         # constants
         max_len = self.tokenizer.model_max_length

@@ -9,8 +9,8 @@ from .base import BaseModelLoader
 IMG_CONTEXT_TOKEN = '<IMG_CONTEXT>'
 
 
-@register_loader("internvl2")
-class InternVL2ModelLoader(BaseModelLoader):
+@register_loader("internvl2.5")
+class InternVL2_5_ModelLoader(BaseModelLoader):
     def load(self, load_model: bool = True) -> Tuple[AutoModel, PreTrainedTokenizer, AutoProcessor, AutoConfig]:
         if load_model:
             model = AutoModel.from_pretrained(

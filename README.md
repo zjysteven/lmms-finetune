@@ -16,7 +16,7 @@ More and more large multimodal models (LMMs) are being released from time to tim
 
 The codebase is quite flexible. It supports the finetuning of various types of LMMs, including:
 - :city_sunrise: single image models: [LLaVA-1.5](https://huggingface.co/collections/llava-hf/llava-15-65f762d5b6941db5c2ba07e0), [LLaVA-1.6/NeXT](https://huggingface.co/collections/llava-hf/llava-next-65f75c4afac77fd37dbbe6cf), [Phi-3-Vision](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct), [Llama-3.2-Vision](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision), [Idefics2](https://huggingface.co/HuggingFaceM4/idefics2-8b), [Idefics3](https://huggingface.co/HuggingFaceM4/Idefics3-8B-Llama3), [GLM-4V](https://huggingface.co/zai-org/glm-4v-9b)
-- :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [Qwen2-VL-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct),  [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19), [Qwen2.5-VL-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct), [InternVL2](https://huggingface.co/OpenGVLab/InternVL2-8B), [InternVL2.5](https://huggingface.co/OpenGVLab/InternVL2_5-8B)
+- :bookmark_tabs: multiple/interleaved image models: [Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat), [Qwen2-VL-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct),  [LLaVA-NeXT-Interleave](https://huggingface.co/collections/llava-hf/llava-interleave-668e19a97da0036aad4a2f19), [Qwen2.5-VL-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct), [Qwen3-VL-Instruct](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct), [InternVL2](https://huggingface.co/OpenGVLab/InternVL2-8B), [InternVL2.5](https://huggingface.co/OpenGVLab/InternVL2_5-8B)
 - :movie_camera: video models: [LLaVA-NeXT-Video](https://huggingface.co/collections/llava-hf/llava-next-video-6666a9173a64c7052930f153)
 - :rocket: unified models: [LLaVA-Onevision](https://huggingface.co/collections/llava-hf/llava-onevision-66bb1e9ce8856e210a7ed1fe)
 
@@ -40,6 +40,7 @@ These are great projects/frameworks with large scale and high-degree optimizatio
 
 ## News
 
+- **2026/02/28**: Qwen3-VL (2B/4B/8B/32B) is supported now. Please upgrade `transformers>=4.57.0`.
 - **2025/11/23**: InternVL2 (2B/8B/26B) and InternVL2.5 family are supported now. Additionally, multiple models have been added, including Idefics2, Idefics3 and GLM-4V.
 - **2025/01/27**: Qwen2.5 family is supported now.
 - **2024/12/16**: Thanks to the contribution from [lavinal712 (Yuqian)](https://github.com/lavinal712), training with Llama-3.2-Vision is now supported. Also there is a useful script `merge_lora_weights.py` added.
